@@ -15,7 +15,7 @@ https://www.sugopeople.com/
 
 #### 이태현
 https://www.recle.io/guide
-
+수정
 https://sugerman.modoo.at/
 #### 김윤아 
 
