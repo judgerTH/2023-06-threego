@@ -32,3 +32,10 @@ https://kongee.kr/
 마이페이지 - 신청내역, 신청상태, 수거완료여부 등
 관리자 - 회원조회, 수걸 실적조회, 권한설정, 수걸 가입 승인 
 #### 홍승영
+
+https://blisgo.com/
+
+https://www.wefun-corp.com/wastemanage
+
+https://www.citywaste.or.kr/
+리클.오늘수거.
