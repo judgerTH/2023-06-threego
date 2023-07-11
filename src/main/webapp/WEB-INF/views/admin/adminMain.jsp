@@ -6,6 +6,6 @@
 <title>adminMain</title>
 </head>
 <body>
-	.
+
 </body>
 </html>
