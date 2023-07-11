@@ -52,6 +52,7 @@
                 </ul>
             </li>
             <li><a href="reviews.jsp">4. 이용후기</a></li>
+            <li><a href="/WEB-INF/views/admin/adminMain.jsp">4. 이용후기</a></li>
         </ul>
     </nav>
 </body>
