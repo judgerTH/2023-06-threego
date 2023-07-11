@@ -8,6 +8,7 @@
 <title>Threego</title>
 </head>
 <body>
+
 <main>
     <div class="main-container">
         <img src="<%=request.getContextPath()%>/images/mainbanner.png" alt="메인배너" class="main-img">
