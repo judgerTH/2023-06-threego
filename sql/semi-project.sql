@@ -6,31 +6,34 @@ default tablespace users;
 
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
+
+
 ---------------------------------------------------------------
 
 create table member(
     id 	varchar2(30),	
     pwd	varchar2(300) not null, 
     email varchar2(200),	
-    phone varchar2(11) not null,
+    phone char(11) not null,
     member_role char(1) default 'U',	
-    location varchar2(10) not null,
     address	varchar2(400) not null,
     reg_date date default sysdate,	
     constraints pk_member_id primary key(id),
     constraints uq_member_phone unique(phone),
     constraints uq_member_email unique(email),
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
-);
-        
+        );
+
 create table ticket(
     tic_id 	varchar2(30),	
     tic_name varchar2(30) not null,
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
-);
-                       
+    );        
+ 
+
+        
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -41,8 +44,7 @@ create table payment(
     constraint  pk_payment_p_no primary key(p_no),
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id),
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) 
-);     
-
+   );     
 create table board(
     b_no number,
     b_type	varchar2(30) not null,
@@ -76,21 +78,21 @@ create table location(
 
 create table rider(
     r_id varchar2(30),
-    r_l_id varchar2(30),
+    r_location_id varchar2(30),
     r_status char(1),
     r_reg_date date default sysdate,
     up_date	date,
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
-    constraints fk_rider_l_id foreign key(r_l_id) references location(l_id),
+    constraints fk_rider_location_id foreign key(r_location_id) references location(l_id),
     constraints ck_rider_r_status check (r_status in ('0', '1'))
-    
+   
 );
 
 create table request(
     req_no	number,
     req_writer varchar2(30) not null,
-    req_loca	varchar2(30) not null,
+    req_location_id	varchar2(30) not null,
     req_photo varchar2(200) not null,
     req_status	char(1) default 0,
     req_date	date default sysdate,
@@ -98,37 +100,38 @@ create table request(
     req_cp_date date default sysdate,
     constraints pk_request_req_no primary key(req_no),
     constraints fk_request_id foreign key(req_writer) references member(id), 
-    constraints fk_request_location foreign key(req_loca) references location(l_id),
+    constraints fk_request_location_id foreign key(req_location_id) references location(l_id),
     constraints fk_req_rider foreign key(req_rider) references rider(r_id),
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
   
 );
 
 create table del_member(
-	del_id varchar2(30),
-	del_pwd varchar2(300)	 not null,
-	del_email	varchar2(200),	
-	del_phone varchar2(11)	not null,
-	del_role	 char(1),	
-	del_add 	varchar2(400)	not null,
-	del_enroll date,	
-	del_date date,	
-	constraints pk_del_member_del_id primary key(del_id),
-	constraints fk_del_member_del_id foreign key(del_id) references member(id)
+
+del_id varchar2(30),
+del_pwd varchar2(300)	 not null,
+del_email	varchar2(200),	
+del_phone number(11)	not null,
+del_role	 char(1),	
+del_address 	varchar2(400)	not null,
+del_reg_date date,	
+del_date date,	
+constraints pk_del_member_del_id primary key(del_id),
+constraints fk_del_member_del_id foreign key(del_id) references member(id)
 );
 
 create table warning(
-	w_no	 number,		
-	w_req_no	number not null,	
-	w_writer  varchar2(30)	not null,	
-	w_content varchar2(4000)	not null,	
-	w_reg_date date default sysdate,
-	w_confirm number default 0, 
-	w_caution varchar2(4000),
-	constraints pk_warning_w_no primary key(w_no),
-	constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no),
-	constraints fk_warning_w_id foreign key(w_writer) references member(id),
-	constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
+w_no	 number,		
+w_req_no	number not null,	
+w_writer  varchar2(30)	not null,	
+w_content varchar2(4000)	not null,	
+w_reg_date date default sysdate,
+w_confirm number default 0, 
+w_caution varchar2(4000),
+constraints pk_warning_w_no primary key(w_no),
+constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no),
+constraints fk_warning_w_id foreign key(w_writer) references member(id),
+constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
 
 
