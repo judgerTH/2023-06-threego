@@ -42,8 +42,6 @@ where
     m.member_role = 'R';
 
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 create table ticket(
     tic_id 	varchar2(30),      
     tic_name varchar2(30) not null,
@@ -64,6 +62,18 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) 
    );  
  create sequence seq_payment_no;  
+ 
+select
+    p_tic_id,
+    count(*)
+from
+    payment
+group by
+    rollup(p_tic_id);
+ 
+insert into payment values (
+     seq_payment_no.nextval, 'eogh','tic5',sysdate,3,0
+ );
  
 create table board(
     b_no number,
@@ -169,8 +179,7 @@ BEGIN
     VALUES (:old.id, :old.pwd, :old.email, :old.phone, :old.member_role, :old.address, :old.reg_date, SYSDATE);
 END;
 /
- 
- 
+
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
