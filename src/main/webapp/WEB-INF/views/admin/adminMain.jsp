@@ -145,7 +145,7 @@
         <div class="card-body" id="todayIssueBody">
           <span>신규가입</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">2</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>신규신청</span>
           &nbsp;
@@ -266,16 +266,33 @@
     </section>
     <footer></footer>
     <script>
+    let today = new Date();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
+    let twoDayAgo = new Date();
+    twoDayAgo.setDate(twoDayAgo.getDate()-2);
+    let threeDayAgo = new Date();
+    threeDayAgo.setDate(threeDayAgo.getDate()-3);
+    
+    let todMonth = today.getMonth()+1;
+    let todDay = today.getDate();
+    let yesMonth = yesterday.getMonth()+1;
+    let yesDay = yesterday.getDate();
+    let twoMonth = twoDayAgo.getMonth()+1;
+    let twoDay = twoDayAgo.getDate();
+    let threeMonth = threeDayAgo.getMonth()+1;
+    let threeDay = threeDayAgo.getDate();
+    
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart1);
 
     function drawChart1() {
 	    var data = google.visualization.arrayToDataTable([
-	        ['Date', '방문자수', '주문수'],
-	        ['7/2',  50,      13],
-	        ['7/3',  43,      14],
-	        ['7/4',  57,      10],
-	        ['7/5',  29,      21]
+	        ['Date', '가입수', '주문수'],
+	        [threeMonth+'/'+threeDay,  <%= session.getAttribute("threeDayAgoCount")%>,      13],
+	        [twoMonth+'/'+twoDay,  <%= session.getAttribute("twoDayAgoCount")%>,      14],
+	        [yesMonth+'/'+yesDay,  <%= session.getAttribute("yesterdayCount")%>,      10],
+	        [todMonth+'/'+todDay,  <%= session.getAttribute("todayCount")%>,      21]
 	    ]);
 	
 	    var options = {
