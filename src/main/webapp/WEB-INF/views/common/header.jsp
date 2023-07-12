@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ThreeGo</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
 </head>
 <body>
@@ -13,7 +13,7 @@
     <div class="header">
         <!--로고 및 메뉴바 -->
         <header id = "nav">
-            <div><a href=""><img src="<%=request.getContextPath()%>/images/threegoLog.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
+            <div><a href=""><img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
             <div id="menu-container">
                 <ul id = "menubar">
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction">서비스소개</a></li>
@@ -21,13 +21,14 @@
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket">수거신청</a></li>
                     <li class="nav-item"><a href = "">라이더 지원</a></li>
                     <li class="nav-item"><a href="">고객센터</a></li>
+                    <li class="nav-item"><a href="">관리자</a></li>
                 </ul>
             </div>
             <!--로고 및 메뉴바 끝-->
             <!--로그인, 회원가입 버튼 -->
             <div id="enterance">
                 <div class = "ent-button" id="login">
-                    <a href=""><img src="<%=request.getContextPath()%>/images/login.png" alt="login-icon" class = "ent-img" id = "btn-login"></a>
+                    <a href="<%= request.getContextPath()%>/member/loginMember"><img src="<%=request.getContextPath()%>/images/login.png" alt="login-icon" class = "ent-img" id = "btn-login"></a>
                     <span>로그인</span>
                 </div>
                 <div class = "ent-button" id="enroll">
