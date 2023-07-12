@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import com.threego.app.admin.model.service.AdminService;
 
+import com.threego.app.admin.model.service.AdminService;
+
 /**
  * Servlet implementation class AdminMainPageServlet
  */
@@ -24,6 +26,12 @@ public class AdminMainPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 2. 업무로직
+		int lastMonthPayment = adminService.getlastMonthPayment();
+		request.setAttribute("lastMonthPayment", lastMonthPayment);
+		
+		int thisMonthPayment= adminService.getthieMonthPayment();
+		request.setAttribute("thisMonthPayment", thisMonthPayment);
+		
 		// 오늘 방문자 수
     	int todayCount = adminService.getVisitTodayCount();
     	

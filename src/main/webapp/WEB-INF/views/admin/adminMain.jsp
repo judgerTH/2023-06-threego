@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+	int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
+	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
+%>
 <html lang="en">
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -266,6 +270,7 @@
     </section>
     <footer></footer>
     <script>
+<<<<<<< HEAD
     let today = new Date();
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
@@ -282,6 +287,9 @@
     let twoDay = twoDayAgo.getDate();
     let threeMonth = threeDayAgo.getMonth()+1;
     let threeDay = threeDayAgo.getDate();
+=======
+	
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
     
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart1);
@@ -311,10 +319,8 @@
     function drawChart2() {
         var data = google.visualization.arrayToDataTable([
             ['Month', 'Sales'],
-            ['4월', 1000],
-            ['5월', 1170],
-            ['6월', 660],
-            ['7월', 1030]
+            ['6월', <%= lastMonthPayment %>],
+            ['7월', <%= thisMonthPayment %>]
         ]);
 
         var options = {
