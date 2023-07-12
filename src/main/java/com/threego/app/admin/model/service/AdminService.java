@@ -52,11 +52,18 @@ public class AdminService {
 		return lastMonthPayment;
 	}
 
-	public int getthieMonthPayment() {
+	public int getthisMonthPayment() {
 		Connection conn = getConnection();
-		int thisMonthPayment = adminDao.getthieMonthPayment(conn);
+		int thisMonthPayment = adminDao.getthisMonthPayment(conn);
 		close(conn);
 		return thisMonthPayment;
+	}
+
+	public int getTodayPayment() {
+		Connection conn = getConnection();
+		int todayPayment = adminDao.getTodayPayment(conn);
+		close(conn);
+		return todayPayment;
 	}
 
 	
