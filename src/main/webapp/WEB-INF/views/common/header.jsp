@@ -18,7 +18,7 @@
                 <ul id = "menubar">
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction">서비스소개</a></li>
                     <li class="nav-item"><a href = "">이용안내</a></li>
-                    <li class="nav-item"><a href = "">수거신청</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket">수거신청</a></li>
                     <li class="nav-item"><a href = "">라이더 지원</a></li>
                     <li class="nav-item"><a href="">고객센터</a></li>
                 </ul>

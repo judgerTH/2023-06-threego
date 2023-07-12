@@ -8,6 +8,10 @@ grant connect, resource to test;
 alter user test quota unlimited on users;
 
 ---------------------------------------------------------------
+drop table member;
+
+delete member;
+ alter table member modify phone char(11);  
 
 create table member(
     id 	varchar2(30),	
@@ -25,6 +29,7 @@ create table member(
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
         );
 
+<<<<<<< HEAD
 -- 회원 아이디, 이름, 이메일, 전화번호, 집주소, 가입일
 select id, name, email, phone, address, reg_date from member where member_role = 'U';
 
@@ -37,6 +42,8 @@ where
     m.member_role = 'R';
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 create table ticket(
     tic_id 	varchar2(30),      
     tic_name varchar2(30) not null,
