@@ -15,15 +15,23 @@ main img{width: 100vw; height: 500px;}
 .row{display : flex; flex-direction: row; margin : 10px 10px; justify-content: flex-start; align-items : center;}
 
 /* loginFrm css*/
-.sub_div {display: flex; justify-content: center; text-align: center; align-items: center; translate : 0 50%}
+.sub_div {display: flex; justify-content: center; text-align: center; align-items: center; translate : 0 200px;}
 .login-wrap{display: flex; justify-content: center; text-align: center; align-items: center;}
-form{margin-bottom : 20px; display: flex; justify-content: center; align-items:center; text-align: center; border: 1px solid black; width: 500px; height: 390px;}
-fieldset{border : none; border-radius: 5px; display: flex; align-items: center; flex-direction: column;}
+.login-form{margin-bottom : 20px; display: flex; justify-content: center; align-items:center; text-align: center; border: 1px solid black; width: 500px; height: 390px;}
+#login-fieldset{border : none; border-radius: 5px; display: flex; align-items: center; flex-direction: column;}
 #login_logo{width : 150px; height : 150px;}
-table{margin-top: 20px;}
-input{margin: 5px; width : 300px; height: 30px; border-radius: 5px; border : 0.5px solid black;}
+#iogin-tbl{margin-top: 20px;}
+.login-input{margin: 5px; width : 300px; height: 30px; border-radius: 5px; border : 0.5px solid black;}
 .btn-loginMem-wrap{display : flex; justify-content: center; align-items: center; flex-direction: column; }
 .btn-loginMem {margin : 5px 5px; width : 310px; height: 35px; border: none; border-radius: 5px; background-color: #49B466; color: white; font-weight:bold;}
 .searchInfo{display : center; justify-content: center; text-align: center; align-items: center;  width: 500px; height: 300px;}
 .searchInfo a{cursor: pointer;}
+
+/* searchId, searchPwd*/
+.search-wrapper{display: flex; flex-direction: column; align-items: center; text-align: center; translate : 0 10%;}
+.search-subwrapper{display :flex; flex-direction : column; align-items: center; border : 1px solid black; border-radius : 5px; width: 600px; height: 400px;}
+.search-input{margin : 5px 0; width : 300px; height : 35px;}
+#btn-searchId{margin-top : 10px; width: 305px; height: 35px; border : none; background-color: #49B466; color : white; font-weight: bold;}
+
+
 
