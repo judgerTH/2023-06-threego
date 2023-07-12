@@ -101,6 +101,36 @@ private Properties prop = new Properties();
 		return threeDayAgoCount;
 	}
 
+	public int getlastMonthPayment(Connection conn) {
+		int lastMonthPayment = 0;
+		String sql = prop.getProperty("getlastMonthPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					lastMonthPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return lastMonthPayment;
+	}
+
+	public int getthieMonthPayment(Connection conn) {
+		int thisMonthPayment = 0;
+		String sql = prop.getProperty("getthieMonthPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					thisMonthPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return thisMonthPayment;
+	}
+
 	
 	
 }
