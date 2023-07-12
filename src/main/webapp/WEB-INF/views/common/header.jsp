@@ -28,7 +28,7 @@
             <!--로그인, 회원가입 버튼 -->
             <div id="enterance">
                 <div class = "ent-button" id="login">
-                    <a href="<%= request.getContextPath()%>/member/loginMember"><img src="<%=request.getContextPath()%>/images/login.png" alt="login-icon" class = "ent-img" id = "btn-login"></a>
+                    <a href="<%= request.getContextPath()%>/member/memberLogin"><img src="<%=request.getContextPath()%>/images/login.png" alt="login-icon" class = "ent-img" id = "btn-login"></a>
                     <span>로그인</span>
                 </div>
                 <div class = "ent-button" id="enroll">

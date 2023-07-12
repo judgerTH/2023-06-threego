@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginMember
  */
-@WebServlet("/member/loginMember")
+@WebServlet("/member/memberLogin")
 public class MemberLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,7 @@ public class MemberLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/views/member/loginMember.jsp").forward(request, response);;
+		request.getRequestDispatcher("/WEB-INF/views/member/memberLogin.jsp").forward(request, response);;
 		
 	}
 
@@ -27,8 +27,21 @@ public class MemberLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		// 1. 사용자 입력값 
+			String id = request.getParameter("login-id");
+			String pwd = request.getParameter("login-pwd");
+		
+			System.out.println("id = " + id);
+			System.out.println("pwd = " + pwd);
+			
+		// 2. 업무로직 
+			
+			
+		
+		// 3. 응답처리 
+		
+		
 	}
 
 }
