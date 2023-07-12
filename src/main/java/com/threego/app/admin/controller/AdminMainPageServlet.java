@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.threego.app.admin.model.service.AdminService;
 
 import com.threego.app.admin.model.service.AdminService;
 
@@ -16,17 +19,40 @@ import com.threego.app.admin.model.service.AdminService;
 public class AdminMainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AdminService adminService = new AdminService();
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 2. 업무로직
 		int lastMonthPayment = adminService.getlastMonthPayment();
 		request.setAttribute("lastMonthPayment", lastMonthPayment);
 		
 		int thisMonthPayment= adminService.getthieMonthPayment();
 		request.setAttribute("thisMonthPayment", thisMonthPayment);
 		
+		// 오늘 방문자 수
+    	int todayCount = adminService.getVisitTodayCount();
+    	
+    	// 어제 방문자 수
+    	int yesterdayCount = adminService.getVisitYesterdayCount();
+    	
+    	// 그제 방문자 수
+    	int twoDayAgoCount = adminService.getVisitTwoDayAgoCount();
+    	
+    	// 3일전 방문자 수
+    	int threeDayAgoCount = adminService.getVisitThreeDayAgoCount(); 
+    	
+    	HttpSession session = request.getSession();
+    	
+    	// 세션 속성에 담아준다.
+    	session.setAttribute("todayCount", todayCount); // 오늘 방문자 수
+    	session.setAttribute("yesterdayCount", yesterdayCount); // 어제 방문자 수
+    	session.setAttribute("twoDayAgoCount", twoDayAgoCount); // 그제 방문자 수
+    	session.setAttribute("threeDayAgoCount", threeDayAgoCount); // 3일전 방문자 수
+		
+		// 3. 응답
 		request.getRequestDispatcher("/WEB-INF/views/admin/adminMain.jsp")
 		.forward(request, response);
 	}
