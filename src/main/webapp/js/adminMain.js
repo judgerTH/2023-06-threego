@@ -24,49 +24,6 @@ $(function(){
     };
 });
 
-google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart1);
-
-        function drawChart1() {
-        var data = google.visualization.arrayToDataTable([
-            ['Date', '방문자수', '주문수'],
-            ['7/2',  50,      13],
-            ['7/3',  43,      14],
-            ['7/4',  57,      10],
-            ['7/5',  29,      21]
-        ]);
-
-        var options = {
-            curveType: 'function',
-            legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-    }
 
 
-google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart2);
 
-function drawChart2() {
-    var data = google.visualization.arrayToDataTable([
-        ['Month', 'Sales'],
-        ['4월', 1000],
-        ['5월', 1170],
-        ['6월', 660],
-        ['7월', 1030]
-    ]);
-
-    var options = {
-        chart: {
-            title: '월별 통계(단위:만원)',
-            //subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-        }
-    };
-
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-}
