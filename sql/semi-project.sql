@@ -159,7 +159,18 @@ constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no)
 constraints fk_warning_w_id foreign key(w_writer) references member(id),
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
- create sequence seq_w_no;
+create sequence seq_w_no;
+ 
+CREATE OR REPLACE TRIGGER  trig_member_delete
+before DELETE ON member
+FOR EACH ROW
+BEGIN
+    INSERT INTO del_member (del_id, del_pwd, del_email, del_phone, del_role, del_address, del_reg_date, del_date)
+    VALUES (:old.id, :old.pwd, :old.email, :old.phone, :old.member_role, :old.address, :old.reg_date, SYSDATE);
+END;
+/
+ 
+ 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
