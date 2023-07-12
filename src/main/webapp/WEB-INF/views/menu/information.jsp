@@ -9,101 +9,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쓰리고 | 이용방법</title>
     <style>
-  h2 {
- display: block;
- font-size: 1.5em;
- margin-block-start: 0.83em;
- margin-block-end: 0.83em;
- margin-inline-start: 21%;
- margin-inline-end: 0px;
- font-weight: bold;
-}
-.text-box {
-    padding: 1.5rem;
-}
-strong {
-    letter-spacing: -1px;
-    font-weight: bolder;
-    font-size: 1.3rem !important;
-}
-span {
-    color: #49B466;
-}
-p {
-    letter-spacing: -1px;
-    padding-top: 6px;
-    font-size: 1rem !important;
-    word-break: keep-all;
-    margin-top: 0;
-    margin: 0;
-}
+h2 { display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; 
+  		margin-inline-start: 21%; margin-inline-end: 0px; font-weight: bold; }
+strong { letter-spacing: -1px; font-weight: bolder; font-size: 1.3rem !important; }
+span { color: #49B466; }
+p { letter-spacing: -1px; padding-top: 6px; font-size: 1rem !important; word-break: keep-all; margin-top: 0; margin: 0; }
+.text-box { padding: 1.5rem; }
 .info-bg-box1, .info-bg-box2, .info-bg-box3, .info-bg-box4, .info-bg-box5, .info-bg-box6 {
-    box-shadow: 1px 2px 8px #c0c0c04d;
-    border-radius: 20px;
-    height: 470px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 500px;
-    margin-bottom: 5%;
-    margin-left : 50px;
-}
-.container {
-    height: auto;
-    position: relative;
-    width: 100%;
-    padding-right: var(--bs-gutter-x,.75rem);
-    padding-left: var(--bs-gutter-x,.75rem);
-    margin-right: auto;
-    margin-left: auto;
-}
-.info-boxes {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: calc(-1 * var(--bs-gutter-y));
-    margin-right: 20%;
-    margin-left: 20%;
-    justify-content: space-between!important; 
-}
-.info-box{display : flex; flex-direction: row; align-items: center; justify-content: center;}
- 
+				    box-shadow: 1px 2px 8px #c0c0c04d; border-radius: 20px; height: 470px; background-size: cover; 
+				    background-repeat: no-repeat; width: 500px; margin-bottom: 5%; margin-left : 50px; }
+.container { height: auto; position: relative; width: 100%; padding-right: var(--bs-gutter-x,.75rem); 
+					 padding-left: var(--bs-gutter-x,.75rem); margin-right: auto; margin-left: auto; }
+.info-boxes { --bs-gutter-x: 1.5rem; --bs-gutter-y: 0 display: flex; flex-wrap: wrap; margin-top: calc(-1 * var(--bs-gutter-y)); 
+					  margin-right: 20%; margin-left: 20%; justify-content: space-between!important; }
+.info-box{ display : flex; flex-direction: row; align-items: center; justify-content: center; }
 /** 박스 이미지 사이즈, 위치 조절*/
-.info-bg-box1 {
-    background-image: url(../images/information1.png);
-    background-size: 70%;
-    background-position: center bottom;
-}
-
-.info-bg-box2 {
-    background-image: url(../images/information2.png);
-    background-size: 80%;
-    background-position: center bottom;
-}
-
-.info-bg-box3 {
-    background-image: url(../images/information3.png);
-    background-size: 70%;
-    background-position: center bottom;
-}
-
-.info-bg-box4 {
-    background-image: url(../images/information4.png);
-    background-size: 80%;
-    background-position: center bottom;
-}
-.info-bg-box5 {
-    background-image: url(../images/information5.png);
-    background-size: 90%;
-    background-position: left bottom;
-}
-
+.info-bg-box1 { background-image: url(../images/information1.png); background-size: 70%; background-position: center bottom; }
+.info-bg-box2 { background-image: url(../images/information2.png); background-size: 80%; background-position: center bottom; }
+.info-bg-box3 { background-image: url(../images/information3.png); background-size: 65%; background-position: center bottom; }
+.info-bg-box4 { background-image: url(../images/information4.png); background-size: 80%; background-position: center bottom; }
+.info-bg-box5 { background-image: url(../images/information5.png); background-size: 90%; background-position: left bottom; }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="top-div">
-        <h2>쓰리고 이용방법</h2>
+        <h2>쓰리고 이용안내</h2>
     </div>
 
     <div class="info-boxes">
@@ -117,7 +48,6 @@ p {
                     <p>쓰리고 홈페이지 상단 회원가입 페이지에서 정보를 입력 후<br> 회원가입을 완료해주세요.</p>
                 </div>
             </div>
-        
             <div class="info-bg-box2">
                 <div class="text-box">
                     <strong>
@@ -129,8 +59,6 @@ p {
             </div>
         </div>
         <div class="info-box">
-
-
             <div class="info-bg-box3">
                 <div class="text-box">
                     <strong>
@@ -167,6 +95,7 @@ p {
         
             <div class="info-bg-box6">
                 <div class="text-box">
+                	<br><br>
                     <strong>
                         <span>●</span>
                         배출 시 주의사항<br>
