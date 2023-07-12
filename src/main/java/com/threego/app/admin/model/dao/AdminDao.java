@@ -116,7 +116,7 @@ private Properties prop = new Properties();
 		return lastMonthPayment;
 	}
 
-	public int getthieMonthPayment(Connection conn) {
+	public int getthisMonthPayment(Connection conn) {
 		int thisMonthPayment = 0;
 		String sql = prop.getProperty("getthieMonthPayment");
 		
@@ -129,6 +129,21 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return thisMonthPayment;
+	}
+
+	public int getTodayPayment(Connection conn) {
+		int todayPayment = 0;
+		String sql = prop.getProperty("getTodayPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					todayPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return todayPayment;
 	}
 
 	

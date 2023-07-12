@@ -3,6 +3,9 @@
 <%
 	int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
 	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
+	
+	int todayPayment = (int)request.getAttribute("todayPayment")*5000;
+	
 %>
 <html lang="en">
   <head>
@@ -191,9 +194,16 @@
 
           <div class="col">
             <div class="card" style="width: 635px;">
-              <div class="card-header">통계</div>
+              <div class="card-header">
+              	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;통계
+              	<span style="float: right;">
+	              <button id="month" style="border: none;">월별</button>
+	              <button id="day" style="border: none;">일별</button>              	
+              	</span>
+              </div>
               <div class="card-body">
-                <div id="columnchart_material" style="width: 600px; padding: 80px 0 0 20px;"></div>
+                <div id="columnchart_material1" style="width: 600px; padding: 80px 0 0 20px;"></div>
+                <div id="columnchart_material2" style="width: 600px; padding: 80px 0 0 20px; "></div>
               </div>
             </div>
           </div>
@@ -270,7 +280,21 @@
     </section>
     <footer></footer>
     <script>
-
+	const monthButton = document.getElementById('month');
+	const dayButton = document.getElementById('day');
+    const monthChart = document.getElementById('columnchart_material1');
+    const dayChart = document.getElementById('columnchart_material2');
+	
+	monthButton.onclick = () => {
+		monthChart.style.display = 'block';
+		dayChart.style.display = 'none';
+	}
+	
+	dayButton.onclick = () => {
+		monthChart.style.display = 'none';
+		dayChart.style.display = 'block';
+	}
+	
     let today = new Date();
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
@@ -327,7 +351,31 @@
             }
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart3);
+    
+    function drawChart3() {
+        var data = google.visualization.arrayToDataTable([
+            ['Day', 'Sales'],
+            ['7월 9일', <%= thisMonthPayment %>],
+            ['7월 10일', <%= thisMonthPayment %>],
+            ['7월 11일', <%= thisMonthPayment %>],
+            ['7월 12일', <%= todayPayment %>]
+        ]);
+
+        var options = {
+            chart: {
+                title: '일별 통계(단위:만원)',
+                //subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+            }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }

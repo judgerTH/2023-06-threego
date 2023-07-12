@@ -25,12 +25,17 @@ public class AdminMainPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 2. 업무로직
+		// 지난달 매출
 		int lastMonthPayment = adminService.getlastMonthPayment();
 		request.setAttribute("lastMonthPayment", lastMonthPayment);
 		
-		int thisMonthPayment= adminService.getthieMonthPayment();
+		// 이번달 매출
+		int thisMonthPayment= adminService.getthisMonthPayment();
 		request.setAttribute("thisMonthPayment", thisMonthPayment);
+		
+		// 오늘 매출
+		int todayPayment = adminService.getTodayPayment();
+		request.setAttribute("todayPayment", todayPayment);
 		
 		// 오늘 방문자 수
     	int todayCount = adminService.getVisitTodayCount();
