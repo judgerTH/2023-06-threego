@@ -270,7 +270,7 @@
     </section>
     <footer></footer>
     <script>
-<<<<<<< HEAD
+
     let today = new Date();
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
@@ -287,9 +287,6 @@
     let twoDay = twoDayAgo.getDate();
     let threeMonth = threeDayAgo.getMonth()+1;
     let threeDay = threeDayAgo.getDate();
-=======
-	
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
     
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart1);

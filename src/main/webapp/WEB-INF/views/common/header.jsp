@@ -21,11 +21,8 @@
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket">수거신청</a></li>
                     <li class="nav-item"><a href = "">라이더 지원</a></li>
                     <li class="nav-item"><a href="">고객센터</a></li>
-<<<<<<< HEAD
+
                     <li class="nav-item"><a href="<%=request.getContextPath() %>/admin/adminMain" target="_blank">관리자</a></li>
-=======
-                    <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminMain">관리자</a></li>
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
                 </ul>
             </div>
             <!--로고 및 메뉴바 끝-->
