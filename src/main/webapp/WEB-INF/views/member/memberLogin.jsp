@@ -1,3 +1,4 @@
+<%@page import="com.threego.app.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,6 +8,7 @@
 <title>loginMember</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
 </head>
+
 <body>
 	<div class="main_wrap" id="login_new">
         <div class="sub_div">

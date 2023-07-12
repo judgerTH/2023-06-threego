@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class MemberSearchId
  */
 @WebServlet("/member/MemberSearchId")
-public class MemberSearchId extends HttpServlet {
+public class MemberSearchIdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -23,7 +23,14 @@ public class MemberSearchId extends HttpServlet {
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String email = request.getParameter("email");
+		
+		
+		
+		// 비지니스 로직 : 
+		
 		
 		
 		

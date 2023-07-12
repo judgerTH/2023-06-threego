@@ -8,10 +8,10 @@ grant connect, resource to test;
 alter user test quota unlimited on users;
 
 ---------------------------------------------------------------
-drop table member;
+-- drop table member;
 
-delete member;
- alter table member modify phone char(11);  
+-- delete member;
+-- alter table member modify phone char(11);  
 
 create table member(
     id 	varchar2(30),	
