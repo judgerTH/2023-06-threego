@@ -4,8 +4,8 @@ create user threego
 identified by threego
 default tablespace users;
 
-grant connect, resource to threego;
-alter user threego quota unlimited on users;
+grant connect, resource to test;
+alter user test quota unlimited on users;
 
 ---------------------------------------------------------------
 drop table member;
@@ -29,14 +29,14 @@ create table member(
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
         );
 
+
 create table ticket(
-    tic_id 	varchar2(30),	
+    tic_id 	varchar2(30),      
     tic_name varchar2(30) not null,
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );        
-                
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -49,8 +49,8 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) 
    );  
  create sequence seq_payment_no;  
-   
-   
+
+ 
 create table board(
     b_no number,
     b_type	varchar2(30) not null,
@@ -123,7 +123,7 @@ create table del_member(
 del_id varchar2(30),
 del_pwd varchar2(300)	 not null,
 del_email	varchar2(200),	
-del_phone number(11)	not null,
+del_phone char(11)	not null,
 del_role	 char(1),	
 del_address 	varchar2(400)	not null,
 del_reg_date date,	
@@ -145,7 +145,17 @@ constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no)
 constraints fk_warning_w_id foreign key(w_writer) references member(id),
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
- create sequence seq_w_no;
+create sequence seq_w_no;
+ 
+CREATE OR REPLACE TRIGGER  trig_member_delete
+before DELETE ON member
+FOR EACH ROW
+BEGIN
+    INSERT INTO del_member (del_id, del_pwd, del_email, del_phone, del_role, del_address, del_reg_date, del_date)
+    VALUES (:old.id, :old.pwd, :old.email, :old.phone, :old.member_role, :old.address, :old.reg_date, SYSDATE);
+END;
+/
+
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
@@ -203,4 +213,5 @@ select * from ticket;
 select * from location;
 select * from rider;
 select * from request; 
+select * from payment;
     -- commit;

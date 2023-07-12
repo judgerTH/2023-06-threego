@@ -19,7 +19,9 @@ public class AdminReportListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 입력값 처리
 		
+		
 		// 2. 업무로직
+		
 		
 		// 3. 응답처리 forward
 		request.getRequestDispatcher("/WEB-INF/views/admin/reportList.jsp")

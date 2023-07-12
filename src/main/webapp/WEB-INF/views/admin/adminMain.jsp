@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+	int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
+	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
+%>
 <html lang="en">
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.css" />
     <title>AdminPage</title>
-    <script src="js/jquery-3.7.0.js"></script>
+    <script src="<%=request.getContextPath() %>/js/jquery-3.7.0.js"></script>
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
@@ -21,7 +25,7 @@
         </div>
         <hr />
         <div class="serviceName">
-          <img class="logoImg" src="img/threeGologo2.png" alt=""> 쓰리고
+          <img class="logoImg" src="<%=request.getContextPath() %>/img/threeGologo2.png" alt=""> 쓰리고
         </div>
         <di class="goToMainSite">
           <span>
@@ -32,7 +36,7 @@
               />
             </svg>
           </span>
-          <a href="">사이트 바로가기</a>
+          <a href="<%= request.getContextPath()%>">사이트 바로가기</a>
         </di>
         <hr />
         <h5 style="padding-left: 20px; padding-top: 10px">사이트 관리</h5>
@@ -44,7 +48,7 @@
               />
             </svg>
           </span>
-          <a href="">대시보드</a>
+          <a href="<%=request.getContextPath() %>/admin/adminMain">대시보드</a>
         </div>
         <div class="memberManagement">
           <div class="wrap">
@@ -143,7 +147,9 @@
           </span>
         </div>
         <div class="card-body" id="todayIssueBody">
-          <span>신규가입</span>&nbsp;<span style="color: tomato; font-weight: 600">2</span>
+          <span>신규가입</span>
+          &nbsp;
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>신규신청</span>
           &nbsp;
@@ -197,7 +203,7 @@
               <div class="card-body">
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 주소가 바뀌었어요. 어떻게 변경해야하나요?</p>
@@ -206,7 +212,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 키트가 계속 반송됩니다. 이유가 뭔가요</p>
@@ -215,7 +221,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 분리수거를 따로 해야하나요?</p>
@@ -224,7 +230,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 아무리 기다려도 수거가 안돼요. 해결해주세요.</p>
@@ -240,7 +246,7 @@
               <div class="card-body">
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[라이더 신고] 라이더가 집 앞을 쓰레기로 테러해놨습니다.</p>
@@ -249,7 +255,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[유저 신고] 쓰레기 수거 외에 개인적인 심부름을 요구합니다.</p>
@@ -263,8 +269,71 @@
       </div>
     </section>
     <footer></footer>
+    <script>
+
+    let today = new Date();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
+    let twoDayAgo = new Date();
+    twoDayAgo.setDate(twoDayAgo.getDate()-2);
+    let threeDayAgo = new Date();
+    threeDayAgo.setDate(threeDayAgo.getDate()-3);
+    
+    let todMonth = today.getMonth()+1;
+    let todDay = today.getDate();
+    let yesMonth = yesterday.getMonth()+1;
+    let yesDay = yesterday.getDate();
+    let twoMonth = twoDayAgo.getMonth()+1;
+    let twoDay = twoDayAgo.getDate();
+    let threeMonth = threeDayAgo.getMonth()+1;
+    let threeDay = threeDayAgo.getDate();
+    
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart1);
+
+    function drawChart1() {
+	    var data = google.visualization.arrayToDataTable([
+	        ['Date', '가입수', '주문수'],
+	        [threeMonth+'/'+threeDay,  <%= session.getAttribute("threeDayAgoCount")%>,      13],
+	        [twoMonth+'/'+twoDay,  <%= session.getAttribute("twoDayAgoCount")%>,      14],
+	        [yesMonth+'/'+yesDay,  <%= session.getAttribute("yesterdayCount")%>,      10],
+	        [todMonth+'/'+todDay,  <%= session.getAttribute("todayCount")%>,      21]
+	    ]);
+	
+	    var options = {
+	        curveType: 'function',
+	        legend: { position: 'bottom' }
+	    };
+	
+	    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+	
+	    chart.draw(data, options);
+	}
+    
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart2);
+
+    function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+            ['Month', 'Sales'],
+            ['6월', <%= lastMonthPayment %>],
+            ['7월', <%= thisMonthPayment %>]
+        ]);
+
+        var options = {
+            chart: {
+                title: '월별 통계(단위:만원)',
+                //subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+            }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="/js/adminMain.js"></script>
+    <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
   </body>
 </html>
 
