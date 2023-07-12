@@ -27,26 +27,3 @@ $(function(){
 
 
 
-google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart2);
-
-function drawChart2() {
-    var data = google.visualization.arrayToDataTable([
-        ['Month', 'Sales'],
-        ['4월', 1000],
-        ['5월', 1170],
-        ['6월', 660],
-        ['7월', 1030]
-    ]);
-
-    var options = {
-        chart: {
-            title: '월별 통계(단위:만원)',
-            //subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-        }
-    };
-
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-}

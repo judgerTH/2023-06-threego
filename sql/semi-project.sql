@@ -204,3 +204,5 @@ select * from location;
 select * from rider;
 select * from request; 
     -- commit;
+
+select * from VISIT;

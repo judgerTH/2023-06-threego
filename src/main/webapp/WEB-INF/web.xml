@@ -22,6 +22,6 @@
    </resource-ref>
    
    <listener>
-	<listener-class>kr.co.test.web.listener.SessionListener</listener-class>
+	<listener-class>com.threego.app.admin.listener.SessionListener</listener-class>
 </listener>
 </web-app>
