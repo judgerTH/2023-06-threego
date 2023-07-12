@@ -8,6 +8,10 @@ grant connect, resource to threego;
 alter user threego quota unlimited on users;
 
 ---------------------------------------------------------------
+drop table member;
+
+delete member;
+ alter table member modify phone char(11);  
 
 create table member(
     id 	varchar2(30),	
@@ -25,7 +29,6 @@ create table member(
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
         );
 
-  
 create table ticket(
     tic_id 	varchar2(30),	
     tic_name varchar2(30) not null,
