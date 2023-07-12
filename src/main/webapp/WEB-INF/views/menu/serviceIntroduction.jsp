@@ -37,6 +37,21 @@ hr {
     height: 1px;
     background-color: #49B466;
 }
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: 20%;
+    margin-left: 20%;
+    justify-content: space-between!important; 
+}
+.service-img {
+    vertical-align: middle;
+    margin-left: 15%;
+    width: 70vw; height: 450px;
+}
 </style>
 <body>
     <!-- 메인메뉴바 / 서비스 소개 페이지-->
@@ -45,6 +60,7 @@ hr {
 	<!--
 	 	 시간나면 이미지 놀거임 
 	  -->
+	  <img src="<%= request.getContextPath() %>/images/serviceIntroduction.png" alt="서비스소개배너" class="service-img">
 	
     <h3>쓰리고 (ThreeGo)</h3>
     <p>환경부담 줄이<span>GO</span>, 재활용 높이<span>GO</span>, 돈도 벌<span>GO</span></p>
