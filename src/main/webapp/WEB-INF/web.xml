@@ -20,4 +20,8 @@
         <res-auth>Container</res-auth>
 
    </resource-ref>
+   
+   <listener>
+	<listener-class>kr.co.test.web.listener.SessionListener</listener-class>
+</listener>
 </web-app>

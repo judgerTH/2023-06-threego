@@ -24,27 +24,7 @@ $(function(){
     };
 });
 
-google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart1);
 
-        function drawChart1() {
-        var data = google.visualization.arrayToDataTable([
-            ['Date', '방문자수', '주문수'],
-            ['7/2',  50,      13],
-            ['7/3',  43,      14],
-            ['7/4',  57,      10],
-            ['7/5',  29,      21]
-        ]);
-
-        var options = {
-            curveType: 'function',
-            legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-    }
 
 
 google.charts.load('current', {'packages':['bar']});

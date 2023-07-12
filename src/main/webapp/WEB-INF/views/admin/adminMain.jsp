@@ -263,6 +263,29 @@
       </div>
     </section>
     <footer></footer>
+    <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart1);
+
+    function drawChart1() {
+    var data = google.visualization.arrayToDataTable([
+        ['Date', '방문자수', '주문수'],
+        ['7/2',  50,      13],
+        ['7/3',  43,      14],
+        ['7/4',  57,      10],
+        ['7/5',  29,      21]
+    ]);
+
+    var options = {
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+}
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="/js/adminMain.js"></script>
   </body>

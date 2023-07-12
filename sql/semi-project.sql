@@ -128,7 +128,7 @@ del_date date,
 constraints pk_del_member_del_id primary key(del_id),
 constraints fk_del_member_del_id foreign key(del_id) references member(id)
 );
-
+alter table del_member modify del_phone char(11);
 create table warning(
 w_no	 number,		
 w_req_no	number not null,	
@@ -143,6 +143,9 @@ constraints fk_warning_w_id foreign key(w_writer) references member(id),
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
  create sequence seq_w_no;
+ 
+ CREATE TABLE VISIT (V_DATE date);
+ 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
