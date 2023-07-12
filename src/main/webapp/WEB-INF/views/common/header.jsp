@@ -13,7 +13,7 @@
     <div class="header">
         <!--로고 및 메뉴바 -->
         <header id = "nav">
-            <div><a href=""><img src="<%=request.getContextPath()%>/images/threegoLog.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
+            <div><a href=""><img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
             <div id="menu-container">
                 <ul id = "menubar">
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction">서비스소개</a></li>
