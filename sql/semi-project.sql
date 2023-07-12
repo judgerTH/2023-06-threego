@@ -4,8 +4,8 @@ create user threego
 identified by threego
 default tablespace users;
 
-grant connect, resource to threego;
-alter user threego quota unlimited on users;
+grant connect, resource to test;
+alter user test quota unlimited on users;
 
 ---------------------------------------------------------------
 
@@ -25,9 +25,20 @@ create table member(
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
         );
 
-  
+-- 회원 아이디, 이름, 이메일, 전화번호, 집주소, 가입일
+select id, name, email, phone, address, reg_date from member where member_role = 'U';
+
+-- 라이더 아이디, 이름, 이메일, 전화번호, 집주소, 활동지역, 라이더 변환일
+select id, name, email, phone, address, r_location_id, up_date
+from
+    member m join rider r
+        on m.id = r.r_id
+where
+    m.member_role = 'R';
+
+
 create table ticket(
-    tic_id 	varchar2(30),	
+    tic_id 	varchar2(30),      
     tic_name varchar2(30) not null,
     tic_cnt number not null,
     tic_price number not null,
@@ -46,8 +57,7 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) 
    );  
  create sequence seq_payment_no;  
-   
-   
+ 
 create table board(
     b_no number,
     b_type	varchar2(30) not null,
@@ -120,7 +130,7 @@ create table del_member(
 del_id varchar2(30),
 del_pwd varchar2(300)	 not null,
 del_email	varchar2(200),	
-del_phone number(11)	not null,
+del_phone char(11)	not null,
 del_role	 char(1),	
 del_address 	varchar2(400)	not null,
 del_reg_date date,	
@@ -200,4 +210,5 @@ select * from ticket;
 select * from location;
 select * from rider;
 select * from request; 
+select * from payment;
     -- commit;
