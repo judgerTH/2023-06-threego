@@ -82,7 +82,7 @@
                         />
                       </svg>
                     </span>
-                    <a href="">회원정보조회</a>
+                    <a href="<%= request.getContextPath()%>/admin/userList">회원정보조회</a>
                   </div>
                   <div class="riderManagement">
                     <span>
