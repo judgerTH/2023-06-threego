@@ -44,5 +44,20 @@ public class AdminService {
 		close(conn);
 		return threeDayAgoCount;
 	}
+
+	public int getlastMonthPayment() {
+		Connection conn = getConnection();
+		int lastMonthPayment = adminDao.getlastMonthPayment(conn);
+		close(conn);
+		return lastMonthPayment;
+	}
+
+	public int getthieMonthPayment() {
+		Connection conn = getConnection();
+		int thisMonthPayment = adminDao.getthieMonthPayment(conn);
+		close(conn);
+		return thisMonthPayment;
+	}
+
 	
 }
