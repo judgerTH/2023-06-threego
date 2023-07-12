@@ -1,35 +1,58 @@
 package com.threego.app.member.model.vo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+
 
 public class Member {
 
+	private String id;
+	private String pwd;
 	private String name;
-	private String memberId;
-	private String password;
 	private String email;
 	private String phone;
 	private MemberRole memberRole;
-	private Timestamp enrollDate;
+	private String post;
 	private String address;
-	
+	private Date regDate;
+
 	
 	public Member() {
-		super();
+		
 	}
 
 
-	public Member(String name, String memberId, String password, String email, String phone, MemberRole memberRole,
-			Timestamp enrollDate, String address) {
+	public Member(String id, String pwd, String name, String email, String phone, MemberRole memberRole, String post,
+			String address, Date regDate) {
 		super();
+		this.id = id;
+		this.pwd = pwd;
 		this.name = name;
-		this.memberId = memberId;
-		this.password = password;
 		this.email = email;
 		this.phone = phone;
 		this.memberRole = memberRole;
-		this.enrollDate = enrollDate;
+		this.post = post;
 		this.address = address;
+		this.regDate = regDate;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public String getPwd() {
+		return pwd;
+	}
+
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 
@@ -40,26 +63,6 @@ public class Member {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 
@@ -93,13 +96,13 @@ public class Member {
 	}
 
 
-	public Timestamp getEnrollDate() {
-		return enrollDate;
+	public String getPost() {
+		return post;
 	}
 
 
-	public void setEnrollDate(Timestamp enrollDate) {
-		this.enrollDate = enrollDate;
+	public void setPost(String post) {
+		this.post = post;
 	}
 
 
@@ -113,14 +116,25 @@ public class Member {
 	}
 
 
-	
-	
+	public Date getRegDate() {
+		return regDate;
+	}
+
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Member [name=" + name + ", memberId=" + memberId + ", password=" + password + ", email=" + email
-				+ ", phone=" + phone + ", memberRole=" + memberRole + ", enrollDate=" + enrollDate + ", address="
-				+ address + "]";
+		return "Member [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", phone=" + phone
+				+ ", memberRole=" + memberRole + ", post=" + post + ", address=" + address + ", regDate=" + regDate
+				+ "]";
 	}
+	
+	
+	
 	
 	
 	

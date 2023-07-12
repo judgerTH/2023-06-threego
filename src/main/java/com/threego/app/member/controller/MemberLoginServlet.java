@@ -6,6 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
+import com.threego.app.member.model.service.MemberService;
+import com.threego.app.member.model.vo.Member;
 
 /**
  * Servlet implementation class LoginMember
@@ -13,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/member/memberLogin")
 public class MemberLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private final MemberService memberService = new MemberService();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -32,15 +37,16 @@ public class MemberLoginServlet extends HttpServlet {
 			String id = request.getParameter("login-id");
 			String pwd = request.getParameter("login-pwd");
 		
-			System.out.println("id = " + id);
-			System.out.println("pwd = " + pwd);
-			
 		// 2. 업무로직 
+			Member loginMember = memberService.findById(id);
 			
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("loginMember", loginMember);
 			
 		
 		// 3. 응답처리 
-		
+		response.sendRedirect(request.getContextPath());
 		
 	}
 
