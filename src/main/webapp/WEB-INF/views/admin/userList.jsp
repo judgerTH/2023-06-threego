@@ -134,16 +134,17 @@
         <section>
             <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 150px">
                 <div class="card-header" id="todayIssueHeader">
-                신고관리
+                회원목록
                 </div>
                 <div class="card-body" id="todayIssueBody">
                     <table>
-                        <th style="width: 70px;">번호</th>
-                        <th style="width: 150px;">작성자</th>
-                        <th>내용</th>
-                        <th style="width: 150px;">작성일</th>
-                        <th style="width: 100px;">확인여부</th>
-                        <th style="width: 200px;">주의조치</th>
+                        <th style="width: 150px;">ID</th>
+                        <th style="width: 100px;">이름</th>
+                        <th>이메일</th>
+                        <th style="width: 180px;">H/P</th>
+                        <th style="width: 100px;">Role</th>
+                        <th style="width: 100px;">우편번호</th>
+                        <th style="width: 300px;">주소</th>
                         <tr>
 
                         </tr>
