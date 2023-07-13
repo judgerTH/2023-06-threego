@@ -42,11 +42,11 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
-			session.setAttribute("loginMember", loginMember);
 			
-		
-		// 3. 응답처리 
-		response.sendRedirect(request.getContextPath());
+			
+			session.setAttribute("loginMember", loginMember);
+			// 3. 응답처리 
+			response.sendRedirect(request.getContextPath());
 		
 	}
 

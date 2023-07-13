@@ -52,9 +52,6 @@
 	margin: 10;
 }
 
-#buttonsubmit {
-	
-}
 </style>
 
 <!-- 콘텐츠 시작 { -->
@@ -111,53 +108,54 @@
 					</form>
 					<div id="nextForm">
 						<form name="memberEnrollFrm">
-				 							
 							<table id="enroll">
 								<tr>
 									<th>아이디<span class="req">&nbsp;*</span></th>
-									<td><input type="text" name="id" id="userId">
+									<td><input type="text" name="id" id="userId" >
+									<div id="userIdAlert"></div></td>
 								</tr>
 								<tr>
 									<th>비밀번호<span class="req"&nbsp;>*</span></th>
-									<td><input type="password" name="pwd" id="pwd"> </td>
+									<td><input type="password" name="pwd" id="pwd" > 
+									<div id="userPwdAlert"></div></td>
 								</tr>
 								<tr>
 									<th>비밀번호확인</th>
-									<td><input type="password" id="pwdCheck"></td>
+									<td><input type="password" id="pwdCheck" ></td>
 								</tr>
 								<tr>
 									<th>이름<span class="req">&nbsp;*</span></th>
-									<td><input type="text" name="name" id="userName"></td>
+									<td><input type="text" name="name" id="userName" >
+									 <div id="nameAlert"></div></td>
 								</tr>
 
 								<tr>
 									<th>이메일<span class="req">&nbsp;*</span></th>
-									<td><input type="text" name="email" id="email" class="email"></td>
+									<td><input type="text" name="email" id="email" class="email" >
+									 <div id="emailAlert"></div></td>
 								</tr>
 								<tr>
 									<th>전화번호<span class="req">&nbsp;*</span></th>
-									<td><input type="text" name="tel1" id="tel1" class="phone">-
-										<input type="text" name="tel2" id="tel2" class="phone">-
-										<input type="text" name="tel3" id="tel3" class="phone">
+									<td><input type="text" name="phone" id="phone" class="phone">
+										<div id="phoneAlert"></div></td>
 								</tr>
 								<tr>
 									<th>주소<span class="req">&nbsp;*</span></th>
-									<td> <input type="text" id="postal" name="post" style="width: 100px" placeholder="우편번호" required/>
+									<td> <input type="text" id="postal" name="post" style="width: 100px" placeholder="우편번호" required readonly/>
 										<input type="button" id="postal-search"  value="검색" onclick="addressSearch()" /><br>
-										<input type="text" id="userAddress" name="address" placeholder="주소" required/>
-										  <input type="text" id="userDetailAddress" name="detailAddr" placeholder="상세 주소"  required />
+										<input type="text" id="userAddress" name="address" placeholder="주소" required  readonly />
+										  <input type="text" id="userDetailAddress" name="detailAddr" placeholder="상세 주소"    />
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2" class="btn-wrapper">
 										<button>제출</button>
-									&nbsp; <input type="reset" value="초기화" style="width: 80px;"></td>
+									&nbsp; <input
+										type="reset" value="초기화" style="width: 80px;"></td>
 								</tr>
 							</table>
-						
-							
 						</form>
-					
+						<div id="completeTag" style="display : none;">회원가입성공했습니다. 우측 상단 위 로그인 버튼을 클릭 해 이용해주십시오.</div>
 					</div>
 				</div>
 			</div>
@@ -261,39 +259,205 @@
 </script>
 
 <script>
-document.memberEnrollFrm.onsubmit = function(e) {
-	// 파일업로드를 포함한 비동기 요청
-	// e.preventDefault();
-	// 1. FormData객체 사용
-	// 2. ajax 속성 - processData: false, contentType: false
-	console.log(e.target);
+const userId = $("#userId").val();
+const pwd = $("#pwd").val();
+const pwdCheck = $("#pwdCheck").val();
+const userName = $("#userName").val();
+const email = $("#email").val();
+const phone = $("#phone").val();
+
+const idReg = /^[a-z]+[a-z0-9]{5,19}$/; // 앞글자는 영소문자, 영소문자와 숫자만 6 ~ 20자
+const pwReg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!])[a-zA-Z\d@!]{6,20}$/;
+//조건1. 6~20 영문 대소문자
+//조건2. 최소 1개의 숫자 혹은 특수 문자를 포함해야 함
+const nameReg = /^[가-힣]{2,6}$/; // 한글 단어만 2글자 ~ 6글자
+const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; 
+const phoneReg = /^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/;// 앞글자는 영소문자, 영소문자와 숫자만 6 ~ 20자
+const $userIdAlert = $("#userIdAlert");
+const $nameArlert = $("#nameArlert");
+const $emailAlert = $("#emailAlert");
+const $phoneAlert = $("#phoneAlert");
+const $userPwdAlert = $("#userPwdAlert");
+
+//아이디 실시간 유효성검사
+$("#userId").on("input", function() {
+	    const userId = $(this).val();
+	    const $userIdAlert = $("#userIdAlert");
+
+	    if (!idReg.test(userId)) {
+	      $userIdAlert
+	        .text("아이디는 영소문자로 시작하고 영소문자 및 수자 6~20자만 가능합니다.")
+	        .css("color", "red");
+	      return;
+	    } else {
+	      $userIdAlert
+	        .text("사용 가능한 아이디 입니다.")
+	        .css("color", "blue");
+	    }
+	  });
+//비밀번호 실시간 유효성검사
+$("#pwd").on("input", function() {
+  const pwd = $(this).val();
+  const pwdCheck = $("#pwdCheck").val(); // 비밀번호 확인 값 가져오기
+  const $userPwdAlert = $("#userPwdAlert");
+
+  if (!pwReg.test(pwd)) {
+    $userPwdAlert
+      .text("비밀번호는 영문자 6~20자, 1개의 숫자와 특수문자 ! @ 중 하나를 포함해야 합니다.")
+      .css("color", "red");
+    return;
+  } else {
+	 
+	  $userPwdAlert
+      .text("입력한 비밀번호는 사용가능합니다.")
+       .css("color", "blue");
+    // 정규식에 맞을 때
+	  $("#pwdCheck").on("input", function() {
+		  const pwd = $("#pwd").val();
+		  const pwdCheck = $(this).val(); // 변경된 비밀번호 확인 값 가져오기
+		  const $userPwdAlert = $("#userPwdAlert");
+
+		  if (pwd !== pwdCheck) {
+		    $userPwdAlert
+		      .text("입력한 비밀번호가 일치하지 않습니다.")
+		      .css("color", "red");
+		  } else {
+		    $userPwdAlert
+		      .text("사용 가능한 비밀번호입니다.")
+		      .css("color", "blue");
+		  }
+		});
+  }
+});
+
+$("#userName").on("input", function() {
+	  const userName = $(this).val();
+	  const $nameAlert = $("#nameAlert");
+
+	  if (!nameReg.test(userName)) {
+	    $nameAlert
+	      .text("이름은 한글 단어만 2글자 ~ 6글자까지 가능합니다.")
+	      .css("color", "red");
+	    return;
+	  } else {
+	    $nameAlert
+	      .text("사용 가능한 이름입니다.")
+	      .css("color", "blue");
+	  }
+	});
+
+	$("#email").on("input", function() {
+	  const email = $(this).val();
+	  const $emailAlert = $("#emailAlert");
+
+	  if (!emailReg.test(email)) {
+	    $emailAlert
+	      .text("유효한 이메일 주소를 입력해주세요.")
+	      .css("color", "red");
+	    return;
+	  } else {
+	    $emailAlert
+	      .text("사용 가능한 이메일 주소입니다.")
+	      .css("color", "blue");
+	  }
+	});
+
+	$("#phone").on("input", function() {
+	  const phone = $(this).val();
+	  const $phoneAlert = $("#phoneAlert");
+
+	  if (!phoneReg.test(phone)) {
+	    $phoneAlert
+	      .text("유효한 전화번호를 입력해주세요.")
+	      .css("color", "red");
+	    return;
+	  } else {
+	    $phoneAlert
+	      .text("사용 가능한 전화번호입니다.")
+	      .css("color", "blue");
+	  }
+	});
+	  
+
+document.memberEnrollFrm.onsubmit = (e) => {
+  	const userId = $("#userId").val();
+  	const idReg = /^[a-z]+[a-z0-9]{5,19}$/;
+  	
+  	const pwd = $("#pwd").val();
+  	const pwdCheck = $("#pwdCheck").val();
+  	const pwReg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!])[a-zA-Z\d@!]{6,20}$/;			
+  	
+  	const userName = $("#userName").val();
+  	const nameReg = /^[가-힣]{2,6}$/;
+
+  	const email = $("#email").val();
+  	const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  	
+  	const phoneReg = /^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/;
+  	const phone = $("#phone").val();
+  	
+  	
+  
+	  if (!idReg.test(userId)) {
+	    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+	    return false;
+	  }
+	  
+	  if (!nameReg.test(userName)) {
+		    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		    return false;
+		  }
+	  
+	  if (!pwReg.test(pwd) || pwd !== pwdCheck) {
+		    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		    return false;
+		  }
+	  if (!phoneReg.test(phone)) {
+		    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		    return false;
+		  }
+	  if (!emailReg.test(email)) {
+		    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		    return false;
+		  }
+	  const address = document.querySelector("#userAddress").value;
+	  if(address ==="" ){
+		  alert("주소입력을해주세요");
+		  e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		    return false;
+	  }
+	  
+	  
 	const frmData = new FormData(e.target);
-	console.log(frmData);
-	
 	$.ajax({
 		url : "<%= request.getContextPath() %>/member/memberEnroll",
 		data : frmData,
-		processData: false,
-		contentType : false,
 		method : "POST",
 		dataType : "json",
+		processData : false,
+		contentType : false,
 		success(responseData) {
 			console.log(responseData);
-			const {result, message} = responseData;
-			alert(message);
+			//const {result, message} = responseData;
+			//alert(message);
 			
 			
 		},
-		complete() {
-			e.target.reset(); // 폼 초기화
-		}
+	//	complete() {
+		//	e.target.reset(); // 폼 초기화
+		//}
 		
 	});
-	
-	
 	 // 동기적 폼제출 방지
-	 e.preventDefault();
-};
-
+e.preventDefault(); 
+document.getElementById('completeTag').style.display = 'block';
+document.memberEnrollFrm.style.display = 'none';
+document.getElementById('complete').style.backgroundColor = 'green';
+document.getElementById('info').style.backgroundColor = '#D2D2D2';
+	 
+<!-- } 하단 끝 -->
+}
+			
 </script>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

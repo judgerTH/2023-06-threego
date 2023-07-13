@@ -13,6 +13,8 @@ import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 public class MemberDao {
 	
 	Properties prop = new Properties();
@@ -68,6 +70,27 @@ public class MemberDao {
 		Date regDate = rset.getDate("reg_date");
 	 
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
+	}
+
+	public int insertMember(Connection conn, Member member) {
+		int result =0;
+		String sql = prop.getProperty("insertMember");
+		//insertMember = insert into member values(?,?,?,?,?,default,?,?,default)
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPwd());
+			pstmt.setString(3, member.getName());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getPost());
+			pstmt.setString(7, member.getAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
 	}
 	
 	
