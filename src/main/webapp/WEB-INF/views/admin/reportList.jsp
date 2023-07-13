@@ -1,10 +1,10 @@
-<%@page import="com.threego.app.warning.model.vo.MemberRole"%>
+<%@page import="com.threego.app.warning.model.vo.WarnigMemberRole"%>
 <%@page import="com.threego.app.warning.model.vo.Warning"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
+List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,13 +157,15 @@
                     	<tbody>
                     		<%
                     		if(warnings != null && !warnings.isEmpty()){ 
-                    			for(Warning warning : warnings){
+                    		                    			for(Warning warning : warnings){
                     		%>
 								<tr>
-									<td><%= warning.getWarningNo() %></td>
-									<td><%= warning.getWarningWriter() %></td>
+									<td><%=warning.getWarningNo()%></td>
+									<td><%=warning.getWarningWriter()%></td>
 									<td>
-										<% if(warning.getMemberRole()== MemberRole.U) {%>
+										<%
+										if(warning.getMemberRole()== WarnigMemberRole.U) {
+										%>
 											[라이더 신고]
 										<% } else { %>
 											[유저 신고]

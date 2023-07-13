@@ -1,5 +1,5 @@
 package com.threego.app.warning.model.vo;
 
-public enum MemberRole {
+public enum WarnigMemberRole {
 	A, R, U;
 }

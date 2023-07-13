@@ -1,13 +1,16 @@
 <%@page import="com.threego.app.board.model.vo.Board"%>
-<%@page import="com.threego.app.warning.model.vo.MemberRole"%>
+<%@page import="com.threego.app.warning.model.vo.WarnigMemberRole"%>
 <%@page import="com.threego.app.warning.model.vo.Warning"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
+int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
 	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
 	
 	int todayPayment = (int)request.getAttribute("todayPayment")*5000;
+	int yesterdayPayment = (int)request.getAttribute("yesterdayPayment")*5000;
+	int twoDayAgoPayment = (int)request.getAttribute("twoDayAgoPayment")*5000;
+	int threeDayAgoPayment = (int)request.getAttribute("threeDayAgoPayment")*5000;
 	
 	List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 	List<Board> boards = (List<Board>) request.getAttribute("boards");
@@ -19,9 +22,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
     <title>AdminPage</title>
-    <script src="<%=request.getContextPath() %>/js/jquery-3.7.0.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
@@ -35,7 +38,7 @@
         </div>
         <hr />
         <div class="serviceName">
-          <img class="logoImg" src="<%=request.getContextPath() %>/img/threeGologo2.png" alt=""> 쓰리고
+          <img class="logoImg" src="<%=request.getContextPath()%>/img/threeGologo2.png" alt=""> 쓰리고
         </div>
         <di class="goToMainSite">
           <span>
@@ -46,7 +49,7 @@
               />
             </svg>
           </span>
-          <a href="<%= request.getContextPath()%>">사이트 바로가기</a>
+          <a href="<%=request.getContextPath()%>">사이트 바로가기</a>
         </di>
         <hr />
         <h5 style="padding-left: 20px; padding-top: 10px">사이트 관리</h5>
@@ -58,7 +61,7 @@
               />
             </svg>
           </span>
-          <a href="<%=request.getContextPath() %>/admin/adminMain">대시보드</a>
+          <a href="<%=request.getContextPath()%>/admin/adminMain">대시보드</a>
         </div>
         <div class="memberManagement">
           <div class="wrap">
@@ -89,7 +92,7 @@
                         />
                       </svg>
                     </span>
-                    <a href="<%= request.getContextPath()%>/admin/userList">회원정보조회</a>
+                    <a href="<%=request.getContextPath()%>/admin/userList">회원정보조회</a>
                   </div>
                   <div class="riderManagement">
                     <span>
@@ -126,7 +129,7 @@
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
             </svg>
           </span>
-          <a href="<%= request.getContextPath()%>/admin/reportList">신고내역</a>
+          <a href="<%=request.getContextPath()%>/admin/reportList">신고내역</a>
         </div>
         <hr>
         <div class="showMeTheMoney">
@@ -153,37 +156,37 @@
         <div class="card-header" id="todayIssueHeader">
           오늘의 이슈
           <span class="badge text-bg-secondary" style="background-color: tomato">
-            <%= (Integer)session.getAttribute("todayCount")  + (Integer)session.getAttribute("todayPaymentCount") +
+            <%=(Integer)session.getAttribute("todayCount")  + (Integer)session.getAttribute("todayPaymentCount") +
             (Integer)session.getAttribute("unapprovedRiderCount") + (Integer)session.getAttribute("canceledRequestCount") +
-            (Integer)session.getAttribute("warningCount") + (Integer)session.getAttribute("countOfBoardWithOutComment") %>
+            (Integer)session.getAttribute("warningCount") + (Integer)session.getAttribute("countOfBoardWithOutComment")%>
           </span>
         </div>
         <div class="card-body" id="todayIssueBody">
           <span>신규가입</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayCount")%></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("todayCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>신규주문</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayPaymentCount") %></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("todayPaymentCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>라이더 승인</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("unapprovedRiderCount") %></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("unapprovedRiderCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <br />
           <br />
           <span>수거취소</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("canceledRequestCount") %></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("canceledRequestCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>신고내역</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("warningCount") %></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("warningCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>답변대기문의</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("countOfBoardWithOutComment") %></span>
+          <span style="color: tomato; font-weight: 600"><%=session.getAttribute("countOfBoardWithOutComment")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
       </div>
@@ -222,7 +225,7 @@
               <div class="card-body">
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 주소가 바뀌었어요. 어떻게 변경해야하나요?</p>
@@ -231,7 +234,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[문의사항] 키트가 계속 반송됩니다. 이유가 뭔가요</p>
@@ -239,20 +242,28 @@
                   </div>
                 </div>
                 
-                <% if(boards != null && !boards.isEmpty()) { %>
-                <% 	for(Board board : boards) { %>
+                <%
+                                if(boards != null && !boards.isEmpty()) {
+                                %>
+                <%
+                for(Board board : boards) {
+                %>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">
-                    [문의사항] <%= board.getBoardTitle()  %></p>
-                    <p style="font-size: 13px;">&nbsp;<%= board.getBoardWriter() %> | <%= board.getBoardRegDate() %></p>
+                    [문의사항] <%=board.getBoardTitle()%></p>
+                    <p style="font-size: 13px;">&nbsp;<%=board.getBoardWriter()%> | <%=board.getBoardRegDate()%></p>
                   </div>
                 </div>
-                	<% } %>
-                <% } %>
+                	<%
+                	}
+                	%>
+                <%
+                }
+                %>
               </div>
             </div>
           </div>
@@ -262,7 +273,7 @@
               <div class="card-body">
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[라이더 신고] 라이더가 집 앞을 쓰레기로 테러해놨습니다.</p>
@@ -271,7 +282,7 @@
                 </div>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">[유저 신고] 쓰레기 수거 외에 개인적인 심부름을 요구합니다.</p>
@@ -279,25 +290,27 @@
                   </div>
                 </div>
                 <%
-                  if(warnings != null && !warnings.isEmpty()){ 
-                    for(Warning warning : warnings){
+                if(warnings != null && !warnings.isEmpty()){ 
+                                    for(Warning warning : warnings){
                 %>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
                     <p style="font-weight: 600;">
                     	<%
-  							String originalText = warning.getWarningContent();
-						    int maxLength = 20;
-						
-						    String truncatedText = originalText;
-						    if (originalText.length() > maxLength) {
-						    	truncatedText = originalText.substring(0, maxLength) + "...";
-						    }
+                    	String originalText = warning.getWarningContent();
+                    					    int maxLength = 20;
+                    					
+                    					    String truncatedText = originalText;
+                    					    if (originalText.length() > maxLength) {
+                    					    	truncatedText = originalText.substring(0, maxLength) + "...";
+                    					    }
+                    	%>
+						<%
+						if(warning.getMemberRole()== WarnigMemberRole.U) {
 						%>
-						<% if(warning.getMemberRole()== MemberRole.U) {%>
 							[라이더 신고]
 						<% } else { %>
 							[유저 신고]
@@ -399,10 +412,10 @@
     function drawChart3() {
         var data = google.visualization.arrayToDataTable([
             ['Day', 'Sales'],
-            ['7월 9일', <%= thisMonthPayment %>],
-            ['7월 10일', <%= thisMonthPayment %>],
-            ['7월 11일', <%= thisMonthPayment %>],
-            ['7월 12일', <%= todayPayment %>]
+            [threeMonth+'/'+threeDay, <%= threeDayAgoPayment %>],
+            [twoMonth+'/'+twoDay, <%= twoDayAgoPayment %>],
+            [yesMonth+'/'+yesDay, <%= yesterdayPayment %>],
+            [todMonth+'/'+todDay, <%= todayPayment %>]
         ]);
 
         var options = {

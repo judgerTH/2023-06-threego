@@ -12,10 +12,14 @@ import java.util.List;
 import java.util.Properties;
 
 import com.threego.app.admin.model.exception.AdminException;
+import com.threego.app.member.model.vo.Member;
+import com.threego.app.member.model.vo.MemberRole;
+
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.board.model.vo.BoardType;
-import com.threego.app.warning.model.vo.MemberRole;
+import com.threego.app.warning.model.vo.WarnigMemberRole;
 import com.threego.app.warning.model.vo.Warning;
+
 
 
 public class AdminDao {
@@ -114,7 +118,7 @@ private Properties prop = new Properties();
 
 	public int getthisMonthPayment(Connection conn) {
 		int thisMonthPayment = 0;
-		String sql = prop.getProperty("getthieMonthPayment");
+		String sql = prop.getProperty("getthisMonthPayment");
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rset = pstmt.executeQuery()) {
@@ -140,6 +144,113 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return todayPayment;
+	}
+
+
+	public int getYesterdayPayment(Connection conn) {
+		int yesterdayPayment = 0;
+		String sql = prop.getProperty("getYesterdayPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					yesterdayPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return yesterdayPayment;
+	}
+
+	public int getTwoDayAgoPayment(Connection conn) {
+		int twoDayAgoPayment = 0;
+		String sql = prop.getProperty("getTwoDayAgoPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					twoDayAgoPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return twoDayAgoPayment;
+	}
+
+	public int getThreeDayAgoPayment(Connection conn) {
+		int threeDayAgoPayment = 0;
+		String sql = prop.getProperty("getThreeDayAgoPayment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					threeDayAgoPayment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return threeDayAgoPayment;
+	}
+
+	public List<Member> findAll(Connection conn, int start, int end) {
+		List<Member> members = new ArrayList<>();
+		String sql = prop.getProperty("findAll");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Member member = handleMemberResultSet(rset);
+					members.add(member);
+				}
+			}
+		} catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return members;
+	}
+
+	private Member handleMemberResultSet(ResultSet rset) throws SQLException {
+		Member member = new Member();
+		member.setId(rset.getString("id"));
+		member.setName(rset.getString("name"));
+		member.setEmail(rset.getString("email"));
+		member.setPhone(rset.getString("phone"));
+		MemberRole memberRole = MemberRole.valueOf(rset.getString("member_role"));
+		member.setMemberRole(memberRole);
+		member.setPost(rset.getString("post"));
+		member.setAddress(rset.getString("address"));
+		member.setRegDate(rset.getDate("reg_date"));
+		return member;
+	}
+
+	public int getTotalMember(Connection conn) {
+		int totalMember = 0;
+		String sql = prop.getProperty("getTotalMember");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalMember = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return totalMember;
+	}
+
+	public int memberDelete(Connection conn, String id) {
+		int result = 0;
+		String sql = prop.getProperty("memberDelete");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			System.out.println(id);
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
 	}
 
 	public int getTodayPaymentCount(Connection conn) {
@@ -288,7 +399,7 @@ private Properties prop = new Properties();
 		Date warningRegDate = rset.getDate("w_reg_date");
 		int warningConfirm = rset.getInt("w_confirm");
 		String warningCaution = rset.getString("w_confirm");
-		MemberRole memberRole = MemberRole.valueOf(rset.getString("member_role"));
+		WarnigMemberRole memberRole = WarnigMemberRole.valueOf(rset.getString("member_role"));
 		
 		return new Warning(warningNo, warningReqNo, warningWriter, warningContent, warningRegDate, warningConfirm, warningCaution, memberRole);
 	}
@@ -337,6 +448,7 @@ private Properties prop = new Properties();
 		int boardCnt = rset.getInt("b_cnt");
 		
 		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
+
 	}
 
 	
