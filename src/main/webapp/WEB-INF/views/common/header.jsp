@@ -46,6 +46,7 @@
                     <span>마이페이지</span>
                 </div>
                 
+                
                 	<%} else if(loginMember.getMemberRole()==MemberRole.A){ %>
                 	<div class = "ent-button" id="adminpage">
     				<a href="<%=request.getContextPath() %>/admin/adminMain" target="_blank"><img src="<%=request.getContextPath()%>/images/admin.png" alt="mypage-icon" class = "ent-img" id = "btn-adminpage"></a>
