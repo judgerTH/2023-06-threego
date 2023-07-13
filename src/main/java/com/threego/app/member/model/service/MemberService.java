@@ -19,6 +19,22 @@ public class MemberService {
 		return member;
 	}
 
+	public int updateMember(Member member) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+			result = memberDao.updateMember(conn, member);
+			System.out.println(result);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+	
 	public int insertMember(Member member) {
 		int result =0;
 		Connection conn = getConnection();
@@ -33,5 +49,6 @@ public class MemberService {
 		}
 		return result;
 	}
+
 
 }
