@@ -147,7 +147,7 @@ private Properties prop = new Properties();
 		return todayPayment;
 	}
 
-<<<<<<< HEAD
+
 	public int getYesterdayPayment(Connection conn) {
 		int yesterdayPayment = 0;
 		String sql = prop.getProperty("getYesterdayPayment");
@@ -252,7 +252,7 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return result;
-=======
+
 	public int getTodayPaymentCount(Connection conn) {
 		int paymentCount = 0;
 		String sql = prop.getProperty("getTodayPaymentCount");
@@ -448,7 +448,7 @@ private Properties prop = new Properties();
 		int boardCnt = rset.getInt("b_cnt");
 		
 		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 	}
 
 	
