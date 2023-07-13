@@ -44,7 +44,6 @@ public class AdminMainPageServlet extends HttpServlet {
 		int todayPayment = adminService.getTodayPayment();
 		request.setAttribute("todayPayment", todayPayment);
 		
-<<<<<<< HEAD
 		// 어제 매출
 		int yesterdayPayment = adminService.getYesterdayPayment();
 		request.setAttribute("yesterdayPayment", yesterdayPayment);
@@ -58,9 +57,7 @@ public class AdminMainPageServlet extends HttpServlet {
 		request.setAttribute("threeDayAgoPayment", threeDayAgoPayment);
 		
 		// 오늘 방문자 수
-=======
 		// 오늘 방문자 수 - 유성근
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
     	int todayCount = adminService.getVisitTodayCount();
     	
     	// 어제 방문자 수 - 유성근

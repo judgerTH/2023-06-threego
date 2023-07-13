@@ -6,12 +6,12 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.threego.app.admin.model.dao.AdminDao;
-<<<<<<< HEAD
+
 import com.threego.app.member.model.vo.Member;
-=======
+
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.warning.model.vo.Warning;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 
 public class AdminService {
 
@@ -67,7 +67,7 @@ public class AdminService {
 		return todayPayment;
 	}
 
-<<<<<<< HEAD
+
 	public int getYesterdayPayment() {
 		Connection conn = getConnection();
 		int yesterdayPayment = adminDao.getYesterdayPayment(conn);
@@ -116,8 +116,8 @@ public class AdminService {
 			close(conn);
 		}
 		return result;
-	
-=======
+	}
+
 	public int getTodayPaymentCount() {
 		Connection conn = getConnection();
 		int paymentCount = adminDao.getTodayPaymentCount(conn);
@@ -196,7 +196,7 @@ public class AdminService {
 		List<Board> boards = adminDao.findSixBoards(conn);
 		close(conn);
 		return boards;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 	}
 
 	

@@ -12,15 +12,14 @@ import java.util.List;
 import java.util.Properties;
 
 import com.threego.app.admin.model.exception.AdminException;
-<<<<<<< HEAD
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
-=======
+
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.board.model.vo.BoardType;
-import com.threego.app.warning.model.vo.MemberRole;
+import com.threego.app.warning.model.vo.WarnigMemberRole;
 import com.threego.app.warning.model.vo.Warning;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 
 
 public class AdminDao {
@@ -252,6 +251,7 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return result;
+	}
 
 	public int getTodayPaymentCount(Connection conn) {
 		int paymentCount = 0;
@@ -399,7 +399,7 @@ private Properties prop = new Properties();
 		Date warningRegDate = rset.getDate("w_reg_date");
 		int warningConfirm = rset.getInt("w_confirm");
 		String warningCaution = rset.getString("w_confirm");
-		MemberRole memberRole = MemberRole.valueOf(rset.getString("member_role"));
+		WarnigMemberRole memberRole = WarnigMemberRole.valueOf(rset.getString("member_role"));
 		
 		return new Warning(warningNo, warningReqNo, warningWriter, warningContent, warningRegDate, warningConfirm, warningCaution, memberRole);
 	}

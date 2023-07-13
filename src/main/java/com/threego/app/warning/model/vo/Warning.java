@@ -11,7 +11,7 @@ public class Warning {
 	Date WarningRegDate; // 신고 등록일
 	int WarningConfirm; // 신고 확인여부 - 0: 신고확인중, 1: 신고확인완료 
 	String WarningCaution; // 주의조치
-	private MemberRole memberRole;
+	private WarnigMemberRole memberRole;
 	
 	public Warning() {
 		super();
@@ -20,7 +20,7 @@ public class Warning {
 
 
 	public Warning(int warningNo, int warningReqNo, String warningWriter, String warningContent, Date warningRegDate,
-			int warningConfirm, String warningCaution, MemberRole memberRole) {
+			int warningConfirm, String warningCaution, WarnigMemberRole memberRole) {
 		super();
 		WarningNo = warningNo;
 		WarningReqNo = warningReqNo;
@@ -100,11 +100,11 @@ public class Warning {
 		WarningCaution = warningCaution;
 	}
 
-	public MemberRole getMemberRole() {
+	public WarnigMemberRole getMemberRole() {
 		return memberRole;
 	}
 	
-	public void setMemberRole(MemberRole memberRole) {
+	public void setMemberRole(WarnigMemberRole memberRole) {
 		this.memberRole = memberRole;
 	}
 	
