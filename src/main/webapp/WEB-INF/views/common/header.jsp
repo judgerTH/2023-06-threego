@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
+
 </head>
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
