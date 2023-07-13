@@ -21,7 +21,4 @@
 
    </resource-ref>
    
-   <listener>
-	<listener-class>com.threego.app.admin.listener.SessionListener</listener-class>
-</listener>
 </web-app>

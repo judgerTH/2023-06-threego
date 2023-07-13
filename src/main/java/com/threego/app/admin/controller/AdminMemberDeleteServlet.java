@@ -14,18 +14,17 @@ import com.threego.app.common.util.ThreegoUtils;
 import com.threego.app.member.model.vo.Member;
 
 /**
- * Servlet implementation class AdminUserListServlet
+ * Servlet implementation class AdminMemberDeleteServlet
  */
-@WebServlet("/admin/userList")
-public class AdminUserListServlet extends HttpServlet {
+@WebServlet("/admin/memberDelete")
+public class AdminMemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AdminService adminService = new AdminService();
 	private final int LIMIT = 10; // 한페이지당 회원 수
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 페이징처리
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cpage = 1; // 기본값처리
 		try {
 			cpage = Integer.parseInt(request.getParameter("cpage")); 			
@@ -38,8 +37,10 @@ public class AdminUserListServlet extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
+		String id = request.getParameter("id");
+
+		int result = adminService.memberDelete(id);
 		
-		// 회원 전체조회
 		List<Member> members = adminService.findAll(start, end);
 		
 		// 페이지바영역 처리
@@ -48,11 +49,10 @@ public class AdminUserListServlet extends HttpServlet {
 		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalMember, url);
 		
 		
-		
-		request.setAttribute("members", members);	
+		request.setAttribute("members", members);
 		request.setAttribute("pagebar", pagebar);
-		request.getRequestDispatcher("/WEB-INF/views/admin/userList.jsp")
-		.forward(request, response);
+		request.getSession().setAttribute("msg", "해당 사용자를 성공적으로 삭제했습니다.");
+		response.sendRedirect(request.getContextPath() + "/admin/userList");
 	}
 
 }

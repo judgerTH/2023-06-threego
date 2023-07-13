@@ -1,14 +1,20 @@
+<%@page import="com.threego.app.warning.model.vo.WarnigMemberRole"%>
+<%@page import="com.threego.app.warning.model.vo.Warning"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.css" />
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/report.css" />
-    <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/report.css" />
+    <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
     <title>ReportList</title>
 </head>
 <body>
@@ -19,7 +25,7 @@
           </div>
           <hr />
           <div class="serviceName">
-            <img class="logoImg" src="<%= request.getContextPath() %>/img/threeGologo2.png" alt=""> 쓰리고
+            <img class="logoImg" src="<%=request.getContextPath()%>/img/threeGologo2.png" alt=""> 쓰리고
           </div>
           <di class="goToMainSite">
             <span>
@@ -42,7 +48,7 @@
                 />
               </svg>
             </span>
-            <a href="<%=request.getContextPath() %>/admin/adminMain">대시보드</a>
+            <a href="<%=request.getContextPath()%>/admin/adminMain">대시보드</a>
           </div>
           <div class="memberManagement">
             <div class="wrap">
@@ -73,7 +79,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="<%= request.getContextPath()%>/admin/userList">회원정보조회</a>
+                      <a href="<%=request.getContextPath()%>/admin/userList">회원정보조회</a>
                     </div>
                     <div class="riderManagement">
                       <span>
@@ -110,7 +116,7 @@
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
               </svg>
             </span>
-            <a href="<%= request.getContextPath()%>/admin/reportList">신고내역</a>
+            <a href="<%=request.getContextPath()%>/admin/reportList">신고내역</a>
           </div>
           <hr>
           <div class="showMeTheMoney">
@@ -138,15 +144,41 @@
                 </div>
                 <div class="card-body" id="todayIssueBody">
                     <table>
-                        <th style="width: 70px;">번호</th>
-                        <th style="width: 150px;">작성자</th>
-                        <th>내용</th>
-                        <th style="width: 150px;">작성일</th>
-                        <th style="width: 100px;">확인여부</th>
-                        <th style="width: 200px;">주의조치</th>
-                        <tr>
-
-                        </tr>
+                    	<thead>
+                    		<tr>
+		                        <th style="width: 70px;">번호</th>
+		                        <th style="width: 150px;">작성자</th>
+		                        <th>내용</th>
+		                        <th style="width: 150px;">작성일</th>
+		                        <th style="width: 100px;">확인여부</th>
+		                        <th style="width: 200px;">주의조치</th>
+                    		</tr>
+                    	</thead>
+                    	<tbody>
+                    		<%
+                    		if(warnings != null && !warnings.isEmpty()){ 
+                    		                    			for(Warning warning : warnings){
+                    		%>
+								<tr>
+									<td><%=warning.getWarningNo()%></td>
+									<td><%=warning.getWarningWriter()%></td>
+									<td>
+										<%
+										if(warning.getMemberRole()== WarnigMemberRole.U) {
+										%>
+											[라이더 신고]
+										<% } else { %>
+											[유저 신고]
+										<% } %>
+											<%= warning.getWarningContent() %>
+									</td>
+									<td><%= warning.getWarningRegDate() %></td>
+									<td><%= warning.getWarningConfirm() %></td>
+									<td><%= warning.getWarningCaution() %></td>
+								</tr>
+								<% } %>
+							<% } %>
+                    	</tbody>
                     </table>
                 </div>
             </div>
