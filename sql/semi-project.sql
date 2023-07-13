@@ -117,7 +117,7 @@ create table request(
     constraints pk_request_req_no primary key(req_no),
     constraints fk_request_id foreign key(req_writer) references member(id) on delete cascade, 
     constraints fk_request_location_id foreign key(req_location_id) references location(l_id) on delete cascade,
-    constraints fk_req_rider foreign key(req_rider) references rider(r_id) on delete,
+    constraints fk_req_rider foreign key(req_rider) references rider(r_id) on delete cascade,
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
@@ -133,9 +133,7 @@ del_phone char(11)	not null,
 del_role	 char(1),	
 del_address 	varchar2(400)	not null,
 del_reg_date date,	
-del_date date,	
-constraints pk_del_member_del_id primary key(del_id),
-constraints fk_del_member_del_id foreign key(del_id) references member(id)
+del_date date
 );
 
 create table warning(
@@ -213,7 +211,7 @@ insert into location values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
 
-
+delete from member where id = 'eogh';
 
 select * from member;
 select * from ticket;
@@ -221,4 +219,6 @@ select * from location;
 select * from rider;
 select * from request; 
 select * from payment;
+select * from del_member;
     -- commit;
+

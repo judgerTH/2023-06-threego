@@ -35,40 +35,16 @@ public class MemberSearchIdServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
-
-		
-//		String savedirectory = getServletContext().getRealPath("/");;
-//		
-//		MultipartRequest multiReq = new MultipartRequest(request, savedirectory);
-		
 		
 		MultipartRequest multipartReq = new MultipartRequest(request, getServletContext().getRealPath("/"), "utf-8");
 		String email = multipartReq.getParameter("email");
        
-		//System.out.println("email = " + email);
-
-		
-		
 		
 		// 비지니스 로직 : 
 		Member member = memberService.findByEmail(email); 
-		System.out.println("member = " + member);
-	
-		
-//		
-//		request.setAttribute("member", member);
-//		
-//		String referer = request.getHeader("Referer");
-//		response.sendRedirect(referer);
 		
 		// 헤더 
 		response.setContentType("application/json; charset=utf-8");
-		
-		//Map<String, Object> map = new HashMap<>();
-		// map.put("result", "성공");
-		// map.put("message", "이메일을 통해 아이디 조회 성공");
-		//map.put("member", member);
-		
 		
 		// 바디
 		new Gson().toJson(member, response.getWriter());

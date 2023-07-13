@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
+
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 </head>
 <%
@@ -40,7 +41,7 @@
             
             %>
              	<div class = "ent-button" id="mypage">
-    				<a href=""><img src="<%=request.getContextPath()%>/images/mypageicon.png" alt="mypage-icon" class = "ent-img" id = "btn-mypage"></a>
+    				<a href="<%= request.getContextPath() %>/member/myPage"><img src="<%=request.getContextPath()%>/images/mypageicon.png" alt="mypage-icon" class = "ent-img" id = "btn-mypage"></a>
                     <span>마이페이지</span>
                 </div>
                 

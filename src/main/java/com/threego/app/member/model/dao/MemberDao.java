@@ -13,6 +13,8 @@ import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 public class MemberDao {
 	
 	Properties prop = new Properties();
@@ -36,7 +38,6 @@ public class MemberDao {
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, id);
-			
 			try(ResultSet rset = pstmt.executeQuery()){
 				
 				while(rset.next()) {
@@ -70,6 +71,7 @@ public class MemberDao {
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
 	}
 
+
 	public Member findByEmail(Connection conn, String email) {
 		
 		Member member = null; 
@@ -95,5 +97,63 @@ public class MemberDao {
 	}
 	
 	
+	public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		String sql = prop.getProperty("updateMember");
+		// update member set email = ?, phone = ?, post = ?, address = ? where id = ?
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, member.getEmail());
+			pstmt.setString(2, member.getPhone());
+			pstmt.setString(3, member.getPost());
+			pstmt.setString(4, member.getAddress());
+			pstmt.setString(5, member.getId());
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
+	
+	public int insertMember(Connection conn, Member member) {
+		int result =0;
+		String sql = prop.getProperty("insertMember");
+		//insertMember = insert into member values(?,?,?,?,?,default,?,?,default)
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPwd());
+			pstmt.setString(3, member.getName());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getPost());
+			pstmt.setString(7, member.getAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
 
+	public int updatePwd(Connection conn, String id, String pwd) {
+		int result = 0;
+		String sql = prop.getProperty("updatePwd");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		}
+		
+		
+		
+		return result;
+	}
+	
 }

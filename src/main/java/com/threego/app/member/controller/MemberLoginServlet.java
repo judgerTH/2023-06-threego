@@ -42,6 +42,7 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
+
 			if(member != null && pwd.equals(member.getPwd())) {
 				session.setAttribute("loginMember", member);
 				response.sendRedirect(request.getContextPath());
@@ -51,8 +52,11 @@ public class MemberLoginServlet extends HttpServlet {
 				String referer = request.getHeader("Referer");
 				response.sendRedirect(referer);
 			}
-			
-		
+
+			session.setAttribute("loginMember", member);
+			// 3. 응답처리 
+			response.sendRedirect(request.getContextPath());
+
 	}
 
 }

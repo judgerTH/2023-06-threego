@@ -41,6 +41,7 @@ public class MemberSearchPwdServlet extends HttpServlet {
 		// 아이디, 이메일로 조회했을때 동일하면, 비밀번호 변경 페이지로 이동! 
 		Member member = memberService.findById(id); 
 		// HttpSession session = request.getSession();
+		request.setAttribute("searchedMember", member);
 		if(member!=null && email.equals(member.getEmail())) {
 			// 만약 아이디 비밀번호가 동일하다면 비밀번호 재설정 페이지로 이동해야함! 
 			RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberResetPwd.jsp");
@@ -48,7 +49,6 @@ public class MemberSearchPwdServlet extends HttpServlet {
 			
 		} else {
 			
-			request.setAttribute("searchedMember", member);
 			String referer = request.getHeader("Referer");
 			response.sendRedirect(referer+"error");
 			

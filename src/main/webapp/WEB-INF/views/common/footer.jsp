@@ -7,13 +7,13 @@
 <title>ThreeGo</title>
 </head>
 <body>
-<footer class="footer">
-    <div class="footer-container">
-        <div class="row">
-            <div class="col-2 jalnan green-color fs-3">
+<footer class="footer1">
+    <div class="footerContainer">
+        <div class="footerRow">
+            <div class="footerImg">
                 <img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="ThreeGo logo" style = "width : 100px; height: 100px; margin : 0 20px;"/>
             </div>
-            <div class="col d-none d-sm-block">
+            <div class="footerInfo">
                 대표 : 황대호 ｜ 사업자등록번호  : 000-00-00000 ｜ 통신판매업 신고번호 : 제 2022-울산남구-0449호
                 <br />
                 주소 : 서울시 강남구 역삼동 테헤란로 130, KH정보교육원 501호
