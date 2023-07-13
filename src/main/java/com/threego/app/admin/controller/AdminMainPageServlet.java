@@ -37,6 +37,18 @@ public class AdminMainPageServlet extends HttpServlet {
 		int todayPayment = adminService.getTodayPayment();
 		request.setAttribute("todayPayment", todayPayment);
 		
+		// 어제 매출
+		int yesterdayPayment = adminService.getYesterdayPayment();
+		request.setAttribute("yesterdayPayment", yesterdayPayment);
+		
+		// 2일전 매출
+		int twoDayAgoPayment = adminService.getTwoDayAgoPayment();
+		request.setAttribute("twoDayAgoPayment", twoDayAgoPayment);
+		
+		// 3일전 매출
+		int threeDayAgoPayment = adminService.getThreeDayAgoPayment();
+		request.setAttribute("threeDayAgoPayment", threeDayAgoPayment);
+		
 		// 오늘 방문자 수
     	int todayCount = adminService.getVisitTodayCount();
     	

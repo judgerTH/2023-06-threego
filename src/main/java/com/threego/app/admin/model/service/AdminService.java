@@ -1,11 +1,12 @@
 package com.threego.app.admin.model.service;
 
-import static com.threego.app.common.util.JdbcTemplate.close;
-import static com.threego.app.common.util.JdbcTemplate.getConnection;
+import static com.threego.app.common.util.JdbcTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.threego.app.admin.model.dao.AdminDao;
+import com.threego.app.member.model.vo.Member;
 
 public class AdminService {
 
@@ -64,6 +65,57 @@ public class AdminService {
 		int todayPayment = adminDao.getTodayPayment(conn);
 		close(conn);
 		return todayPayment;
+	}
+
+	public int getYesterdayPayment() {
+		Connection conn = getConnection();
+		int yesterdayPayment = adminDao.getYesterdayPayment(conn);
+		close(conn);
+		return yesterdayPayment;
+	}
+
+	public int getTwoDayAgoPayment() {
+		Connection conn = getConnection();
+		int twoDayAgoPayment = adminDao.getTwoDayAgoPayment(conn);
+		close(conn);
+		return twoDayAgoPayment;
+	}
+
+	public int getThreeDayAgoPayment() {
+		Connection conn = getConnection();
+		int threeDayAgoPayment = adminDao.getThreeDayAgoPayment(conn);
+		close(conn);
+		return threeDayAgoPayment;
+	}
+
+	public List<Member> findAll(int start, int end) {
+		Connection conn = getConnection();
+		List<Member> members = adminDao.findAll(conn, start, end);
+		close(conn);
+		return members;
+	}
+
+	public int getTotalMember() {
+		Connection conn = getConnection();
+		int totalMember = adminDao.getTotalMember(conn);
+		close(conn);
+		return totalMember;
+	}
+
+	public int memberDelete(String id) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.memberDelete(conn, id);
+			commit(conn);
+		}catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);
+		}
+		return result;
+	
 	}
 
 	

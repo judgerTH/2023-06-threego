@@ -1,7 +1,14 @@
+<%@page import="com.threego.app.member.model.vo.Member"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+<%
+	List<Member> members = (List<Member>) request.getAttribute("members");
+	String msg = (String) session.getAttribute("msg");
+	if(msg != null) session.removeAttribute("msg"); // 1회용
+%>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
@@ -10,6 +17,10 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/report.css" />
     <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
     <title>ReportList</title>
+    <style>
+    div#pagebar{margin-top:10px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1300px;}
+	div#pagebar a{margin-right: 5px; color: green; font-size: 20px}
+    </style>
 </head>
 <body>
     <section>
@@ -132,27 +143,93 @@
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 150px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px">
                 <div class="card-header" id="todayIssueHeader">
                 회원목록
+                <input id="findById" placeholder="아이디 검색" style="float:right;">
+	  			<input id="findByName" style="float:right" placeholder="이름 검색">
                 </div>
                 <div class="card-body" id="todayIssueBody">
                     <table>
-                        <th style="width: 150px;">ID</th>
-                        <th style="width: 100px;">이름</th>
-                        <th>이메일</th>
-                        <th style="width: 180px;">H/P</th>
-                        <th style="width: 100px;">Role</th>
-                        <th style="width: 100px;">우편번호</th>
-                        <th style="width: 300px;">주소</th>
-                        <tr>
-
-                        </tr>
+                    	<thead>
+                    		<tr>
+		                        <th style="width: 150px;">ID</th>
+		                        <th style="width: 100px;">이름</th>
+		                        <th>이메일</th>
+		                        <th style="width: 180px;">H/P</th>
+		                        <th style="width: 100px;">Role</th>
+		                        <th style="width: 100px;">우편번호</th>
+		                        <th style="width: 300px;">주소</th>  
+		                        <th>가입일</th>         
+		                        <th>탈퇴</th>         	                    		
+                    		</tr>
+                    	</thead>
+                        <tbody>
+                        	<%
+                        		if(members != null && !members.isEmpty()) {
+	            					for(Member member : members){	
+                        	%>
+                        	<tr>
+                        		<td><%= member.getId() %></td>
+                        		<td><%= member.getName() %></td>
+                        		<td><%= member.getEmail() %></td>
+                        		<td><%= member.getPhone() %></td>
+                        		<td><%= member.getMemberRole() %></td>
+                        		<td><%= member.getPost() %></td>
+                        		<td><%= member.getAddress() %></td>
+                        		<td><%= member.getRegDate() %></td>
+                        		<td><button 
+                        				id="memberDelete" 
+                        				value="<%= member.getId() %>">강퇴
+                        			</button>
+                        		</td>
+							</tr>
+							<%
+	            					}
+                        		}
+                        		else {
+							%>
+							<tr>
+								<td>조회된 게시글이 없습니다.</td>
+							</tr>
+							<% } %>
+                        </tbody>
                     </table>
                 </div>
             </div>
+	        <div id='pagebar' style="margin-left: 330px">
+				<%= request.getAttribute("pagebar") %>
+			</div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
+    
+    <form 
+	    action="<%= request.getContextPath() %>/admin/memberDelete" 
+	    name="memberDeleteFrm" 
+	    method="POST">
+    	<input type="hidden" name="id" value = "">
+    </form>
+    
+    <script>    	
+    <% 	if(msg != null) { %>
+		alert('<%= msg %>');
+	<% 	} %>	
+    
+    document.querySelectorAll("#memberDelete").forEach((button) => {
+		button.onclick = (e) => {
+			if(confirm("해당 회원을 삭제하시겠습니까?")){
+				const frm = document.memberDeleteFrm;
+				const value = e.target.value;
+				const hiddenVal = frm.querySelector("input[name='id']");
+				hiddenVal.value = value;
+				frm.submit();
+			}else {
+				return false;
+			}
+		}
+	});
+    </script>
+    
 </body>
 </html>

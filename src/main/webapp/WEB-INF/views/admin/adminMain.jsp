@@ -5,6 +5,9 @@
 	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
 	
 	int todayPayment = (int)request.getAttribute("todayPayment")*5000;
+	int yesterdayPayment = (int)request.getAttribute("yesterdayPayment")*5000;
+	int twoDayAgoPayment = (int)request.getAttribute("twoDayAgoPayment")*5000;
+	int threeDayAgoPayment = (int)request.getAttribute("threeDayAgoPayment")*5000;
 	
 %>
 <html lang="en">
@@ -362,10 +365,10 @@
     function drawChart3() {
         var data = google.visualization.arrayToDataTable([
             ['Day', 'Sales'],
-            ['7월 9일', <%= thisMonthPayment %>],
-            ['7월 10일', <%= thisMonthPayment %>],
-            ['7월 11일', <%= thisMonthPayment %>],
-            ['7월 12일', <%= todayPayment %>]
+            [threeMonth+'/'+threeDay, <%= threeDayAgoPayment %>],
+            [twoMonth+'/'+twoDay, <%= twoDayAgoPayment %>],
+            [yesMonth+'/'+yesDay, <%= yesterdayPayment %>],
+            [todMonth+'/'+todDay, <%= todayPayment %>]
         ]);
 
         var options = {
