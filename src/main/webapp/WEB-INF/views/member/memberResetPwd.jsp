@@ -6,19 +6,95 @@
 <meta charset="UTF-8">
 <title>비밀번호 재설정</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
+<script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 </head>
 <body>
 <div class="search-wrapper">
         <div class="search-subwrapper">
             <h2>비밀번호 재설정</h2>
             <p>비밀번호를 재설정하시기 바랍니다.</p>
-            <form action = "<%=request.getContextPath()%>/member/MemberResetPwd" method= "POST">
+            <form name = "resetPwdFrm" action = "<%=request.getContextPath()%>/member/memberResetPwd" method = "POST" >
+            <p id = "userPwdAlert"></p>
             <input type="password" class= "search-input" name="reset-pwd" id="reset-pwd" placeholder="재설정 비밀번호">
-            <input type="password" class= "search-input" name="reset-pwd-confirm" id="reset-pwd-confirm">
-            <button id="btn-searchId">비밀번호 재설정</button>
+            <input type="password" class= "search-input" name="reset-pwd-confirm" id="reset-pwd-confirm" placeholder="재설정 비밀번호 확인">
+            <button id="btn-searchId" type = "submit">비밀번호 재설정</button>
             </form>
         </div>
 </div>
 
 </body>
+<script>
+	
+//비밀번호 실시간 유효성검사
+$("#reset-pwd").on("input", function() {
+  const pwd = $(this).val();
+  const pwdCheck = $("#reset-pwd-confirm").val(); // 비밀번호 확인 값 가져오기
+  const $userPwdAlert = $("#userPwdAlert");
+  
+  if (!pwReg.test(pwd)) {
+    $userPwdAlert
+      .text("비밀번호는 영문자 6~20자, 1개의 숫자와 특수문자 ! @ 중 하나를 포함해야 합니다.")
+      .css("color", "red");
+    return false;
+    
+  } else {
+      $userPwdAlert
+      .text("입력한 비밀번호는 사용가능합니다.")
+       .css("color", "blue");
+    // 정규식에 맞을 때
+      $("#reset-pwd-confirm").on("input", function() {
+          // const pwd = $("#pwd").val();
+          const pwdCheck = $(this).val(); // 변경된 비밀번호 확인 값 가져오기
+          // const $userPwdAlert = $("#userPwdAlert");
+
+          if (pwd !== pwdCheck) {
+            $userPwdAlert
+              .text("입력한 비밀번호가 일치하지 않습니다.")
+              .css("color", "red");
+           	return false;
+            
+          } else {
+            $userPwdAlert
+              .text("사용 가능한 비밀번호입니다.")
+              .css("color", "blue");
+          }
+        });
+  }
+});
+
+document.resetPwdFrm.onsubmit = (e) => {
+  
+  	const pwd = $("#reset-pwd").val();
+  	const pwdCheck = $("#reset-pwd-confirm").val();
+  	const pwReg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!])[a-zA-Z\d@!]{6,20}$/;			
+  
+  	if(!pwReg.test(pwd)){
+  		alert("비밀번호는 영문자 6~20자, 1개의 숫자와 특수문자 ! @ 중 하나를 포함해야 합니다.");
+  		e.preventDefault();
+  		return false;
+  	}
+  
+	if (!pwReg.test(pwd) || pwd !== pwdCheck) {
+	   alert("비밀번호가 일치하지 않습니다!")
+	   e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+	   return false;
+	}
+	
+	e.target.submit();
+		
+};
+
+
+	
+	
+	
+	
+	
+
+
+
+
+
+
+</script>
 </html>

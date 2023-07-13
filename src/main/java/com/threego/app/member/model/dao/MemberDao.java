@@ -69,6 +69,30 @@ public class MemberDao {
 	 
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
 	}
+
+	public Member findByEmail(Connection conn, String email) {
+		
+		Member member = null; 
+		String sql = prop.getProperty("findByEmail");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+		
+			pstmt.setString(1, email);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+				
+				while(rset.next()) {
+					
+					member = handleMemberResultSet(rset);
+				}
+			}
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		
+		}
+		return member;
+	}
 	
 	
 

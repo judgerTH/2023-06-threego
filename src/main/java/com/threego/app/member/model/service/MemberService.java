@@ -19,4 +19,13 @@ public class MemberService {
 		return member;
 	}
 
+	public Member findByEmail(String email) {
+		Connection conn = getConnection();
+		Member member = memberDao.findByEmail(conn, email);
+		close(conn);
+		
+		return member;
+	}
+
+	
 }
