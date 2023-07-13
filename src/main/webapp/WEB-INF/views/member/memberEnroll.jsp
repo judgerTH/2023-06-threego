@@ -835,6 +835,7 @@ document.memberEnrollFrm.onsubmit = (e) => {
 		//	e.target.reset(); // 폼 초기화
 		//}
 		
+		
 	});
 	 // 동기적 폼제출 방지
 e.preventDefault(); 
