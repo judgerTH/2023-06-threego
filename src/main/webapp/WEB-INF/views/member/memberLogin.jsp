@@ -8,6 +8,22 @@
 <title>loginMember</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
 </head>
+<%
+	String msg = (String)session.getAttribute("msg");
+	if(msg != null) session.removeAttribute("msg");
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	System.out.println(msg);
+	
+%>
+<script>
+window.onload = () => {
+	<% if(msg != null){ %>
+		alert("<%=msg%>");
+	<% } %>
+}
+
+
+</script>
 
 <body>
 	<div class="main_wrap" id="login_new">
@@ -49,7 +65,7 @@
         </div>
     </div>
 	<form name = "searchIdFrm" action = "<%= request.getContextPath()%>/member/MemberSearchId"></form>
-	<form name = "searchPwdFrm" action = "<%= request.getContextPath()%>/member/MemberSearchPwd"></form>
+	<form name = "searchPwdFrm" action = "<%= request.getContextPath()%>/member/memberSearchPwd"></form>
 </body>
 
 <script>
@@ -75,7 +91,6 @@ const searchPWD = () => {
 	frm.submit();
 	
 }
-document.querySelector()
 
 
 </script>

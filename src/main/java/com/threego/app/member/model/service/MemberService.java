@@ -19,6 +19,16 @@ public class MemberService {
 		return member;
 	}
 
+
+	public Member findByEmail(String email) {
+		Connection conn = getConnection();
+		Member member = memberDao.findByEmail(conn, email);
+		close(conn);
+		
+		return member;
+	}
+
+	
 	public int updateMember(Member member) {
 		int result = 0;
 		Connection conn = getConnection();
@@ -50,5 +60,24 @@ public class MemberService {
 		return result;
 	}
 
+
+	public int updatePwd(String id, String pwd) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = memberDao.updatePwd(conn, id, pwd);
+			commit(conn);
+			
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		
+		}finally {
+			close(conn);
+		}
+		
+		
+		return result;
+	}
 
 }
