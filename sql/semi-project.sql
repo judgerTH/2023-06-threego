@@ -4,8 +4,12 @@ create user threego
 identified by threego
 default tablespace users;
 
-grant connect, resource to test;
-alter user test quota unlimited on users;
+grant connect, resource to threego;
+alter user threego quota unlimited on users;
+
+-- drop user threego cascade;
+
+select * from member;
 
 ---------------------------------------------------------------
 -- drop table member;
@@ -61,10 +65,11 @@ create table board(
     b_cnt	 number default 0,
     constraints pk_board_b_no primary key(b_no),
     constraints fk_board_b_writer foreign key(b_writer) references member(id) on delete cascade,
-    constraints ck_board_b_type check(b_type in ('0', '1', '2', '3'))
+    constraints ck_board_b_type check(b_type in ('N', 'Q'))
+    -- N : 공지사항 Q : 이용문의
 );
  create sequence seq_board_no;
- 
+ --drop table board;
  
 
 create table board_comment(
@@ -97,6 +102,7 @@ create table rider(
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id),
     constraints ck_rider_r_status check (r_status in ('0', '1'))
+    -- 0 승인 대기중 1 승인완료
 );
 
 
@@ -114,6 +120,7 @@ create table request(
     constraints fk_request_location_id foreign key(req_location_id) references location(l_id),
     constraints fk_req_rider foreign key(req_rider) references rider(r_id),
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
+    -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
  create sequence seq_req_no;
 
@@ -144,6 +151,7 @@ constraints pk_warning_w_no primary key(w_no),
 constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no),
 constraints fk_warning_w_id foreign key(w_writer) references member(id),
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
+-- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
  
@@ -206,7 +214,7 @@ insert into location values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
 
-
+update member set phone = '01022223333' where id = 'dbsdk';
 
 select * from member;
 select * from ticket;
@@ -215,3 +223,9 @@ select * from rider;
 select * from request; 
 select * from payment;
     -- commit;
+    
+     insert into member values (
+    'dbsdk', 'dbsdk','김윤아','dbsdk@naver.com','01023231313','U','15242' ,'경기 평택시 고덕 국제3길 403 1603',default
+);   
+
+update member set phone = '01020202939' where id = 'dbsdk';

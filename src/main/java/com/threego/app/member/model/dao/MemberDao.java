@@ -36,7 +36,6 @@ public class MemberDao {
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, id);
-			
 			try(ResultSet rset = pstmt.executeQuery()){
 				
 				while(rset.next()) {
@@ -69,7 +68,25 @@ public class MemberDao {
 	 
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
 	}
-	
+
+	public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		String sql = prop.getProperty("updateMember");
+		// update member set email = ?, phone = ?, post = ?, address = ? where id = ?
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, member.getEmail());
+			pstmt.setString(2, member.getPhone());
+			pstmt.setString(3, member.getPost());
+			pstmt.setString(4, member.getAddress());
+			pstmt.setString(5, member.getId());
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
 	
 
 }
