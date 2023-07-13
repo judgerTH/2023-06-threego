@@ -53,9 +53,7 @@ public class MemberLoginServlet extends HttpServlet {
 				response.sendRedirect(referer);
 			}
 
-			session.setAttribute("loginMember", member);
-			// 3. 응답처리 
-			response.sendRedirect(request.getContextPath());
+			
 
 	}
 
