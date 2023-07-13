@@ -9,7 +9,6 @@ alter user threego quota unlimited on users;
 
 -- drop user threego cascade;
 
-select * from member;
 
 ---------------------------------------------------------------
 -- drop table member;
@@ -31,7 +30,7 @@ create table member(
     constraints uq_member_phone unique(phone),
     constraints uq_member_email unique(email),
     constraints ck_member_role check (member_role in ('A', 'R', 'U'))
-        );
+);
 
 
 create table ticket(
@@ -49,8 +48,8 @@ create table payment(
     p_cnt number, 
     p_use_cnt number,
     constraint  pk_payment_p_no primary key(p_no),
-    constraints fk_payment_mem_id foreign key(p_mem_id) references member (id),
-    constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) 
+    constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
+    constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
 
@@ -81,7 +80,7 @@ create table board_comment(
     c_reg_date date default sysdate,
     constraints pk_board_comment_c_no primary key(c_no),
     constraints fk_board_comment_c_writer foreign key(c_writer) references member(id) on delete cascade,
-    constraints fk_board_comment_c_ref foreign key(c_board_no) references board( b_no) on delete cascade
+    constraints fk_board_comment_c_ref foreign key(c_board_no) references board(b_no) on delete cascade
 );
  create sequence seq_c_no;
 
@@ -100,7 +99,7 @@ create table rider(
     up_date	date default null,
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
-    constraints fk_rider_location_id foreign key(r_location_id) references location(l_id),
+    constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
     constraints ck_rider_r_status check (r_status in ('0', '1'))
     -- 0 승인 대기중 1 승인완료
 );
@@ -116,9 +115,9 @@ create table request(
     req_rider varchar2(30) , 
     req_cp_date date default null,
     constraints pk_request_req_no primary key(req_no),
-    constraints fk_request_id foreign key(req_writer) references member(id), 
-    constraints fk_request_location_id foreign key(req_location_id) references location(l_id),
-    constraints fk_req_rider foreign key(req_rider) references rider(r_id),
+    constraints fk_request_id foreign key(req_writer) references member(id) on delete cascade, 
+    constraints fk_request_location_id foreign key(req_location_id) references location(l_id) on delete cascade,
+    constraints fk_req_rider foreign key(req_rider) references rider(r_id) on delete cascade,
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
@@ -134,9 +133,7 @@ del_phone char(11)	not null,
 del_role	 char(1),	
 del_address 	varchar2(400)	not null,
 del_reg_date date,	
-del_date date,	
-constraints pk_del_member_del_id primary key(del_id),
-constraints fk_del_member_del_id foreign key(del_id) references member(id)
+del_date date
 );
 
 create table warning(
@@ -148,8 +145,8 @@ w_reg_date date default sysdate,
 w_confirm number default 0, 
 w_caution varchar2(4000),
 constraints pk_warning_w_no primary key(w_no),
-constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no),
-constraints fk_warning_w_id foreign key(w_writer) references member(id),
+constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no) on delete cascade,
+constraints fk_warning_w_id foreign key(w_writer) references member(id) on delete cascade,
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
@@ -214,7 +211,7 @@ insert into location values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
 
-update member set phone = '01022223333' where id = 'dbsdk';
+delete from member where id = 'eogh';
 
 select * from member;
 select * from ticket;
@@ -222,10 +219,6 @@ select * from location;
 select * from rider;
 select * from request; 
 select * from payment;
+select * from del_member;
     -- commit;
-    
-     insert into member values (
-    'dbsdk', 'dbsdk','김윤아','dbsdk@naver.com','01023231313','U','15242' ,'경기 평택시 고덕 국제3길 403 1603',default
-);   
 
-update member set phone = '01020202939' where id = 'dbsdk';
