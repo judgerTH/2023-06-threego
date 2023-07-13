@@ -12,7 +12,7 @@ main{display : flex; flex-direction: column; justify-content: center; align-item
 main img{width: 100vw; height: 500px;}
 #btn-container{display: flex; flex-direction: row; justify-content: center;}
 .btn-main{margin: 30px 100px; padding : 20px 50px; border-radius: 5px; border : none; background-color: #49B466; color : white; font-weight: bold; font-size: 20px;}
-.row{display : flex; flex-direction: row; margin : 10px 10px; justify-content: flex-start; align-items : center;}
+.footerRow{display : flex; flex-direction: row; margin : 10px 10px; justify-content: flex-start; align-items : center;}
 
 /* loginFrm css*/
 .sub_div {display: flex; justify-content: center; text-align: center; align-items: center; translate : 0 200px;}
