@@ -1,12 +1,19 @@
+<%@page import="com.threego.app.board.model.vo.Board"%>
+<%@page import="com.threego.app.warning.model.vo.MemberRole"%>
+<%@page import="com.threego.app.warning.model.vo.Warning"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%
 	int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
 	int thisMonthPayment = (int)request.getAttribute("thisMonthPayment")*5000;
 	
 	int todayPayment = (int)request.getAttribute("todayPayment")*5000;
 	
+	List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
+	List<Board> boards = (List<Board>) request.getAttribute("boards");
 %>
+<!DOCTYPE html>
+
 <html lang="en">
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -146,7 +153,9 @@
         <div class="card-header" id="todayIssueHeader">
           오늘의 이슈
           <span class="badge text-bg-secondary" style="background-color: tomato">
-            7
+            <%= (Integer)session.getAttribute("todayCount")  + (Integer)session.getAttribute("todayPaymentCount") +
+            (Integer)session.getAttribute("unapprovedRiderCount") + (Integer)session.getAttribute("canceledRequestCount") +
+            (Integer)session.getAttribute("warningCount") + (Integer)session.getAttribute("countOfBoardWithOutComment") %>
           </span>
         </div>
         <div class="card-body" id="todayIssueBody">
@@ -154,27 +163,27 @@
           &nbsp;
           <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
-          <span>신규신청</span>
+          <span>신규주문</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">1</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("todayPaymentCount") %></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
-          <span>신규 라이더 승인</span>
+          <span>라이더 승인</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">1</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("unapprovedRiderCount") %></span>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <br />
           <br />
-          <span>취소관리</span>
+          <span>수거취소</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">0</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("canceledRequestCount") %></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>신고내역</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">0</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("warningCount") %></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
           <span>답변대기문의</span>
           &nbsp;
-          <span style="color: tomato; font-weight: 600">2</span>
+          <span style="color: tomato; font-weight: 600"><%= session.getAttribute("countOfBoardWithOutComment") %></span>
           &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
       </div>
@@ -184,7 +193,7 @@
         <div class="row row-cols-2">
           <div class="col">
             <div class="card" style="width: 635px;">
-              <div class="card-header">방문자 현황</div>
+              <div class="card-header">가입자/주문 현황</div>
               <div class="card-body">
                 <div id="curve_chart" style="width: 630px; height: 350px"></div>
               </div>
@@ -229,24 +238,21 @@
                     <p style="font-size: 13px;">&nbsp;황대호 | 2023.07.10</p>
                   </div>
                 </div>
+                
+                <% if(boards != null && !boards.isEmpty()) { %>
+                <% 	for(Board board : boards) { %>
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
                   <div class="warning-img">
                     <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
                   </div>
                   <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 분리수거를 따로 해야하나요?</p>
-                    <p style="font-size: 13px;">&nbsp;김윤아 | 2023.07.10</p>
+                    <p style="font-weight: 600;">
+                    [문의사항] <%= board.getBoardTitle()  %></p>
+                    <p style="font-size: 13px;">&nbsp;<%= board.getBoardWriter() %> | <%= board.getBoardRegDate() %></p>
                   </div>
                 </div>
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 아무리 기다려도 수거가 안돼요. 해결해주세요.</p>
-                    <p style="font-size: 13px;">&nbsp;홍승영 | 2023.07.10</p>
-                  </div>
-                </div>
+                	<% } %>
+                <% } %>
               </div>
             </div>
           </div>
@@ -272,6 +278,37 @@
                     <p style="font-size: 13px;">&nbsp;이태현 | 2023.07.10</p>
                   </div>
                 </div>
+                <%
+                  if(warnings != null && !warnings.isEmpty()){ 
+                    for(Warning warning : warnings){
+                %>
+                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
+                  <div class="warning-img">
+                    <img src="<%=request.getContextPath() %>/img/threeGologo.png" style="width: 60px;">
+                  </div>
+                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
+                    <p style="font-weight: 600;">
+                    	<%
+  							String originalText = warning.getWarningContent();
+						    int maxLength = 20;
+						
+						    String truncatedText = originalText;
+						    if (originalText.length() > maxLength) {
+						    	truncatedText = originalText.substring(0, maxLength) + "...";
+						    }
+						%>
+						<% if(warning.getMemberRole()== MemberRole.U) {%>
+							[라이더 신고]
+						<% } else { %>
+							[유저 신고]
+						<% } %>
+						<%= truncatedText %>
+                    </p>
+                    <p style="font-size: 13px;">&nbsp;<%= warning.getWarningWriter() %> | <%= warning.getWarningRegDate() %></p>
+                  </div>
+                </div>
+                	<% } %>
+                <% } %>
               </div>
             </div>
           </div>
@@ -318,10 +355,10 @@
     function drawChart1() {
 	    var data = google.visualization.arrayToDataTable([
 	        ['Date', '가입수', '주문수'],
-	        [threeMonth+'/'+threeDay,  <%= session.getAttribute("threeDayAgoCount")%>,      13],
-	        [twoMonth+'/'+twoDay,  <%= session.getAttribute("twoDayAgoCount")%>,      14],
-	        [yesMonth+'/'+yesDay,  <%= session.getAttribute("yesterdayCount")%>,      10],
-	        [todMonth+'/'+todDay,  <%= session.getAttribute("todayCount")%>,      21]
+	        [threeMonth+'/'+threeDay,  <%= session.getAttribute("threeDayAgoCount")%>,      <%= session.getAttribute("threeDayAgoPaymentCount")%>],
+	        [twoMonth+'/'+twoDay,  <%= session.getAttribute("twoDayAgoCount")%>,      <%= session.getAttribute("twoDayAgoPaymentCount")%>],
+	        [yesMonth+'/'+yesDay,  <%= session.getAttribute("yesterdayCount")%>,      <%= session.getAttribute("yesterdayPaymentCount")%>],
+	        [todMonth+'/'+todDay,  <%= session.getAttribute("todayCount")%>,      <%= session.getAttribute("todayPaymentCount")%>]
 	    ]);
 	
 	    var options = {

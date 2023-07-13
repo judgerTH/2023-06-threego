@@ -3,12 +3,19 @@ package com.threego.app.admin.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.threego.app.admin.model.exception.AdminException;
+import com.threego.app.board.model.vo.Board;
+import com.threego.app.board.model.vo.BoardType;
+import com.threego.app.warning.model.vo.MemberRole;
+import com.threego.app.warning.model.vo.Warning;
 
 
 public class AdminDao {
@@ -40,17 +47,6 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return todayCount;
-	}
-	
-	// 방문자수 증가시키기
-	public void setVisitTotalCount(Connection conn) {
-		String sql = prop.getProperty("setVisitTotalCount"); // select count(*) from board
-	
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			 pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new AdminException(e);
-		}
 	}
 
 	// 어제 방문자수 db에서 받아오기
@@ -144,6 +140,203 @@ private Properties prop = new Properties();
 			throw new AdminException(e);
 		}
 		return todayPayment;
+	}
+
+	public int getTodayPaymentCount(Connection conn) {
+		int paymentCount = 0;
+		String sql = prop.getProperty("getTodayPaymentCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					paymentCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return paymentCount;
+	}
+
+	public int getYesterdayPaymentCount(Connection conn) {
+		int paymentCount = 0;
+		String sql = prop.getProperty("getYesterdayPaymentCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					paymentCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return paymentCount;
+	}
+
+	public int getTwoDayAgoPaymentCount(Connection conn) {
+		int paymentCount = 0;
+		String sql = prop.getProperty("getTwoDayAgoPaymentCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					paymentCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return paymentCount;
+	}
+
+	public int getThreeDayAgoPaymentCount(Connection conn) {
+		int paymentCount = 0;
+		String sql = prop.getProperty("getThreeDayAgoPaymentCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					paymentCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return paymentCount;
+	}
+
+	public int getUnapprovedRiderCount(Connection conn) {
+		int unapprovedRiderCount = 0;
+		String sql = prop.getProperty("getUnapprovedRiderCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					unapprovedRiderCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return unapprovedRiderCount;
+	}
+
+	public int getCanceledRequestCount(Connection conn) {
+		int canceledRequestCount = 0;
+		String sql = prop.getProperty("getCanceledRequestCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					canceledRequestCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return canceledRequestCount;
+	}
+
+	public int getWarningCount(Connection conn) {
+		int warningCount = 0;
+		String sql = prop.getProperty("getWarningCount");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					warningCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return warningCount;
+	}
+
+	public int getCountOfBoardWithOutComment(Connection conn) {
+		int countOfBoardWithOutComment = 0;
+		String sql = prop.getProperty("getCountOfBoardWithOutComment");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next())
+					countOfBoardWithOutComment = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return countOfBoardWithOutComment;
+	}
+
+	// 모든 신고내역 조회
+	public List<Warning> findAllReports(Connection conn) {
+		List<Warning> warnings = new ArrayList<>();
+		String sql = prop.getProperty("findAllReports");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Warning warning = handleReportResultSet(rset);
+					warnings.add(warning);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return warnings;
+	}
+
+	private Warning handleReportResultSet(ResultSet rset) throws SQLException{
+		int warningNo = rset.getInt("w_no");
+		int warningReqNo = rset.getInt("w_req_no");
+		String warningWriter = rset.getString("w_writer");
+		String warningContent = rset.getString("w_content");
+		Date warningRegDate = rset.getDate("w_reg_date");
+		int warningConfirm = rset.getInt("w_confirm");
+		String warningCaution = rset.getString("w_confirm");
+		MemberRole memberRole = MemberRole.valueOf(rset.getString("member_role"));
+		
+		return new Warning(warningNo, warningReqNo, warningWriter, warningContent, warningRegDate, warningConfirm, warningCaution, memberRole);
+	}
+
+	public List<Warning> findSixReports(Connection conn) {
+		List<Warning> warnings = new ArrayList<>();
+		String sql = prop.getProperty("findAllReportsOnlySix");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Warning warning = handleReportResultSet(rset);
+					warnings.add(warning);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return warnings;
+	}
+
+	public List<Board> findSixBoards(Connection conn) {
+		List<Board> boards = new ArrayList<>();
+		String sql = prop.getProperty("findSixBoards");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Board board = handleBoardResultSet(rset);
+					boards.add(board);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return boards;
+	}
+
+	private Board handleBoardResultSet(ResultSet rset) throws SQLException {
+		int boardNo = rset.getInt("b_no");
+		BoardType boardType = BoardType.valueOf(rset.getString("b_type"));
+		String boardTitle = rset.getString("b_tittle");
+		String boardWriter = rset.getString("b_writer");
+		String boardContent = rset.getString("b_content");
+		Date boardRegDate = rset.getDate("b_reg_date");
+		int boardCnt = rset.getInt("b_cnt");
+		
+		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
 	}
 
 	
