@@ -27,11 +27,16 @@ public class InsertPaymentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 // 파라미터 값 가져오기
         String memberId = request.getParameter("memberId");
-        String ticketId = request.getParameter("ticketId");
+        String _ticketId = request.getParameter("ticketId");
+        String ticketId = "tic" + _ticketId;
+        
         int purchaseCount = Integer.parseInt(request.getParameter("purchaseCount"));
-
+        
+        
+        System.out.println("tt:" + ticketId + "mI" + memberId + "tc" + purchaseCount);
+        
         int result = paymentService.insertPayment(memberId, ticketId, purchaseCount);
-
+        System.out.println(result);
         // 수거신청 등 다른 동작 수행
 
         // 응답 처리 등
@@ -44,10 +49,9 @@ public class InsertPaymentServlet extends HttpServlet {
         Gson gson = new Gson();
 
         // 맵을 JSON 데이터로 변환
-        String json = gson.toJson(map);
+        gson.toJson(map, response.getWriter());
 
-        // JSON 데이터 출력
-        System.out.println(json); // 예시: 성공 페이지로 리다이렉트
+        
 	}
 
 }

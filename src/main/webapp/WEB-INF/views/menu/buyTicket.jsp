@@ -243,8 +243,10 @@ input:not(#address), input[type="file"] {
 		    	    purchaseCount: purchaseCount
 		    	  },
 		    	  success(responseText) {
-		    	    const result = responseText;
+		    		  console.log(responseText);
+		    	    const {result} = responseText;
 		    	    alert(result);
+		    	    
 		    	    document.getElementById("buyFrm").style.display = "none";
 		    	    btn3.style.display = "none";
 		    	    btn4.style.display = "block";
