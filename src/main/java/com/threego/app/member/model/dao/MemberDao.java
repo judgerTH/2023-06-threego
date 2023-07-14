@@ -155,5 +155,18 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public int findByPhone(Connection conn, String phone) {
+		int result =0;
+		String sql =prop.getProperty("findByPhone");
+		// findByPhone = select count(*) from member where phone = ?
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, phone);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
 	
 }

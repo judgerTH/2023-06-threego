@@ -80,4 +80,18 @@ public class MemberService {
 		return result;
 	}
 
+
+
+
+	public int findByPhone(String phone) {
+		int result =0;
+		Connection conn = getConnection();
+		
+		result=memberDao.findByPhone(conn,phone);
+		close(conn);	
+		
+		
+		return result;
+	}
+
 }
