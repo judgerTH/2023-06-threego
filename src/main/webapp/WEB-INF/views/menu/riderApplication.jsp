@@ -61,6 +61,7 @@ p {
 	margin-right: auto;
 	margin-left: auto;
 	height: auto; /* Adjust the height as needed */
+	padding-bottom: 6rem;
 }
 
 .rider-info-boxes { -
@@ -218,7 +219,7 @@ width: 400px;
 						<%if(loginMember != null){%>
 						
 						<td> 
-						<input type="text" name="id" id="userId" value="<%= loginMember.getId() %>"></td><%}%>
+						<input type="text" name="id" id="userId" value="<%= loginMember.getId() %>" disabled required></td><%}%>
 					</tr>
 					<tr>
 						<th>수거지역 <span>*</span>
@@ -231,10 +232,11 @@ width: 400px;
 						</select></td>
 					</tr>
 					<tr>
-						<th>약관 동의 및 근로계약서</th>
+						<th> 근로계약서</th>
 						<td>
+						<img src="<%= request.getContextPath() %>/images/pdf.png" alt="" style="width:16px;" />
 						<a href="<%=request.getContextPath() %>/upload/쓰리고근로계약서.pdf" download>근로계약서 다운로드</a>
-						<br>근로계약서 파일은 다운로드 후 꼭 읽어보시고 서명 후 제출 부탁드립니다.
+						<br><div id="gunroinfo" style="font-size: 12px;">근로계약서 파일은 다운로드 후 확인 및 서명기입 후 제출 부탁드립니다.</div>
 						</td>
 					</tr>
 					<tr>
@@ -257,9 +259,14 @@ width: 400px;
 </div>
 </body>
 <script>
+
+
 application.onclick=(e)=>{
+	<%if(loginMember == null) {%>
+	alert("로그인 후 이용 가능합니다."); <%}else{%>
 	document.querySelector("#beforeContent").style.display="none";
 	document.querySelector("#afterContent").style.display="block";
+	<%}%>
 }
 document.memberUpdateFrm.onsubmit=(e)=>{
 	
