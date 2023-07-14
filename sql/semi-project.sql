@@ -9,7 +9,9 @@ alter user threego quota unlimited on users;
 
 -- drop user threego cascade;
 
-
+-- select sid, serial#, username,status from v$session where username = 'THREEGO';
+-- alter system kill SESSION '375,47511';
+ 
 ---------------------------------------------------------------
 -- drop table member;
 
@@ -101,7 +103,7 @@ create table rider(
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
     constraints ck_rider_r_status check (r_status in ('0', '1'))
-    -- 0 승인 대기중 1 승인완료
+    -- 0 승인 대기중 1 승인완료 2 승인거부
 );
 
 
@@ -139,7 +141,7 @@ del_date date
 create table warning(
 w_no	 number,		
 w_req_no	number not null,	
-w_writer  varchar2(30)	not null,	
+w_writer  varchar2(30)	not null,	  
 w_content varchar2(4000)	not null,	
 w_reg_date date default sysdate,
 w_confirm number default 0, 
@@ -211,7 +213,7 @@ insert into location values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
 
-delete from member where id = 'eogh';
+--delete from member where id = 'eogh';
 
 select * from member;
 select * from ticket;
