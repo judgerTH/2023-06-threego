@@ -84,6 +84,9 @@ border-collapse: collapse;
 width:300px;
 
 } 
+#wrapper{
+padding-bottom: 6rem;
+}
 </style>
 
 <!-- 콘텐츠 시작 { -->
@@ -684,6 +687,7 @@ NICEPAYMENTS(전자결제 수단 제공, 본인확인)
 </script>
 
 <script>
+
 const userId = $("#userId").val();
 const pwd = $("#pwd").val();
 const pwdCheck = $("#pwdCheck").val();
@@ -704,6 +708,9 @@ const $emailAlert = $("#emailAlert");
 const $phoneAlert = $("#phoneAlert");
 const $userPwdAlert = $("#userPwdAlert");
 
+let isValidId = false;
+let isValidEmail = false;
+let isValidPhone = false;
 //아이디 실시간 유효성검사
 $("#userId").on("input", function() {
 	    const userId = $(this).val();
@@ -711,14 +718,39 @@ $("#userId").on("input", function() {
 
 	    if (!idReg.test(userId)) {
 	      $userIdAlert
-	        .text("아이디는 영소문자로 시작하고 영소문자 및 수자 6~20자만 가능합니다.")
+	        .text("아이디는 영소문자로 시작하고 영소문자 및 숫자 6~20자만 가능합니다.")
 	        .css("color", "red");
 	      return;
-	    } else {
-	      $userIdAlert
-	        .text("사용 가능한 아이디 입니다.")
-	        .css("color", "blue");
-	    }
+	    } else  {
+            // 정규식에 맞다면, ajax로 DB 값과 비교
+            $.ajax({
+              url:"<%= request.getContextPath() %>/member/memberEnrollSearch",
+              data: {userId },
+              method : "POST",
+              success(response) {
+            	  const{result} = response;
+                if (result == "NNNNN") {
+                  // 중복된 아이디 == 사용불가
+                  $userIdAlert
+                    .text("이미 존재하거나 탈퇴한 회원의 아이디입니다.")
+                    .css("color", "red");
+                  isValidId = false;
+                  	return;
+                 	
+                } else {
+                  // 중복되지 않은 아이디 == 사용가능
+					
+                  $userIdAlert
+                    .text("사용 가능한 아이디 입니다.")
+                    .css("color", "blue");
+                  isValidId = true;
+                }
+              },
+              error: function () {
+                console.log("ajax ID 체크 실패");
+              },
+            });
+          }
 	  });
 //비밀번호 실시간 유효성검사
 $("#pwd").on("input", function() {
@@ -750,6 +782,7 @@ $("#pwd").on("input", function() {
 		    $userPwdAlert
 		      .text("사용 가능한 비밀번호입니다.")
 		      .css("color", "blue");
+		    	
 		  }
 		});
   }
@@ -781,10 +814,35 @@ $("#userName").on("input", function() {
 	      .css("color", "red");
 	    return;
 	  } else {
-	    $emailAlert
-	      .text("사용 가능한 이메일 주소입니다.")
-	      .css("color", "blue");
-	  }
+          // 정규식에 맞다면, ajax로 DB 값과 비교
+          $.ajax({
+            url:"<%= request.getContextPath() %>/member/memberEnrollSearch",
+            data: {email },
+            method : "POST",
+            success(response) {
+          	  const{result} = response;
+              if (result == "NNNNN") {
+                // 중복된 이메일 == 사용불가
+                $emailAlert
+                  .text("이미 등록된 이메일입니다.")
+                  .css("color", "red");
+                isValidEmail =false;
+               		 return;
+                ;
+               
+              } else {
+                // 중복되지 않은 이메일 == 사용가능
+                $emailAlert
+                  .text("사용 가능한 이메일 입니다.")
+                  .css("color", "blue");
+                isValidEmail =true;
+              }
+            },
+            error: function () {
+              console.log("ajax email 체크 실패");
+            },
+          });
+        }
 	});
 
 	$("#phone").on("input", function() {
@@ -797,10 +855,34 @@ $("#userName").on("input", function() {
 	      .css("color", "red");
 	    return;
 	  } else {
-	    $phoneAlert
-	      .text("사용 가능한 전화번호입니다.")
-	      .css("color", "blue");
-	  }
+          // 정규식에 맞다면, ajax로 DB 값과 비교
+          $.ajax({
+            url:"<%= request.getContextPath() %>/member/memberEnrollSearch",
+            data: {phone },
+            method : "POST",
+            success(response) {
+          	  const{result} = response;
+              if (result == "NNNNN") {
+                // 중복된 폰 == 사용불가
+                $phoneAlert
+                  .text("이미 등록된 번호입니다.")
+                  .css("color", "red");
+                
+                isValidPhone = false;
+                return;
+              } else {
+                // 중복되지 않은 번호 == 사용가능
+                $phoneAlert
+                  .text("사용 가능한 번호 입니다.")
+                  .css("color", "blue");
+                isValidPhone = true;
+              }
+            },
+            error: function () {
+              console.log("ajax 번호 체크 실패");
+            },
+          });
+        }
 	});
 	  
 
@@ -823,7 +905,8 @@ document.memberEnrollFrm.onsubmit = (e) => {
   	
   		let cnt = 0;
 	  if (!idReg.test(userId)) {
-	    e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
+		  document.getElementById("userId").focus();
+		  e.preventDefault(); // 유효성 검사 실패 시 폼 제출을 막음
 	  }else{
 		  cnt++;
 	  }
@@ -858,9 +941,14 @@ document.memberEnrollFrm.onsubmit = (e) => {
 	  
 	  if (cnt !== 6) {
 		    e.preventDefault();
-		    alert("모든 항목을 기입 후 제출 버튼을 눌러주세요.");
+		    alert("모든 항목을 정확히 기입 후 제출 버튼을 눌러주세요.");
 		    return false;
 		  }
+	  if (!isValidId || !isValidEmail || !isValidPhone) {
+	        e.preventDefault(); // 폼 제출 방지
+	        alert("아이디, 이메일, 휴대폰 중복 검사를 통과해야 합니다."); // 오류 메시지 표시
+	        return false;
+	    }
 	  
 	const frmData = new FormData(e.target);
 	$.ajax({

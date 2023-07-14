@@ -10,7 +10,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '375,47511';
+-- alter system kill SESSION '30,42970';
  
 ---------------------------------------------------------------
 -- drop table member;
@@ -41,7 +41,9 @@ create table ticket(
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
-    );        
+    );       
+    
+    
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -53,8 +55,17 @@ create table payment(
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
+--drop table payment;
  create sequence seq_payment_no;  
 
+select * from payment;
+select * from member;
+
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
  
 create table board(
     b_no number,
@@ -69,9 +80,11 @@ create table board(
     constraints ck_board_b_type check(b_type in ('N', 'Q'))
     -- N : 공지사항 Q : 이용문의
 );
+--drop table board;
  create sequence seq_board_no;
- --drop table board;
+ --drop sequence seq_board_no;
  
+ select * from board;
 
 create table board_comment(
     c_no number,
@@ -84,28 +97,32 @@ create table board_comment(
     constraints fk_board_comment_c_writer foreign key(c_writer) references member(id) on delete cascade,
     constraints fk_board_comment_c_ref foreign key(c_board_no) references board(b_no) on delete cascade
 );
+--drop table board_comment;
  create sequence seq_c_no;
+
+--drop sequence seq_c_no;
 
 create table location(
     l_id varchar2(30),	
     l_name	varchar2(20) not null,
     constraints pk_location_l_no primary key(l_id)
 );
-
+--drop table location;
 
 create table rider(
     r_id varchar2(30),
     r_location_id varchar2(30),
-    r_status char(1),
+    r_status char(1) default '0',
     r_reg_date date default sysdate,
     up_date	date default null,
+    fileName varchar2(500) not null,
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
     constraints ck_rider_r_status check (r_status in ('0', '1'))
     -- 0 승인 대기중 1 승인완료 2 승인거부
 );
-
+--drop table rider;
 
 create table request(
     req_no	number,
@@ -123,8 +140,9 @@ create table request(
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
+--drop table request;
  create sequence seq_req_no;
-
+--drop sequence seq_req_no;
 
 create table del_member(
 
@@ -137,6 +155,7 @@ del_address 	varchar2(400)	not null,
 del_reg_date date,	
 del_date date
 );
+--drop table del_member;
 
 create table warning(
 w_no	 number,		
@@ -152,7 +171,9 @@ constraints fk_warning_w_id foreign key(w_writer) references member(id) on delet
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
+--drop table warning;
 create sequence seq_w_no;
+--drop sequence seq_w_no;
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
@@ -162,6 +183,22 @@ BEGIN
     VALUES (:old.id, :old.pwd, :old.email, :old.phone, :old.member_role, :old.address, :old.reg_date, SYSDATE);
 END;
 /
+--drop trigger trig_member_delete;
+
+create table msgbox(
+    msg_no number, 
+    msg_type varchar2(50) not null, 
+    msg_sender varchar2(30) not null, 
+    msg_receiver varchar2(30) not null, 
+    msg_content varchar2(4000), 
+    constraints pk_msgbox_msg_no primary key(msg_no),
+    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
+);
+--drop table msgbox;
+create sequence seq_msg_no;
+--drop sequence seq_msg_no;
 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
@@ -200,7 +237,7 @@ insert into location values(
 );
 
  insert into rider values (
-    'xogus', 'S2','1', sysdate,sysdate
+    'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
  insert into request values(
@@ -212,7 +249,9 @@ insert into location values(
    insert into request values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
-
+insert into board values(
+    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+);
 --delete from member where id = 'eogh';
 
 select * from member;
@@ -224,11 +263,13 @@ select * from payment;
 select * from del_member;
     -- commit;
 
+
 SELECT sum(p_cnt)
 FROM payment
 WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
+
   
   
 create table msgbox(
@@ -246,3 +287,6 @@ create table msgbox(
 -- drop table msgbox;
 
 select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
+
+update rider set r_status = '0', up_date = null where r_id='sukey'
+

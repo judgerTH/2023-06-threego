@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class PickupTrashServlet
+ * Servlet implementation class BuyTicketServlet
  */
 @WebServlet("/menu/buyTicket")
 public class BuyTicketServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
-		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			req.getRequestDispatcher("/WEB-INF/views/menu/buyTicket.jsp").forward(req, resp);
-		}
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/menu/buyTicket.jsp");
+		reqDispatcher.forward(request, response);
+	}
+
 }
