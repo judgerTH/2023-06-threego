@@ -38,16 +38,23 @@ public class MemberLoginServlet extends HttpServlet {
 			String pwd = request.getParameter("login-pwd");
 		
 		// 2. 업무로직 
-			Member loginMember = memberService.findById(id);
+			Member member = memberService.findById(id);
 			
 			HttpSession session = request.getSession();
 			
+
+			if(member != null && pwd.equals(member.getPwd())) {
+				session.setAttribute("loginMember", member);
+				response.sendRedirect(request.getContextPath());
+				
+			} else {
+				session.setAttribute("msg", "로그인 정보가 일치하지 않습니다. 확인해주세요.");
+				String referer = request.getHeader("Referer");
+				response.sendRedirect(referer);
+			}
+
 			
-			
-			session.setAttribute("loginMember", loginMember);
-			// 3. 응답처리 
-			response.sendRedirect(request.getContextPath());
-		
+
 	}
 
 }

@@ -69,8 +69,10 @@ create table board(
 );
  create sequence seq_board_no;
  --drop table board;
- 
-
+ select * from board;
+insert into board values(
+    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+);
 create table board_comment(
     c_no number,
     c_level number default 1,
@@ -151,6 +153,10 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
+select * from warning;
+insert into warning values (
+    seq_w_no.next
+);
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member

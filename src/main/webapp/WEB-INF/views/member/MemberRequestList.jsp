@@ -143,7 +143,7 @@
                 <h2>마이페이지</h2>
                     <ul>
                         <li ><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList">수거신청 내역</a></li>
+                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList">결제정보</a></li>
                     </ul>        
                 </div>
             </div>
@@ -156,7 +156,7 @@
                             <td>이용권명</td>
                             <td>결제금액</td>
                             <td>결제일</td>
-                            <td>결제상태</td>
+                            <td>잔여 이용권</td>
                         </tr>
                         <tr>
                         <td colspan="7" class="empty_table">주문 내역이 없습니다.</td>

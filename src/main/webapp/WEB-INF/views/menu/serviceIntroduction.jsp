@@ -11,6 +11,7 @@ span { color: #49B466; }
 hr { width: 70%; height: 1px; background-color: #49B466; }
 .row { --bs-gutter-x: 1.5rem; --bs-gutter-y: 0; display: flex; flex-wrap: wrap; margin-top: calc(-1 * var(--bs-gutter-y));  margin-right: 20%; margin-left: 20%; justify-content: space-between!important; }
 .service-img { vertical-align: middle; margin-left: 15%; width: 70vw; height: 450px; }
+.menu-wrapper {padding-top: 3rem; padding-bottom: 6rem;}
 </style>
 <body>
     <!-- 메인메뉴바 / 서비스 소개 페이지-->
