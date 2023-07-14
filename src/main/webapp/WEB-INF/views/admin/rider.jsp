@@ -178,7 +178,10 @@
 			    					<input type="hidden" name="riderId" id="riderId" value="<%= waitingRider.getRiderId()%>">
 			    				</form>
 			                    &nbsp; &nbsp; &nbsp;
-			                    <button class="card-text" id="rejectButton" style="border-style: none; background-color: white;" value="<%= waitingRider.getRiderId()%>"><small class="text-muted">반려</small></button>		                    
+			                    <button class="card-text" id="rejectButton" style="border-style: none; background-color: white;"><small class="text-muted">반려</small></button>		                    
+		                    	<form action="<%= request.getContextPath() %>/admin/riderRefusal" name="riderRefusalFrm" method="post">
+		    						<input type="hidden" name="riderRefusalId" id="riderRefusalId" value="<%= waitingRider.getRiderId()%>">
+		    					</form>
 		                    </div>
 		                  </div>
 		                </div>
@@ -218,9 +221,7 @@
                 </div>
         	</div>
         	
-		    <form action="<%= request.getContextPath() %>/admin/riderRefusal" name="riderRefusalFrm" method="post">
-		    	<input type="hidden" name="riderId" value="">
-		    </form>
+		   
         </section>
         <script>
 	        <% 	if(msg != null) { %>
@@ -257,7 +258,17 @@
         				return false;
         			}
         	};
-        				
+        	
+        	const refusalButton = document.querySelector("#rejectButton");
+        	refusalButton.onclick = () => {
+        		if(confirm('반려하시겠습니까?')) {
+        			const frm = document.riderRefusalFrm;
+        			const hiddenVal = frm.querySelector("#riderRefusalId")
+        			frm.submit();
+        		} else {
+        			return false;
+        		}
+        	}
         	
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

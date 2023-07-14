@@ -538,6 +538,71 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public int sendApprovementMsg(Connection conn, String riderId, String approvementMsg) {
+		int result = 0;
+		String sql = prop.getProperty("sendApprovementMsg");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, riderId);
+			pstmt.setString(2, approvementMsg);
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int updateMemberRole(Connection conn, String riderId) {
+		int result = 0;
+		String sql = prop.getProperty("updateMemberRole");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, riderId);
+			
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int updateRiderStatusTo2(Connection conn, String riderRefusalId) {
+		int result = 0;
+		String sql = prop.getProperty("updateRiderStatusTo2");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, riderRefusalId);
+			
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int sendRefusalMsg(Connection conn, String riderRefusalId, String refusalMsg) {
+		int result = 0;
+		String sql = prop.getProperty("sendRefusalMsg");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, riderRefusalId);
+			pstmt.setString(2, refusalMsg);
+			
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
 	
 	
 }

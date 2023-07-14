@@ -240,5 +240,65 @@ public class AdminService {
 		return result;
 	}
 
+	public int sendApprovementMsg(String riderId, String approvementMsg) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.sendApprovementMsg(conn, riderId, approvementMsg);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
+		return result;
+	}
+
+	public int updateMemberRole(String riderId) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.updateMemberRole(conn, riderId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
+		return result;
+	}
+
+	public int updateRiderStatusTo2(String riderRefusalId) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.updateRiderStatusTo2(conn, riderRefusalId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
+		return result;
+	}
+
+	public int sendRefusalMsg(String riderRefusalId, String refusalMsg) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.sendRefusalMsg(conn, riderRefusalId, refusalMsg);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
+		return result;
+	}
+
 	
 }
