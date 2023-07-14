@@ -8,7 +8,7 @@ import java.util.List;
 import com.threego.app.admin.model.dao.AdminDao;
 
 import com.threego.app.member.model.vo.Member;
-
+import com.threego.app.rider.model.vo.Rider;
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.warning.model.vo.Warning;
 
@@ -17,31 +17,34 @@ public class AdminService {
 
 	private final AdminDao adminDao = new AdminDao();
 
-	// 오늘 방문자수 서비스
-	public int getVisitTodayCount() {
+	// 오늘 가입자수
+	public int getSignUpTodayCount() {
 		Connection conn = getConnection();
-		int todayCount = adminDao.getVisitTodayCount(conn);
+		int todayCount = adminDao.getSignUpTodayCount(conn);
 		close(conn);
 		return todayCount;
 	}
 
-	public int getVisitYesterdayCount() {
+	// 어제 가입자수
+	public int getSignUpYesterdayCount() {
 		Connection conn = getConnection();
-		int yesterdayCount = adminDao.getVisitYesterdayCount(conn);
+		int yesterdayCount = adminDao.getSignUpYesterdayCount(conn);
 		close(conn);
 		return yesterdayCount;
 	}
 
-	public int getVisitTwoDayAgoCount() {
+	// 그제 가입자 수
+	public int getSignUpTwoDayAgoCount() {
 		Connection conn = getConnection();
-		int twoDayAgoCount = adminDao.getVisitTwoDayAgoCount(conn);
+		int twoDayAgoCount = adminDao.getSignUpTwoDayAgoCount(conn);
 		close(conn);
 		return twoDayAgoCount;
 	}
 
-	public int getVisitThreeDayAgoCount() {
+	// 3일전 가입자 수
+	public int getSignUpThreeDayAgoCount() {
 		Connection conn = getConnection();
-		int threeDayAgoCount = adminDao.getVisitThreeDayAgoCount(conn);
+		int threeDayAgoCount = adminDao.getSignUpThreeDayAgoCount(conn);
 		close(conn);
 		return threeDayAgoCount;
 	}
@@ -182,7 +185,7 @@ public class AdminService {
 		return warnings;
 	}
 
-	// 신고내역 최신순 6개
+	// 관리자 메인화면 - 신고내역 최신순 6개
 	public List<Warning> findSixReports() {
 		Connection conn = getConnection();
 		List<Warning> warnings = adminDao.findSixReports(conn);
@@ -190,7 +193,7 @@ public class AdminService {
 		return warnings;
 	}
 
-	// 문의사항 최신순 6개
+	// 관리자 메인화면 - 문의사항 최신순 6개
 	public List<Board> findSixBoards() {
 		Connection conn = getConnection();
 		List<Board> boards = adminDao.findSixBoards(conn);
@@ -211,6 +214,28 @@ public class AdminService {
 		List<Member> members = adminDao.findByName(conn, memberName);
 		close(conn);
 		return members;
+	}
+	// 문의사항 받아오기
+	public List<Board> getInquiryBoard(int start, int end) {
+		Connection conn = getConnection();
+		List<Board> boards = adminDao.getInquiryBoard(conn, start, end);
+		close(conn);
+		return boards;
+	}
+	
+	// 라이더 받아오기
+	public List<Rider> getAllRiderList() {
+		Connection conn = getConnection();
+		List<Rider> riders = adminDao.getAllRiderList(conn);
+		close(conn);
+		return riders;
+	}
+
+	public List<Rider> getApproveRiderList() {
+		Connection conn = getConnection();
+		List<Rider> waitingRiders = adminDao.getApproveRiderList(conn);
+		close(conn);
+		return waitingRiders;
 	}
 
 	

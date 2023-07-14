@@ -56,18 +56,18 @@ public class AdminMainPageServlet extends HttpServlet {
 		int threeDayAgoPayment = adminService.getThreeDayAgoPayment();
 		request.setAttribute("threeDayAgoPayment", threeDayAgoPayment);
 		
-		// 오늘 방문자 수
-		// 오늘 방문자 수 - 유성근
-    	int todayCount = adminService.getVisitTodayCount();
+		
+		// 오늘 가입자 수 - 유성근
+    	int todayCount = adminService.getSignUpTodayCount();
     	
-    	// 어제 방문자 수 - 유성근
-    	int yesterdayCount = adminService.getVisitYesterdayCount();
+    	// 어제 가입자 수 - 유성근
+    	int yesterdayCount = adminService.getSignUpYesterdayCount();
     	
-    	// 그제 방문자 수 - 유성근
-    	int twoDayAgoCount = adminService.getVisitTwoDayAgoCount();
+    	// 그제 가입자 수 - 유성근
+    	int twoDayAgoCount = adminService.getSignUpTwoDayAgoCount();
     	
-    	// 3일전 방문자 수 - 유성근
-    	int threeDayAgoCount = adminService.getVisitThreeDayAgoCount();
+    	// 3일전 가입자 수 - 유성근
+    	int threeDayAgoCount = adminService.getSignUpThreeDayAgoCount();
     	
     	// 오늘 주문수 - 유성근
     	int todayPaymentCount = adminService.getTodayPaymentCount();

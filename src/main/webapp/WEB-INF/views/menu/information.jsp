@@ -29,6 +29,7 @@ p { letter-spacing: -1px; padding-top: 6px; font-size: 1rem !important; word-bre
 .info-bg-box3 { background-image: url(../images/information3.png); background-size: 65%; background-position: center bottom; }
 .info-bg-box4 { background-image: url(../images/information4.png); background-size: 80%; background-position: center bottom; }
 .info-bg-box5 { background-image: url(../images/information5.png); background-size: 90%; background-position: left bottom; }
+.container {padding-top: 3rem; padding-bottom: 6rem;}
     </style>
 </head>
 <body>

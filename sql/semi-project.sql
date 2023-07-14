@@ -9,7 +9,9 @@ alter user threego quota unlimited on users;
 
 -- drop user threego cascade;
 
-
+-- select sid, serial#, username,status from v$session where username = 'THREEGO';
+-- alter system kill SESSION '375,47511';
+ 
 ---------------------------------------------------------------
 -- drop table member;
 
@@ -40,6 +42,7 @@ create table ticket(
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );        
+    
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -52,7 +55,12 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-
+select * from payment;
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
  
 create table board(
     b_no number,
@@ -69,8 +77,10 @@ create table board(
 );
  create sequence seq_board_no;
  --drop table board;
- 
-
+ select * from board;
+insert into board values(
+    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+);
 create table board_comment(
     c_no number,
     c_level number default 1,
@@ -101,7 +111,7 @@ create table rider(
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
     constraints ck_rider_r_status check (r_status in ('0', '1'))
-    -- 0 승인 대기중 1 승인완료
+    -- 0 승인 대기중 1 승인완료 2 승인거부
 );
 
 
@@ -139,7 +149,7 @@ del_date date
 create table warning(
 w_no	 number,		
 w_req_no	number not null,	
-w_writer  varchar2(30)	not null,	
+w_writer  varchar2(30)	not null,	  
 w_content varchar2(4000)	not null,	
 w_reg_date date default sysdate,
 w_confirm number default 0, 
@@ -151,6 +161,10 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
+select * from warning;
+insert into warning values (
+    seq_w_no.next
+);
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
@@ -217,7 +231,7 @@ insert into location values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
 
-delete from member where id = 'eogh';
+--delete from member where id = 'eogh';
 
 select * from member;
 select * from ticket;
