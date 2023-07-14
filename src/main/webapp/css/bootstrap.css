@@ -11299,3 +11299,5 @@ a {
 }
 
 .memberManagement, .qanda, .reportManagement, .showMeTheMoney{padding-left: 25px; padding-top: 10px;}
+
+#approveButton, #rejectButton {border-style: none; background-color: white;}

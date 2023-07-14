@@ -7,6 +7,8 @@
 <%
 	List<Rider> riders = (List<Rider>) request.getAttribute("riders");
 	List<Rider> waitingRiders = (List<Rider>) request.getAttribute("waitingRiders");
+	String msg = (String) session.getAttribute("msg");
+	if(msg != null) session.removeAttribute("msg"); // 1회용
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +149,7 @@
         <section>
 	        <div class="buttonBox" style="margin-top:50px; margin-left:330px;">
     	        <button type="button" class="btn btn-primary" id="lookUpRider">라이더 조회</button>
-    	        <button type="button" class="btn btn-primary position-relative">
+    	        <button type="button" class="btn btn-primary position-relative" id="approveRider">
  				 라이더 승인
 				  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 				    <%= request.getAttribute("unapprovedRiderCount2") %>
@@ -155,7 +157,7 @@
 				  </span>
 				</button>
         	</div>
-        	<div class="container" id="approveRiderContainer">
+        	<div class="container" id="approveRiderContainer" style="display:none;">
          		<div class="vh-100 d-flex justify-content-center" style="margin-top:40px;">
         	<% if(waitingRiders != null && !waitingRiders.isEmpty()) { %>
         		<% for(Rider waitingRider : waitingRiders) { %>
@@ -170,9 +172,17 @@
 		                    <p class="card-text">아이디 : <%= waitingRider.getRiderId() %></p>
 		                    <p class="card-text">이름 : <%= waitingRider.getRiderName() %></p>
 		                    <p class="card-text">활동구역 : <%= waitingRider.getRiderLocationId() %>(<%= waitingRider.getRiderLocationName() %>)</p>
-		                    <span class="card-text" style="cursor:pointer;"><small class="text-muted">승인</small></span>
-		                    &nbsp;&nbsp;&nbsp;
-		                    <span class="card-text" style="cursor:pointer;"><small class="text-muted">반려</small></span>
+		                    <div style="display:flex">
+			                    <button class="card-text" id="approveButton" style="border-style: none; background-color: white;"><small class="text-muted" >승인</small></button>
+			                    <form action="<%= request.getContextPath() %>/admin/riderApprovement" name="riderApprovementFrm" method="post">
+			    					<input type="hidden" name="riderId" id="riderId" value="<%= waitingRider.getRiderId()%>">
+			    				</form>
+			                    &nbsp; &nbsp; &nbsp;
+			                    <button class="card-text" id="rejectButton" style="border-style: none; background-color: white;"><small class="text-muted">반려</small></button>		                    
+		                    	<form action="<%= request.getContextPath() %>/admin/riderRefusal" name="riderRefusalFrm" method="post">
+		    						<input type="hidden" name="riderRefusalId" id="riderRefusalId" value="<%= waitingRider.getRiderId()%>">
+		    					</form>
+		                    </div>
 		                  </div>
 		                </div>
 		              </div>
@@ -210,14 +220,56 @@
                     </table>
                 </div>
         	</div>
+        	
+		   
         </section>
         <script>
+	        <% 	if(msg != null) { %>
+			alert('<%= msg %>');
+			<% 	} %>
+        	// 라이더 조회, 승인 버튼 이벤트
         	const lookUpRiderButton = document.querySelector("#lookUpRider");
         	const riderList = document.querySelector("#riderList");
+        	const approveRiderContainer = document.querySelector("#approveRiderContainer");
+        	const approveRiderButton = document.querySelector("#approveRider");
         	
         	lookUpRiderButton.onclick = (e) => {
         		riderList.style.display = "block";
+        		approveRiderContainer.style.display = "none";
         	}
+        	
+        	
+        	approveRiderButton.onclick = (e) => {
+        		approveRiderContainer.style.display = "block";
+        		riderList.style.display = "none";
+        	}
+        	
+        	// 승인 이벤트
+        	const approveButton = document.querySelector("#approveButton");
+        	approveButton.onclick = () => {
+        			if(confirm('승인하시겠습니까?')) {
+        				const frm = document.riderApprovementFrm;
+        				const hiddenVal = frm.querySelector("#riderId");
+        				
+        				console.log(hiddenVal.value);
+        				frm.submit();
+        				
+        			} else {
+        				return false;
+        			}
+        	};
+        	
+        	const refusalButton = document.querySelector("#rejectButton");
+        	refusalButton.onclick = () => {
+        		if(confirm('반려하시겠습니까?')) {
+        			const frm = document.riderRefusalFrm;
+        			const hiddenVal = frm.querySelector("#riderRefusalId")
+        			frm.submit();
+        		} else {
+        			return false;
+        		}
+        	}
+        	
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     	<script src="<%= request.getContextPath() %>/js/adminMain.js"></script>
