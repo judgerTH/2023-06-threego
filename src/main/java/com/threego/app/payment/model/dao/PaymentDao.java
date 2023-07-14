@@ -20,7 +20,7 @@ public class PaymentDao {
 	
 	public PaymentDao() {
 		String filename = 
-				AdminDao.class.getResource("/sql/payment/payment-query.properties").getPath();
+				PaymentDao.class.getResource("/sql/payment/payment-query.properties").getPath();
 			try {
 				prop.load(new FileReader(filename));
 			} catch (IOException e) {
@@ -71,4 +71,6 @@ public class PaymentDao {
 		}
 		return totalPayment;
 	}
+
+
 }

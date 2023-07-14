@@ -1,9 +1,12 @@
 package com.threego.app.member.model.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.threego.app.member.model.dao.MemberDao;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.ticket.model.vo.TicketPayment;
+
 import static  com.threego.app.common.util.JdbcTemplate.*;
 
 public class MemberService {
@@ -81,8 +84,6 @@ public class MemberService {
 	}
 
 
-
-
 	public int findByPhone(String phone) {
 		int result =0;
 		Connection conn = getConnection();
@@ -92,6 +93,15 @@ public class MemberService {
 		
 		
 		return result;
+	}
+	
+	public List<TicketPayment> findRequestList(String memberId) {
+		Connection conn = getConnection();
+		List<TicketPayment> requestList = memberDao.findRequestList(conn, memberId);
+		close(conn);
+	
+		return requestList;
+
 	}
 
 }

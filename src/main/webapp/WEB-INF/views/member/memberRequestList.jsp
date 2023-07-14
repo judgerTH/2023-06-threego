@@ -1,6 +1,12 @@
+<%@page import="com.threego.app.ticket.model.vo.TicketPayment"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file = "/WEB-INF/views/common/header.jsp" %>
+    <% 
+   		 String memberId = loginMember.getId();
+    	List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("requestList");
+    %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,10 +91,11 @@
 	    width: 1200px;
 		}
     
-        .mypage-wrap {
-         padding-top: 5rem;
-    	 padding-bottom: 8rem;
-        }
+      .mypage-wrap {
+	    padding-top: 5rem;
+	    padding-bottom: 7rem;
+	    padding-left: 10rem;
+		}
         
         .mypage-wrap .mypage-table {
 	    border-top: 2px solid #222;
@@ -143,7 +150,8 @@
                 <h2>마이페이지</h2>
                     <ul>
                         <li ><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList">수거신청 내역</a></li>
+                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">결제정보</a></li>
+                        <li ><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
                     </ul>        
                 </div>
             </div>
@@ -156,10 +164,22 @@
                             <td>이용권명</td>
                             <td>결제금액</td>
                             <td>결제일</td>
-                            <td>결제상태</td>
+                            <td>잔여 이용권</td>
                         </tr>
                         <tr>
-                        <td colspan="7" class="empty_table">주문 내역이 없습니다.</td>
+                   		<% if(requestList.isEmpty() || requestList == null) { %>
+                        	<td colspan="7" class="empty_table">주문 내역이 없습니다.</td>
+                        </tr>
+                        <% } else {
+                        			for(TicketPayment reqList : requestList) {	 %>
+                        <tr>
+                        <td><%= reqList.getTicName()%></td>
+                        <td><%= reqList.getTicPrice() %></td>
+                        <td><%= reqList.getpDate() %></td>
+                        <td><%= reqList.getpCnt() %></td>
+                        <% 		}
+                        		}
+                       	%>
                         </tr>           
                      </tbody>
                 </table>
