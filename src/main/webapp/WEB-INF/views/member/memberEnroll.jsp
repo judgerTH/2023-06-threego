@@ -84,6 +84,9 @@ border-collapse: collapse;
 width:300px;
 
 } 
+#wrapper{
+padding-bottom: 6rem;
+}
 </style>
 
 <!-- 콘텐츠 시작 { -->
