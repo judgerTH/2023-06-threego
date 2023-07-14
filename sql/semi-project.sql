@@ -10,7 +10,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '375,47511';
+-- alter system kill SESSION '30,42970';
  
 ---------------------------------------------------------------
 -- drop table member;
