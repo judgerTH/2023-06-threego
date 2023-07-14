@@ -1,21 +1,19 @@
-<%@page import="com.threego.app.member.model.vo.Member"%>
+<%@page import="com.threego.app.payment.model.vo.Payment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	List<Payment> payments = (List<Payment>) request.getAttribute("payments");
+%>
 <!DOCTYPE html>
 <html lang="en">
-<%
-	List<Member> members = (List<Member>) request.getAttribute("members");
-	String msg = (String) session.getAttribute("msg");
-	if(msg != null) session.removeAttribute("msg"); // 1회용
-%>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.css" />
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/report.css" />
-    <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/report.css" />
+    <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
     <title>ReportList</title>
     <style>
     div#pagebar{margin-top:10px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1300px;}
@@ -30,7 +28,7 @@
           </div>
           <hr />
           <div class="serviceName">
-            <img class="logoImg" src="<%= request.getContextPath() %>/img/threeGologo2.png" alt=""> 쓰리고
+            <img class="logoImg" src="<%=request.getContextPath()%>/img/threeGologo2.png" alt=""> 쓰리고
           </div>
           <di class="goToMainSite">
             <span>
@@ -53,7 +51,7 @@
                 />
               </svg>
             </span>
-            <a href="<%=request.getContextPath() %>/admin/adminMain">대시보드</a>
+            <a href="<%=request.getContextPath()%>/admin/adminMain">대시보드</a>
           </div>
           <div class="memberManagement">
             <div class="wrap">
@@ -84,7 +82,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="<%= request.getContextPath()%>/admin/userList">회원정보조회</a>
+                      <a href="<%=request.getContextPath()%>/admin/userList">회원정보조회</a>
                     </div>
                     <div class="riderManagement">
                       <span>
@@ -121,7 +119,7 @@
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
               </svg>
             </span>
-            <a href="<%= request.getContextPath()%>/admin/reportList">신고내역</a>
+            <a href="<%=request.getContextPath()%>/admin/reportList">신고내역</a>
           </div>
           <hr>
           <div class="showMeTheMoney">
@@ -131,7 +129,7 @@
                 <path fill-rule="evenodd" d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595zM2.516 6.26c.455-2.066 2.667-3.733 5.448-3.733 3.146 0 5.536 2.114 5.536 4.542 0 1.254-.624 2.41-1.67 3.248a.5.5 0 0 0-.165.535l.66 2.175h-.985l-.59-1.487a.5.5 0 0 0-.629-.288c-.661.23-1.39.359-2.157.359a6.558 6.558 0 0 1-2.157-.359.5.5 0 0 0-.635.304l-.525 1.471h-.979l.633-2.15a.5.5 0 0 0-.17-.534 4.649 4.649 0 0 1-1.284-1.541.5.5 0 0 0-.446-.275h-.56a.5.5 0 0 1-.492-.414l-.254-1.46h.933a.5.5 0 0 0 .488-.393zm12.621-.857a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199z"/>
               </svg>
             </span>
-            <a href="<%=request.getContextPath()%>/admin/paymentList">매출조회</a>
+            <a href="">매출조회</a>
           </div>
         </div>
         <section style="width: 1630px">
@@ -143,46 +141,37 @@
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px; display: flex; justify-content: flex-end;">
                 <div class="card-header" id="todayIssueHeader">
-                회원목록
-                <input id="findById" placeholder="아이디 검색" style="float:right;">
-	  			<input id="findByName" style="float:right" placeholder="이름 검색">
+                매출현황
+                <input type="date" name="startday" id="startday" value="2023-01-01" style="order: 2;">~
+                <input type="date" name="endday" id="endday" value="2023-07-07" style="order: 1;">
+                <input type="submit" id="submit"value="기간 검색" style="order: 0;" onclick="handleSubmit()">
                 </div>
                 <div class="card-body" id="todayIssueBody">
                     <table>
                     	<thead>
                     		<tr>
-		                        <th style="width: 150px;">ID</th>
-		                        <th style="width: 100px;">이름</th>
-		                        <th>이메일</th>
-		                        <th style="width: 180px;">H/P</th>
-		                        <th style="width: 100px;">Role</th>
-		                        <th style="width: 100px;">우편번호</th>
-		                        <th style="width: 300px;">주소</th>  
-		                        <th>가입일</th>         
-		                        <th>탈퇴</th>         	                    		
+		                        <th style="width: 70px;">번호</th>
+		                        <th style="width: 70px;">구매자 ID</th>
+		                        <th style="width: 70px;">티켓 분류</th>
+		                        <th style="width: 70px;">전체 횟수</th>
+		                        <th style="width: 70px;">사용 횟수</th>
+		                        <th style="width: 200px;">결제일</th>
                     		</tr>
                     	</thead>
-                        <tbody>
-                        	<%
-                        		if(members != null && !members.isEmpty()) {
-	            					for(Member member : members){	
-                        	%>
-                        	<tr>
-                        		<td><%= member.getId() %></td>
-                        		<td><%= member.getName() %></td>
-                        		<td><%= member.getEmail() %></td>
-                        		<td><%= member.getPhone() %></td>
-                        		<td><%= member.getMemberRole() %></td>
-                        		<td><%= member.getPost() %></td>
-                        		<td><%= member.getAddress() %></td>
-                        		<td><%= member.getRegDate() %></td>
-                        		<td><button 
-                        				id="memberDelete" 
-                        				value="<%= member.getId() %>">강퇴
-                        			</button>
-                        		</td>
+                    	<tbody>
+							<% 
+								if(payments != null && !payments.isEmpty()) {
+									for(Payment payment : payments)	{
+							%>
+							<tr>
+								<td><%= payment.getP_no() %></td>
+								<td><%= payment.getP_mem_id() %></td>
+								<td><%= payment.getP_tic_id() %></td>
+								<td><%= payment.getP_cnt() %></td>
+								<td><%= payment.getP_use_cnt() %></td>
+								<td><%= payment.getP_date() %></td>
 							</tr>
 							<%
 	            					}
@@ -190,45 +179,44 @@
                         		else {
 							%>
 							<tr>
-								<td>조회된 게시글이 없습니다.</td>
+								<td>조회된 매출이 없습니다.</td>
 							</tr>
 							<% } %>
-                        </tbody>
+                    	</tbody>
                     </table>
                 </div>
             </div>
-	        <div id='pagebar' style="margin-left: 330px">
+            <div id='pagebar' style="margin-left: 330px">
 				<%= request.getAttribute("pagebar") %>
 			</div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
     
-    <form 
-	    action="<%= request.getContextPath() %>/admin/memberDelete" 
-	    name="memberDeleteFrm" 
+    <form
+    	action="<%= request.getContextPath() %>/admin/paymentList" 
+	    name="paymentListFindByDateFrm" 
 	    method="POST">
-    	<input type="hidden" name="id" value = "">
+    	<input type="hidden" name="searchStart" value = "">
+    	<input type="hidden" name="searchEnd" value = "">
     </form>
-    
-    <script>    	
-    <% 	if(msg != null) { %>
-		alert('<%= msg %>');
-	<% 	} %>	
-    
-    document.querySelectorAll("#memberDelete").forEach((button) => {
-		button.onclick = (e) => {
-			if(confirm("해당 회원을 삭제하시겠습니까?")){
-				const frm = document.memberDeleteFrm;
-				const value = e.target.value;
-				const hiddenVal = frm.querySelector("input[name='id']");
-				hiddenVal.value = value;
-				frm.submit();
-			}else {
-				return false;
-			}
-		}
-	});
+    <script>
+    	function handleSubmit() {    			
+    		const _startday = document.getElementById("startday").value;
+    		const _endday = document.getElementById("endday").value;
+    		const startday = _startday.replace(/-/g, "/");
+    		const endday = _endday.replace(/-/g, "/");
+	
+    		console.log(startday);
+    		console.log(endday);
+    		const frm = document.paymentListFindByDateFrm;
+    		const hiddenVal1 = frm.querySelector("input [name='searchStart']");
+    		const hiddenVal2 = frm.querySelector("input [name='searchEnd']");
+
+    		hiddenVal1.value = startday;
+    		hiddenVal2.value = endday;
+			frm.submit();
+    	}
     </script>
     
 </body>
