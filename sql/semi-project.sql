@@ -53,7 +53,12 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-
+select * from payment;
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
  
 create table board(
     b_no number,
