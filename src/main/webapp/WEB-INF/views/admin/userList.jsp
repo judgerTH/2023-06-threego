@@ -41,7 +41,7 @@
                 />
               </svg>
             </span>
-            <a href="">사이트 바로가기</a>
+            <a href="<%=request.getContextPath()%>">사이트 바로가기</a>
           </di>
           <hr />
           <h5 style="padding-left: 20px; padding-top: 10px">사이트 관리</h5>
@@ -94,7 +94,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="">라이더 관리</a>
+                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
                     </div>
                   </div>
                 </li>
@@ -112,7 +112,7 @@
                 />
               </svg>
             </span>
-            <a href="">문의사항</a>
+            <a href="<%=request.getContextPath()%>/admin/adminInquiry">문의사항</a>
           </div>
           
           <div class="reportManagement">

@@ -1,10 +1,12 @@
+<%@page import="com.threego.app.rider.model.vo.Rider"%>
 <%@page import="com.threego.app.warning.model.vo.WarnigMemberRole"%>
 <%@page import="com.threego.app.warning.model.vo.Warning"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
+	List<Rider> riders = (List<Rider>) request.getAttribute("riders");
+	List<Rider> waitingRiders = (List<Rider>) request.getAttribute("waitingRiders");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,6 +135,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
             <a href="">매출조회</a>
           </div>
         </div>
+        </section>
         <section style="width: 1630px">
           <nav class="navbar bg-light" style="margin-left: 330px">
             <div class="container-fluid">
@@ -142,55 +145,81 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 150px">
+	        <div class="buttonBox" style="margin-top:50px; margin-left:330px;">
+    	        <button type="button" class="btn btn-primary" id="lookUpRider">라이더 조회</button>
+    	        <button type="button" class="btn btn-primary position-relative">
+ 				 라이더 승인
+				  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+				    <%= request.getAttribute("unapprovedRiderCount2") %>
+				    <span class="visually-hidden">unread messages</span>
+				  </span>
+				</button>
+        	</div>
+        	<div class="container" id="approveRiderContainer">
+         		<div class="vh-100 d-flex justify-content-center" style="margin-top:40px;">
+        	<% if(waitingRiders != null && !waitingRiders.isEmpty()) { %>
+        		<% for(Rider waitingRider : waitingRiders) { %>
+		            <div class="card mb-3" style="width: 500px; height:200px;">
+		              <div class="row g-0">
+		                <div class="col-md-4">
+		                  <img src="<%= request.getContextPath() %>/img/threeGologo.png" style="padding-top:25px; width:150px;" class="img-fluid rounded-start" alt="...">
+		                </div>
+		                <div class="col-md-8">
+		                  <div class="card-body">
+		                    <h5 class="card-title" style="padding-top:12px; font-weight:600;">ThreeGo Rider</h5>
+		                    <p class="card-text">아이디 : <%= waitingRider.getRiderId() %></p>
+		                    <p class="card-text">이름 : <%= waitingRider.getRiderName() %></p>
+		                    <p class="card-text">활동구역 : <%= waitingRider.getRiderLocationId() %>(<%= waitingRider.getRiderLocationName() %>)</p>
+		                    <span class="card-text" style="cursor:pointer;"><small class="text-muted">승인</small></span>
+		                    &nbsp;&nbsp;&nbsp;
+		                    <span class="card-text" style="cursor:pointer;"><small class="text-muted">반려</small></span>
+		                  </div>
+		                </div>
+		              </div>
+            		</div>
+            		<% } %>
+            	<% } else { %>
+            	<p>승인대기중인 라이더가 없습니다.</p>
+            	<% } %>
+          		</div> <!-- vh100 끝 -->
+        	</div> <!-- container 끝 -->
+        	<div class="card" style="margin: 30px 0 0 330px; width: 1300px; display:none;" id="riderList">
                 <div class="card-header" id="todayIssueHeader">
-                신고관리
+                라이더 목록
                 </div>
-                <div class="card-body" id="todayIssueBody">
+                <div class="card-body" id="todayIssueBody" >
                     <table>
                     	<thead>
                     		<tr>
-		                        <th style="width: 70px;">번호</th>
-		                        <th style="width: 150px;">작성자</th>
-		                        <th>내용</th>
-		                        <th style="width: 150px;">작성일</th>
-		                        <th style="width: 100px;">확인여부</th>
-		                        <th style="width: 200px;">주의조치</th>
+		                        <th style="width: 300px;">ID</th>
+		                        <th style="width: 500px;">지역코드(지역)</th>
+		                        <th>라이더 승인일</th>
                     		</tr>
                     	</thead>
-                    	<tbody>
-                    		<%
-                    		if(warnings != null && !warnings.isEmpty()){ 
-                    		                    			for(Warning warning : warnings){
-                    		%>
-								<tr>
-									<td><%=warning.getWarningNo()%></td>
-									<td><%=warning.getWarningWriter()%></td>
-									<td>
-										<%
-										if(warning.getMemberRole()== WarnigMemberRole.U) {
-										%>
-											[라이더 신고]
-										<% } else { %>
-											[유저 신고]
-										<% } %>
-											<%= warning.getWarningContent() %>
-									</td>
-									<td><%= warning.getWarningRegDate() %></td>
-									<td><%= warning.getWarningConfirm() %></td>
-									<td><%= warning.getWarningCaution() %></td>
-								</tr>
+                        <tbody>
+                        	<%  if(riders!=null && !riders.isEmpty()) { %>
+                        		<% for(Rider rider : riders) { %>
+                        			<tr>
+										 <td><%= rider.getRiderId() %></td>
+										 <td><%= rider.getRiderLocationId() %>(<%= rider.getRiderLocationName() %>)</td>
+										 <td><%= rider.getRiderUpDate() %></td>                       		
+									</tr>
 								<% } %>
 							<% } %>
-                    	</tbody>
+                        </tbody>
                     </table>
-                    <div id='pagebar'>
-						<%= request.getAttribute("pagebar") %>
-					</div>
                 </div>
-            </div>
+        	</div>
         </section>
+        <script>
+        	const lookUpRiderButton = document.querySelector("#lookUpRider");
+        	const riderList = document.querySelector("#riderList");
+        	
+        	lookUpRiderButton.onclick = (e) => {
+        		riderList.style.display = "block";
+        	}
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
+    	<script src="<%= request.getContextPath() %>/js/adminMain.js"></script>
 </body>
 </html>
