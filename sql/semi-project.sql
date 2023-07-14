@@ -10,7 +10,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '375,47511';
+-- alter system kill SESSION '20,1713';
  
 ---------------------------------------------------------------
 -- drop table member;
@@ -41,7 +41,8 @@ create table ticket(
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
-    );        
+    );       
+    
     
 create table payment(
     p_no	number,
@@ -55,7 +56,10 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
+
 select * from payment;
+select * from member;
+
  select * from ticket;
  
 SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
