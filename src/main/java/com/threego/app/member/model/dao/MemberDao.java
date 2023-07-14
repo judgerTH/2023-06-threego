@@ -158,6 +158,20 @@ public class MemberDao {
 	}
 
 
+	public int findByPhone(Connection conn, String phone) {
+		int result =0;
+		String sql =prop.getProperty("findByPhone");
+		// findByPhone = select count(*) from member where phone = ?
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, phone);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
+
+
 	public List<TicketPayment> findRequestList(Connection conn, String memberId) {
 		List<TicketPayment> requestList = new ArrayList<>();
 		String sql = "SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt " +
