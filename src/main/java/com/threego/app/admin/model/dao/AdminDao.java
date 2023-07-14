@@ -522,6 +522,21 @@ private Properties prop = new Properties();
 		return waitingRiders;
 	}
 
+	public int updateRiderStatus(Connection conn, String riderId) {
+		int result = 0;
+		String sql = prop.getProperty("updateRiderStatus");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, riderId);
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
 	
 	
 }

@@ -225,5 +225,20 @@ public class AdminService {
 		return waitingRiders;
 	}
 
+	public int updateRiderStatus(String riderId) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.updateRiderStatus(conn, riderId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
+		return result;
+	}
+
 	
 }
