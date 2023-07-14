@@ -84,12 +84,24 @@ public class MemberService {
 	}
 
 
+	public int findByPhone(String phone) {
+		int result =0;
+		Connection conn = getConnection();
+		
+		result=memberDao.findByPhone(conn,phone);
+		close(conn);	
+		
+		
+		return result;
+	}
+	
 	public List<TicketPayment> findRequestList(String memberId) {
 		Connection conn = getConnection();
 		List<TicketPayment> requestList = memberDao.findRequestList(conn, memberId);
 		close(conn);
 	
 		return requestList;
+
 	}
 
 }

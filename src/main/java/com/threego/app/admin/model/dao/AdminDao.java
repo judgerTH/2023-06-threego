@@ -528,8 +528,8 @@ private Properties prop = new Properties();
 		String riderStatus = rset.getString("r_status");
 		Date riderRegDate = rset.getDate("r_reg_date");
 		Date riderUpDate = rset.getDate("up_Date");
-		
-		return new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName);
+		String fileName = rset.getString("fileName");
+		return new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName, riderId, fileName);
 	}
 
 	public List<Rider> getApproveRiderList(Connection conn) {
@@ -546,8 +546,9 @@ private Properties prop = new Properties();
 					Date riderRegDate = rset.getDate("r_reg_date");
 					Date riderUpDate = rset.getDate("up_Date");;
 					String riderName = rset.getString("name");
+					String fileName = rset.getString("fileName");
 					
-					Rider waitingRider = new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName, riderName);
+					Rider waitingRider = new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName, riderName,fileName);
 					waitingRiders.add(waitingRider);
 				}
 			}
