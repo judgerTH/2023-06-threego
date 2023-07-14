@@ -176,6 +176,19 @@ BEGIN
 END;
 /
 
+create table msgbox(
+    msg_no number, 
+    msg_type varchar2(50) not null, 
+    msg_sender varchar2(30) not null, 
+    msg_receiver varchar2(30) not null, 
+    msg_content varchar2(4000), 
+    constraints pk_msgbox_msg_no primary key(msg_no),
+    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
+);
+create sequence seq_msg_no;
+
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
@@ -201,12 +214,6 @@ END;
  insert into payment values (
      seq_payment_no.nextval, 'eogh','tic3',sysdate,3,0
  );
- 
-insert into payment values (
-    seq_payment_no.nextval, 'eogh', 'tic1', '2023/06/12', 1, 0
-);
-
-select * from payment where (p_no between 1 and 10) and(p_date >= TO_DATE('2023/06/12', 'YYYY/MM/DD') AND p_date <= TO_DATE(sysdate, 'YY/MM/DD'));
 
 insert into location values(
     'S1', '강남구, 서초구'
@@ -242,15 +249,4 @@ select * from request;
 select * from payment;
 select * from del_member;
     -- commit;
-    
-select count(*) from payment;
 
-select * from payment where (p_no between 1 and 10) and
-(p_date >= TO_DATE(?, 'YYYY/MM/DD')
-  AND p_date <= TO_DATE(?, 'YY/MM/DD'));
-
-
-SELECT *
-FROM payment
-WHERE p_date >= TO_DATE('2023/07/01', 'YYYY/MM/DD')
-  AND p_date <= TO_DATE('23/07/15', 'YY/MM/DD');
