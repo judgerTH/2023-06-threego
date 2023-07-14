@@ -186,6 +186,12 @@ END;
  insert into payment values (
      seq_payment_no.nextval, 'eogh','tic3',sysdate,3,0
  );
+ 
+insert into payment values (
+    seq_payment_no.nextval, 'eogh', 'tic1', '2023/06/12', 1, 0
+);
+
+select * from payment where (p_no between 1 and 10) and(p_date >= TO_DATE('2023/06/12', 'YYYY/MM/DD') AND p_date <= TO_DATE(sysdate, 'YY/MM/DD'));
 
 insert into location values(
     'S1', '강남구, 서초구'
@@ -221,8 +227,15 @@ select * from request;
 select * from payment;
 select * from del_member;
     -- commit;
+    
+select count(*) from payment;
 
-SELECT sum(p_cnt)
+select * from payment where (p_no between 1 and 10) and
+(p_date >= TO_DATE(?, 'YYYY/MM/DD')
+  AND p_date <= TO_DATE(?, 'YY/MM/DD'));
+
+
+SELECT *
 FROM payment
-WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
-  AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
+WHERE p_date >= TO_DATE('2023/07/01', 'YYYY/MM/DD')
+  AND p_date <= TO_DATE('23/07/15', 'YY/MM/DD');

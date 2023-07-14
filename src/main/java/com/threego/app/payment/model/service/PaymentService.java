@@ -25,4 +25,11 @@ public class PaymentService {
 		close(conn);
 		return totalPayment;
 	}
+
+	public List<Payment> findByDate(int start, int end, String startDay, String endDay) {
+		Connection conn = getConnection();
+		List<Payment> payments = paymentDao.findByDate(conn, start, end, startDay, endDay);
+		close(conn);
+		return payments;
+	}
 }

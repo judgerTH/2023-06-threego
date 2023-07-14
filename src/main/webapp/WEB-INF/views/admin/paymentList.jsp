@@ -145,7 +145,7 @@
                 <div class="card-header" id="todayIssueHeader">
                 매출현황
                 <input type="date" name="startday" id="startday" value="2023-01-01" style="order: 2;">~
-                <input type="date" name="endday" id="endday" value="2023-07-07" style="order: 1;">
+                <input type="date" name="endday" id="endday" value="" style="order: 1;">
                 <input type="submit" id="submit"value="기간 검색" style="order: 0;" onclick="handleSubmit()">
                 </div>
                 <div class="card-body" id="todayIssueBody">
@@ -157,12 +157,14 @@
 		                        <th style="width: 70px;">티켓 분류</th>
 		                        <th style="width: 70px;">전체 횟수</th>
 		                        <th style="width: 70px;">사용 횟수</th>
+		                        <th style="width: 70px;">금액</th>
 		                        <th style="width: 200px;">결제일</th>
                     		</tr>
                     	</thead>
                     	<tbody>
 							<% 
 								if(payments != null && !payments.isEmpty()) {
+									int totalAmount = 0;
 									for(Payment payment : payments)	{
 							%>
 							<tr>
@@ -171,10 +173,32 @@
 								<td><%= payment.getP_tic_id() %></td>
 								<td><%= payment.getP_cnt() %></td>
 								<td><%= payment.getP_use_cnt() %></td>
+								<td>
+									<% 
+							            int cnt = payment.getP_cnt();
+							            int amount = 0;
+							            
+							            if (cnt == 1) {
+							                amount = 5000;
+							            } else if (cnt == 3) {
+							                amount = 15000;
+							            } else if (cnt == 5) {
+							                amount = 23900;
+							            } else if (cnt == 10) {
+							                amount = 46900;
+							            }
+							         	totalAmount += amount;
+							            out.print(amount);
+							        %>
+								</td>
 								<td><%= payment.getP_date() %></td>
+
 							</tr>
 							<%
 	            					}
+							%>
+			                    총 매출: <%= totalAmount %>
+							<%
                         		}
                         		else {
 							%>
@@ -194,13 +218,15 @@
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
     
     <form
-    	action="<%= request.getContextPath() %>/admin/paymentList" 
+    	action="<%= request.getContextPath() %>/admin/PaymentFindByDate" 
 	    name="paymentListFindByDateFrm" 
-	    method="POST">
+	    method="GET">
     	<input type="hidden" name="searchStart" value = "">
     	<input type="hidden" name="searchEnd" value = "">
     </form>
     <script>
+    	const today = new Date().toISOString().split('T')[0];
+    	document.getElementById('endday').value = today;
     	function handleSubmit() {    			
     		const _startday = document.getElementById("startday").value;
     		const _endday = document.getElementById("endday").value;
@@ -210,8 +236,8 @@
     		console.log(startday);
     		console.log(endday);
     		const frm = document.paymentListFindByDateFrm;
-    		const hiddenVal1 = frm.querySelector("input [name='searchStart']");
-    		const hiddenVal2 = frm.querySelector("input [name='searchEnd']");
+    		const hiddenVal1 = frm.querySelector("input[name='searchStart']");
+    		const hiddenVal2 = frm.querySelector("input[name='searchEnd']");
 
     		hiddenVal1.value = startday;
     		hiddenVal2.value = endday;

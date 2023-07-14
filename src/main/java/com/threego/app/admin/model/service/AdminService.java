@@ -199,5 +199,19 @@ public class AdminService {
 
 	}
 
+	public List<Member> findById(String memberId) {
+		Connection conn = getConnection();
+		List<Member> members = adminDao.findById(conn, memberId);
+		close(conn);
+		return members;
+	}
+
+	public List<Member> findByName(String memberName) {
+		Connection conn = getConnection();
+		List<Member> members = adminDao.findByName(conn, memberName);
+		close(conn);
+		return members;
+	}
+
 	
 }

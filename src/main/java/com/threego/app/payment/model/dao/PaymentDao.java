@@ -20,7 +20,7 @@ public class PaymentDao {
 	
 	public PaymentDao() {
 		String filename = 
-				AdminDao.class.getResource("/sql/payment/payment-query.properties").getPath();
+				PaymentDao.class.getResource("/sql/payment/payment-query.properties").getPath();
 			try {
 				prop.load(new FileReader(filename));
 			} catch (IOException e) {
@@ -57,6 +57,26 @@ public class PaymentDao {
 
 		return payment;
 	}
+	
+	public List<Payment> findByDate(Connection conn, int start, int end, String startDay, String endDay) {
+		List<Payment> payments = new ArrayList<>();
+		String sql = prop.getProperty("findByDate");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, startDay);
+			pstmt.setString(4, endDay);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Payment payment = handlePaymentResultSet(rset);
+					payments.add(payment);
+				}
+			}
+		} catch (SQLException e) {
+			throw new PaymentException(e);
+		}
+		return payments;
+	}
 
 	public int getTotalPayment(Connection conn) {
 		int totalPayment = 0;
@@ -71,4 +91,5 @@ public class PaymentDao {
 		}
 		return totalPayment;
 	}
+
 }
