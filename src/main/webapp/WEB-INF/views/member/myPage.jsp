@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쓰리고 | 회원정보수정</title>
  <style>
-	       .left-div ul {
+	      .left-div ul {
 		  list-style: none;
 		  padding: 0;
 		  margin: 0;
@@ -118,7 +118,7 @@
     <div id="wrapper">
         <div id="container_wr">
         <div id="con">
-                    <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+         <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
     <div class="mypage-wrap">
         <div class="container">
             <div>
@@ -126,7 +126,11 @@
                 <h2>마이페이지</h2>
                     <ul>
                         <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+                        <% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
                         <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList">수거신청 내역</a></li>
+                        <% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
+                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/rider/requestCollectionList">수거 리스트</a></li>
+                        <% } %>
                     </ul>        
                 </div>
             </div>

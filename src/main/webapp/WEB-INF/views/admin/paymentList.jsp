@@ -1,10 +1,9 @@
-<%@page import="com.threego.app.warning.model.vo.WarnigMemberRole"%>
-<%@page import="com.threego.app.warning.model.vo.Warning"%>
+<%@page import="com.threego.app.payment.model.vo.Payment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
+	List<Payment> payments = (List<Payment>) request.getAttribute("payments");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,12 +13,12 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/report.css" />
-    <style>
-    	div#pagebar{margin-top:5px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1250px;}
-		div#pagebar a{margin-right: 5px; color: green; font-size: 20px}
-    </style>
     <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
     <title>ReportList</title>
+    <style>
+    div#pagebar{margin-top:10px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1300px;}
+	div#pagebar a{margin-right: 5px; color: green; font-size: 20px}
+    </style>
 </head>
 <body>
     <section>
@@ -40,7 +39,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                 />
               </svg>
             </span>
-            <a href="<%=request.getContextPath()%>">사이트 바로가기</a>
+            <a href="">사이트 바로가기</a>
           </di>
           <hr />
           <h5 style="padding-left: 20px; padding-top: 10px">사이트 관리</h5>
@@ -93,7 +92,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                           />
                         </svg>
                       </span>
-                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
+                      <a href="">라이더 관리</a>
                     </div>
                   </div>
                 </li>
@@ -111,7 +110,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                 />
               </svg>
             </span>
-            <a href="<%=request.getContextPath()%>/admin/adminInquiry">문의사항</a>
+            <a href="">문의사항</a>
           </div>
           
           <div class="reportManagement">
@@ -142,55 +141,83 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 150px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px; display: flex; justify-content: flex-end;">
                 <div class="card-header" id="todayIssueHeader">
-                신고관리
+                매출현황
+                <input type="date" name="startday" id="startday" value="2023-01-01" style="order: 2;">~
+                <input type="date" name="endday" id="endday" value="2023-07-07" style="order: 1;">
+                <input type="submit" id="submit"value="기간 검색" style="order: 0;" onclick="handleSubmit()">
                 </div>
                 <div class="card-body" id="todayIssueBody">
                     <table>
                     	<thead>
                     		<tr>
 		                        <th style="width: 70px;">번호</th>
-		                        <th style="width: 150px;">작성자</th>
-		                        <th>내용</th>
-		                        <th style="width: 150px;">작성일</th>
-		                        <th style="width: 100px;">확인여부</th>
-		                        <th style="width: 200px;">주의조치</th>
+		                        <th style="width: 70px;">구매자 ID</th>
+		                        <th style="width: 70px;">티켓 분류</th>
+		                        <th style="width: 70px;">전체 횟수</th>
+		                        <th style="width: 70px;">사용 횟수</th>
+		                        <th style="width: 200px;">결제일</th>
                     		</tr>
                     	</thead>
                     	<tbody>
-                    		<%
-                    		if(warnings != null && !warnings.isEmpty()){ 
-                    		                    			for(Warning warning : warnings){
-                    		%>
-								<tr>
-									<td><%=warning.getWarningNo()%></td>
-									<td><%=warning.getWarningWriter()%></td>
-									<td>
-										<%
-										if(warning.getMemberRole()== WarnigMemberRole.U) {
-										%>
-											[라이더 신고]
-										<% } else { %>
-											[유저 신고]
-										<% } %>
-											<%= warning.getWarningContent() %>
-									</td>
-									<td><%= warning.getWarningRegDate() %></td>
-									<td><%= warning.getWarningConfirm() %></td>
-									<td><%= warning.getWarningCaution() %></td>
-								</tr>
-								<% } %>
+							<% 
+								if(payments != null && !payments.isEmpty()) {
+									for(Payment payment : payments)	{
+							%>
+							<tr>
+								<td><%= payment.getP_no() %></td>
+								<td><%= payment.getP_mem_id() %></td>
+								<td><%= payment.getP_tic_id() %></td>
+								<td><%= payment.getP_cnt() %></td>
+								<td><%= payment.getP_use_cnt() %></td>
+								<td><%= payment.getP_date() %></td>
+							</tr>
+							<%
+	            					}
+                        		}
+                        		else {
+							%>
+							<tr>
+								<td>조회된 매출이 없습니다.</td>
+							</tr>
 							<% } %>
                     	</tbody>
                     </table>
-                    <div id='pagebar'>
-						<%= request.getAttribute("pagebar") %>
-					</div>
                 </div>
             </div>
+            <div id='pagebar' style="margin-left: 330px">
+				<%= request.getAttribute("pagebar") %>
+			</div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
+    
+    <form
+    	action="<%= request.getContextPath() %>/admin/paymentList" 
+	    name="paymentListFindByDateFrm" 
+	    method="POST">
+    	<input type="hidden" name="searchStart" value = "">
+    	<input type="hidden" name="searchEnd" value = "">
+    </form>
+    <script>
+    	function handleSubmit() {    			
+    		const _startday = document.getElementById("startday").value;
+    		const _endday = document.getElementById("endday").value;
+    		const startday = _startday.replace(/-/g, "/");
+    		const endday = _endday.replace(/-/g, "/");
+	
+    		console.log(startday);
+    		console.log(endday);
+    		const frm = document.paymentListFindByDateFrm;
+    		const hiddenVal1 = frm.querySelector("input [name='searchStart']");
+    		const hiddenVal2 = frm.querySelector("input [name='searchEnd']");
+
+    		hiddenVal1.value = startday;
+    		hiddenVal2.value = endday;
+			frm.submit();
+    	}
+    </script>
+    
 </body>
 </html>

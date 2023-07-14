@@ -230,7 +230,7 @@ width: 400px;
 						<th>첨부파일
 						</th>
 						<td>
-						<input type="file" name="upFile1" required="required">
+						<input type="file" name="upFile" required="required">
 						</td>
 					</tr>
 				</tbody>
