@@ -11,37 +11,15 @@ public class Rider {
 	private Date riderUpDate;
 	private String riderLocationName;
 	private String riderName;
+	private String fileName;
 	
 	public Rider() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Rider(String riderId, String riderLocationId, String riderStatus, Date riderRegDate, Date riderUpDate) {
-		super();
-		this.riderId = riderId;
-		this.riderLocationId = riderLocationId;
-		this.riderStatus = riderStatus;
-		this.riderRegDate = riderRegDate;
-		this.riderUpDate = riderUpDate;
-	}
-	
-
 	public Rider(String riderId, String riderLocationId, String riderStatus, Date riderRegDate, Date riderUpDate,
-			String riderLocationName) {
-		super();
-		this.riderId = riderId;
-		this.riderLocationId = riderLocationId;
-		this.riderStatus = riderStatus;
-		this.riderRegDate = riderRegDate;
-		this.riderUpDate = riderUpDate;
-		this.riderLocationName = riderLocationName;
-	}
-	
-	
-
-	public Rider(String riderId, String riderLocationId, String riderStatus, Date riderRegDate, Date riderUpDate,
-			String riderLocationName, String riderName) {
+			String riderLocationName, String riderName, String fileName) {
 		super();
 		this.riderId = riderId;
 		this.riderLocationId = riderLocationId;
@@ -50,6 +28,7 @@ public class Rider {
 		this.riderUpDate = riderUpDate;
 		this.riderLocationName = riderLocationName;
 		this.riderName = riderName;
+		this.fileName = fileName;
 	}
 
 	public String getRiderId() {
@@ -95,13 +74,11 @@ public class Rider {
 	public String getRiderLocationName() {
 		return riderLocationName;
 	}
-	
+
 	public void setRiderLocationName(String riderLocationName) {
 		this.riderLocationName = riderLocationName;
 	}
-	
-	
-	
+
 	public String getRiderName() {
 		return riderName;
 	}
@@ -110,12 +87,23 @@ public class Rider {
 		this.riderName = riderName;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public String toString() {
 		return "Rider [riderId=" + riderId + ", riderLocationId=" + riderLocationId + ", riderStatus=" + riderStatus
-				+ ", riderRegDate=" + riderRegDate + ", riderUpDate=" + riderUpDate + "]";
+				+ ", riderRegDate=" + riderRegDate + ", riderUpDate=" + riderUpDate + ", riderLocationName="
+				+ riderLocationName + ", riderName=" + riderName + ", fileName=" + fileName + "]";
 	}
 
+	
+	
 	
 	
 	
