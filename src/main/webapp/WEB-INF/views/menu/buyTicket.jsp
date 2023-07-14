@@ -1,127 +1,195 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%
+    	String memberId = loginMember.getId();
+    	String name = loginMember.getName();
+    	String password = loginMember.getPwd();
+    	String email = loginMember.getEmail();
+    	String phone = loginMember.getPhone();
+    	String post = loginMember.getPost();
+    	String address = loginMember.getAddress();
+    	
+    	String addr1 = address.substring(0, address.indexOf(" "));
+    	String addr2 = address.substring(address.indexOf(" ") + 1);
+    	
+    %>
 <!DOCTYPE html>
 <html lang="en">
-<%
-	/* String memberId = loginMember.getId(); */
-%>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>신청/구매</title>
-<script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
-
+<title>수거/이용권구매</title>
 <style>
-hr {
-	margin-left: 150px;
-	margin-right: 150px;
+.left-div ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
 }
 
-h1 {
-	margin-left: 150px;
+.left-div ul li {
+	display: list-item;
+	margin-bottom: 10px;
 }
 
-#btn1, #btn3, #btn4, #btn5, #applicationForm {
-	margin-top: 10px;
-	margin-left: 150px;
-}
-/* #btn1 {
-	background-color: #49B466;
-	
-} */
-.baaan {
-	margin-top: 30px;
-	margin-left: 150px;
-}
-
-.select_section {
+.left-div ul a {
 	display: inline-block;
+	width: 160px;
+	height: 30px;
+	border-radius: 15px;
+	background-color: #e9e9e9;
+	text-align: center;
+	line-height: 30px;
+	text-decoration: none;
+	color: #000000;
 }
 
-#paymentForm {
-	margin-left: 150px;
-}
-/* 주소 입력란 스타일 */
-#address {
-	border: none;
-	background-color: transparent;
+.left-div ul a:hover {
+	background-color: #49B466;
+	color: #fff;
 }
 
-/* 나머지 입력란 스타일 */
-input:not(#address), input[type="file"] {
-	border: none;
-	outline: none;
-	background-color: transparent;
+.left-div ul .active a {
+	background-color: #49B466;
+	color: #fff;
+}
+
+.left-div {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	margin-left: 180px;
+	width: 200px;
+	float: left;
+}
+
+input {
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.btn {
+	border: solid 2px #24873a;
+	border-radius: 50px;
+	width: 25%;
+	text-align: center;
+	padding: 0.5rem;
+	margin: 20px;
+	margin-top: 20px;
+	font-size: large;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.right-div {
+	flex: 1;
+	margin-left: 500px;
+	flex-direction: column;
+	display: flex;
+	flex-wrap: wrap;
+	width: 1200px;
+}
+
+.mypage-wrap {
+	padding-top: 5rem;
+	padding-bottom: 8rem;
+}
+
+.con {
+	float: left;
+}
+
+h2 {
+	margin-left: 30px;
 }
 </style>
 </head>
-
 <body>
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<h1>신청/구매</h1>
-	<hr>
-	<button id="btn1">신청하기</button>
-	<button id="btn2">이용권 구매</button>
-	<div id="buyFrm" style="display: none;">
-
-		<div class="baaan">
-			<div class="payment_option_wrap">
-				<strong class="req short">입금은행</strong>
-
-				<div class="select_section">
-					<div id="bankCodeList" class="selectbox-noscript">
-						<select name="selBank"
-							class="selectbox-source _nonBankBookPayBankCode _payForm">
-							<option value="농협" selected>농협</option>
-							<option value="국민은행">국민은행</option>
-							<option value="신한은행">신한은행</option>
-							<option value="우리은행">우리은행</option>
-							<option value="기업은행">기업은행</option>
-							<option value="하나은행">하나은행</option>
-							<option value="대구은행">대구은행</option>
-							<option value="부산은행">부산은행</option>
-							<option value="우체국">우체국</option>
-							<option value="제일은행">SC제일은행</option>
-							<option value="광주은행">광주은행</option>
-							<option value="경남은행">경남은행</option>
-							<option value="수협">수협</option>
-							<option value="케이뱅크">케이뱅크</option>
-						</select>
-						<div class="selectbox-box">
-							<div class="selectbox-label"></div>
+	<div id="wrapper">
+		<div id="container_wr">
+			<div id="con"></div>
+			<script
+				src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+			<div class="mypage-wrap">
+				<div class="container">
+					<div>
+						<div class="left-div">
+							<h2>신청/이용권구매</h2>
+							<ul>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/menu/reqPickupGarbage">수거
+										신청</a></li>
+								<li class="active"><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/menu/buyTicket">이용권
+										구매</a></li>
+							</ul>
 						</div>
-						<div class="selectbox-layer layer_width_base">
-							<div class="selectbox-list"></div>
+					</div>
+					<div class="right-div">
+						<h3>이용권 구매</h3>
+
+						<div class="new-mypage-form-box">
+							<form name="buyTicketFrm" action="<%= request.getContextPath() %>/menu/buyTicket" method="post">
+								<table class="mypage-table">
+									<tbody>
+										<tr>
+											<th>아이디</th>
+											<td><%= memberId %></td>
+										</tr>
+										<tr>
+											<th>입금은행</th>
+											<td><%= name %></td>
+										</tr>
+			
+										<tr>
+											<th>이용권구매</th>
+											<td>
+												<div class="selectbox-box">
+													<div class="selectbox-label"></div>
+												</div>
+												<div class="selectbox-layer layer_width_base">
+													<div class="selectbox-list"></div>
+												</div> <span class="drop"></span>
+											</td>
+										</tr>
+										<tr>
+											<th>결제금액</th>
+											<td><label for="ticket"></label> <select
+												name="ticket" id="ticket">
+													<option value="1" selected>1</option>
+													<option value="3">3</option>
+													<option value="5">5</option>
+													<option value="10">10</option>
+											</select> <a>회권</a> <br> <label for="price">결제금액: </label> <span
+												id="selectedPrice"></span></td>
+										</tr>
+
+
+
+									</tbody>
+								</table>
+								<div class="f_btn">
+								
+    								<input type="hidden" name="memberId" id="memberId" value="<%= memberId %>">
+   									<input type="hidden" name="ticId" id="ticId" value="${ticId}">
+									<button type="submit" class="btn">구매하기</button>
+								</div>
+							</form>
 						</div>
-						<span class="drop"></span>
 					</div>
 				</div>
-				<br> <label for="ticket">이용권구매</label> <select name="ticket"
-					id="ticket">
-					<option value="1" selected>1</option>
-					<option value="3">3</option>
-					<option value="5">5</option>
-					<option value="10">10</option>
-				</select> <a>회권</a> <br> <label for="price">결제금액: </label> <span
-					id="selectedPrice"></span>
 			</div>
-		</div>
-
-
-
-
-
-	</div>
-	<!--  구입하기 눌렀을때, -->
-
-
-
-	<div id="paymentForm" style="display: none;">
+			
+			<div id="paymentForm" style="display: none;">
 		<h2>무통장 입금 안내</h2>
 		<p>아래 계좌로 결제금액을 입금해주세요.</p>
 		<p>
@@ -137,150 +205,75 @@ input:not(#address), input[type="file"] {
 			입금기한: <span id="depoLine"></span>
 		</p>
 	</div>
-	<form id="applicationForm">
-		<label for="id">아이디:</label> 
-		<input id="id" value="<%= loginMember.getId() %>" disabled> <br> 
-		<label for="name">이름:</label> 
-		<input id="name"value="<%= loginMember.getName() %>" disabled> <br> 
-		<label for="address">주소:</label> 
-		<input type="text" id="address" value="<%= loginMember.getAddress() %>" disabled>
-		<button type="button" id="changeAddressBtn">주소변경</button> <br>
-		<label for="photo">사진:</label> 
-		<input type="file" id="photo" accept="image/jpeg, image/png" style="width: 200px; height: 200px;" required> <br>
 			
-	</form>
-
-
-
-	<hr>
-	<button id="btn3" style="display: none;">구매하기</button>
-	<button id="btn4" style="display: none;">홈으로</button>
-	<button id="btn5">신청하기</button>
-
-
-
-
-
-
-
-
-	<script>
-	
-	
-	
-	btn1.onclick = () => {
-		event.preventDefault();
-		document.getElementById("applicationForm").style.display="block";
-		document.getElementById("buyFrm").style.display = "none"; 
-		btn3.style.display = "none";
-		btn5.style.display = "block";
-		
-	}
-	btn2.onclick= () => {
-		document.getElementById("buyFrm").style.display = "block"; 
-		btn3.style.display = "block";
-		btn5.style.display = "none";
-		document.getElementById("applicationForm").style.display = "none";
-		// 가격 정보 객체 생성
-		const priceInfo = {
-			1: 5000,
-			3: 15000,
-			5: 23900,
-			10: 46900
-		};
-	
-		// 회권 선택 요소 가져오기
-		const ticketSelect = document.getElementById("ticket");
-		// 결제금액 표시 요소 가져오기
-		const priceLabel = document.getElementById("selectedPrice");
-	
-		// 회권 선택 이벤트 처리
-		ticketSelect.addEventListener("change", function() {
-			// 선택된 회권 값 가져오기
-			const selectedTicket = parseInt(ticketSelect.value);
 			
-			// 선택된 회권에 따른 가격 표시
-			const price = priceInfo[selectedTicket];
-			priceLabel.textContent = price + "원";
-		});
-	
-		// 초기 설정: 기본 회권과 가격 표시
-		const initialTicket = parseInt(ticketSelect.value);
-		const initialPrice = priceInfo[initialTicket];
-		priceLabel.textContent = initialPrice;
-		
-
-			// 신청하기 버튼 클릭 이벤트 처리
-		
-			btn3.onclick = () => {
-				
-			event.preventDefault(); // 기본 이벤트 중단
 			
-			// 선택한 회권 값 가져오기
-			const selectedTicket = parseInt(ticketSelect.value);
-			// 선택한 회권에 따른 가격 가져오기
-			const selectedPrice = priceInfo[selectedTicket];
-			// 결제금액 표시 요소 업데이트
-			priceLabel.textContent = selectedPrice + "원";
-	
-			const bankSelect = document.querySelector('select[name="selBank"]');
-		    const selectedBank = bankSelect.value;
-		    
-		    const bankNameElement = document.getElementById("bankName");
-		    bankNameElement.textContent = selectedBank;
 			
-		    const amountElement = document.getElementById("amount");
-		    amountElement.textContent = selectedPrice + "원";	    
-					
-			$.ajax({
-				url : "<%=request.getContextPath()%>/menu/buyTicket",
-				method : "POST",
-				data : {
-				price : selectedPrice,
-				ticName : ticket.value
-					
-				},
-				success(responseText){
-					alert(responseText);
-					
-					console.log("zzz");
-					document.getElementById("buyFrm").style.display = "none"; 
-					btn3.style.display = "none";
-					btn4.style.display = "block";
-					
-					
-				}
-			});			
-		    
-		     
-			// 폼 표시
-			const paymentForm = document.getElementById("paymentForm");
-			paymentForm.style.display = "block";
 			
-			}
-		
-	
-		// 기본 설정: 폼 초기화
-		const paymentForm = document.getElementById("paymentForm");
-		paymentForm.style.display = "none";
-		
-	}
-	
-	
-	</script>
-
-
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
+			
 </body>
-
 </html>
+<script>
+    const priceInfo = {
+        1: 5000,
+        3: 15000,
+        5: 23900,
+        10: 46900
+    };
+    
+    const ticketSelect = document.getElementById("ticket");
+    const priceLabel = document.getElementById("selectedPrice");
+    const paymentForm = document.getElementById("paymentForm");
+    const mypageTable = document.querySelector(".mypage-table");
+    
+    
+    
+    
+    
+	
+    
+    ticketSelect.addEventListener("change", function() {
+        const selectedTicket = parseInt(ticketSelect.value);
+        const price = priceInfo[selectedTicket];
+        priceLabel.textContent = price + "원";
+    });
 
+    const initialTicket = parseInt(ticketSelect.value);
+    const initialPrice = priceInfo[initialTicket];
+    priceLabel.textContent = initialPrice + "원";
+
+    document.buyTicketFrm.onsubmit = function(e) {
+       
+        
+        const ticId = "tic" + ticket.value;
+        document.getElementById("ticId").value = ticId
+        
+        console.log(ticId);
+        // mypage-table 안내 표시
+        const selectedTicket = parseInt(ticketSelect.value);
+        const selectedPrice = priceInfo[selectedTicket];
+        const bankName = "입금은행 이름";
+        const accountNumber = "계좌번호";
+        const depoLine = "입금기한";
+        
+        mypageTable.innerHTML = `
+            <tr>
+                <th colspan="2">무통장 입금 안내</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>아래 계좌로 결제금액을 입금해주세요.</p>
+                    <p>은행: <span id="bankName">${bankName}</span></p>
+                    <p>계좌번호: <span id="accountNumber">${accountNumber}</span></p>
+                    <p>결제금액: <span id="amount">${selectedPrice}원</span></p>
+                    <p>입금기한: <span id="depoLine">${depoLine}</span></p>
+                </td>
+            </tr>
+        `;
+        
+        paymentForm.style.display = "none";
+        
+        /* e.preventDefault(); */
+    };
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
