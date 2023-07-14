@@ -14,6 +14,10 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/report.css" />
+    <style>
+    	div#pagebar{margin-top:5px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1250px;}
+		div#pagebar a{margin-right: 5px; color: green; font-size: 20px}
+    </style>
     <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
     <title>ReportList</title>
 </head>
@@ -36,7 +40,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                 />
               </svg>
             </span>
-            <a href="">사이트 바로가기</a>
+            <a href="<%=request.getContextPath()%>">사이트 바로가기</a>
           </di>
           <hr />
           <h5 style="padding-left: 20px; padding-top: 10px">사이트 관리</h5>
@@ -89,7 +93,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                           />
                         </svg>
                       </span>
-                      <a href="">라이더 관리</a>
+                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
                     </div>
                   </div>
                 </li>
@@ -107,7 +111,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                 />
               </svg>
             </span>
-            <a href="">문의사항</a>
+            <a href="<%=request.getContextPath()%>/admin/adminInquiry">문의사항</a>
           </div>
           
           <div class="reportManagement">
@@ -180,6 +184,9 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 							<% } %>
                     	</tbody>
                     </table>
+                    <div id='pagebar'>
+						<%= request.getAttribute("pagebar") %>
+					</div>
                 </div>
             </div>
         </section>

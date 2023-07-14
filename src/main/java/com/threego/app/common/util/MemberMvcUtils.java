@@ -41,22 +41,6 @@ public class MemberMvcUtils {
 		return encryptedPassword;
 	}
 
-	/**
-	 * 
-	 *  - totalContent 전체게시물수 
-	 *  - totalPage 전체페이지수
-	 *  - pagebarSize 5개
-	 *  - pageNo 페이지바의 숫자(반복처리)
-	 *  - pageStart 페이지바 시작번호
-	 *  - pageEnd 페이지바 끝번호
-	 *  - url 요청url
-	 *  
-	 * @param cpage
-	 * @param limit
-	 * @param totalContent
-	 * @param url
-	 * @return
-	 */
 
 }
 

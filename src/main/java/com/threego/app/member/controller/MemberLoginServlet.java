@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import com.threego.app.common.util.MemberMvcUtils;
 import com.threego.app.member.model.service.MemberService;
 import com.threego.app.member.model.vo.Member;
 
@@ -35,19 +36,27 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		// 1. 사용자 입력값 
 			String id = request.getParameter("login-id");
-			String pwd = request.getParameter("login-pwd");
+			String pwd = MemberMvcUtils.getEncryptedPassword(request.getParameter("login-pwd"), id);
+					
 		
 		// 2. 업무로직 
-			Member loginMember = memberService.findById(id);
+			Member member = memberService.findById(id);
 			
 			HttpSession session = request.getSession();
 			
+
+			if(member != null && pwd.equals(member.getPwd())) {
+				session.setAttribute("loginMember", member);
+				response.sendRedirect(request.getContextPath());
+				
+			} else {
+				session.setAttribute("msg", "로그인 정보가 일치하지 않습니다. 확인해주세요.");
+				String referer = request.getHeader("Referer");
+				response.sendRedirect(referer);
+			}
+
 			
-			
-			session.setAttribute("loginMember", loginMember);
-			// 3. 응답처리 
-			response.sendRedirect(request.getContextPath());
-		
+
 	}
 
 }

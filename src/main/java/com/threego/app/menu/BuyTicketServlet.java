@@ -35,6 +35,10 @@ public class BuyTicketServlet extends HttpServlet {
 	    
 	    
 	    
+	    
+	    
+	    
+	    
 	    System.out.println(pMemId);
 //	    System.out.println("zzzz");
 	    

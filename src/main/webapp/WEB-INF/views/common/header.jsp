@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
 
+<script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 </head>
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
@@ -30,8 +31,6 @@
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/reqPickupGarbage">수거신청</a></li>
                     <li class="nav-item"><a href = "">라이더 지원</a></li>
                     <li class="nav-item"><a href="">고객센터</a></li>
-
-                    <li class="nav-item"><a href="<%=request.getContextPath() %>/admin/adminMain" target="_blank">관리자</a></li>
                 </ul>
             </div>
             <!--로고 및 메뉴바 끝-->
@@ -45,6 +44,7 @@
     				<a href="<%= request.getContextPath() %>/member/myPage"><img src="<%=request.getContextPath()%>/images/mypageicon.png" alt="mypage-icon" class = "ent-img" id = "btn-mypage"></a>
                     <span>마이페이지</span>
                 </div>
+                
                 
                 	<%} else if(loginMember.getMemberRole()==MemberRole.A){ %>
                 	<div class = "ent-button" id="adminpage">

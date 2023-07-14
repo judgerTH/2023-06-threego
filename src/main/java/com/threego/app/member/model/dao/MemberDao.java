@@ -7,13 +7,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
-
-import oracle.jdbc.proxy.annotation.Pre;
+import com.threego.app.ticket.model.vo.TicketPayment;
 
 public class MemberDao {
 	
@@ -71,6 +72,32 @@ public class MemberDao {
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
 	}
 
+
+	public Member findByEmail(Connection conn, String email) {
+		
+		Member member = null; 
+		String sql = prop.getProperty("findByEmail");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+		
+			pstmt.setString(1, email);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+				
+				while(rset.next()) {
+					
+					member = handleMemberResultSet(rset);
+				}
+			}
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		
+		}
+		return member;
+	}
+	
+	
 	public int updateMember(Connection conn, Member member) {
 		int result = 0;
 		String sql = prop.getProperty("updateMember");
@@ -109,6 +136,60 @@ public class MemberDao {
 			throw new MemberException(e);
 		}
 		return result;
+	}
+
+	public int updatePwd(Connection conn, String id, String pwd) {
+		int result = 0;
+		String sql = prop.getProperty("updatePwd");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		}
+		
+		
+		
+		return result;
+	}
+
+
+	public List<TicketPayment> findRequestList(Connection conn, String memberId) {
+		List<TicketPayment> requestList = new ArrayList<>();
+		String sql = "SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt " +
+			                "FROM payment p " +
+			                "JOIN ticket t ON p.p_tic_id = t.tic_id " +
+			                "WHERE p.p_mem_id = ?";
+		
+		try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, memberId);
+			ResultSet rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String ticName = rset.getString("tic_name");
+			    int ticPrice = rset.getInt("tic_price");
+			    Date pDate = rset.getDate("p_date");
+			    int pCnt = rset.getInt("p_cnt");
+			    
+				TicketPayment ticketPayment = new TicketPayment();
+				ticketPayment.setTicName(ticName);
+			    ticketPayment.setTicPrice(ticPrice);
+			    ticketPayment.setpDate(pDate);
+			    ticketPayment.setpCnt(pCnt);
+
+			    // 생성한 TicketPayment 객체를 requestList에 추가
+			    requestList.add(ticketPayment);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return requestList;
 	}
 	
 }
