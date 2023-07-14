@@ -149,6 +149,16 @@ width: 400px;
 	font-size: 20px;
 	border: none;
 }
+#riderComplete{
+	width : 80%;
+	margin : 0 auto;
+    height: 500px;
+    margin: 0 auto;
+    font-size: 25px;
+    padding-top: 200px;
+    font-weight: bold;
+    text-align: center;
+}
 </style>
 </head>
 <body>
@@ -207,14 +217,15 @@ width: 400px;
 						<th>아이디</th>
 						<%if(loginMember != null){%>
 						
-						<td><%= loginMember.getId() %></td> <%}%>
+						<td> 
+						<input type="text" name="id" id="userId" value="<%= loginMember.getId() %>"></td><%}%>
 					</tr>
 					<tr>
 						<th>수거지역 <span>*</span>
 						</th>
-						<td><select name="type" id="celeb-enroll-type" required="required">
+						<td><select name="location" id="celeb-enroll-type" required="required">
 								<option value="">선택하세요</option>
-								<option value="S1">강남구, 서초구</option>
+								<option value="S1">강남구,서초구</option>
 								<option value="S2">송파구, 강동구</option>
 								<option value="S3">광진구, 성동구</option>
 						</select></td>
@@ -238,8 +249,11 @@ width: 400px;
 			<div class="riderbtn">
 			<button type="submit" id="ridersubmit">수고미 지원하기</button></div>
 		</form>
+		
 
 	</div>
+	<form id="riderComplete" style="display: none;">
+						<div>  라이더지원이 완료되어습니다. 관리자 확인 후 1:1 메세지 함으로 연락드리겠습니다.</div></form>
 </div>
 </body>
 <script>
@@ -248,8 +262,11 @@ application.onclick=(e)=>{
 	document.querySelector("#afterContent").style.display="block";
 }
 document.memberUpdateFrm.onsubmit=(e)=>{
+	
 	if(confirm("근로계약서에 서명 및 날짜기입을 정확하게 하셨습니까?")){
 		const frmData = new FormData(e.target);
+		  for(const name of frmData.keys())
+	            console.log(`\${name}=\${frmData.get(name)}`);
 		$.ajax({
 			url : "<%= request.getContextPath() %>/rider/riderApplication",
 			data : frmData,
@@ -271,6 +288,8 @@ document.memberUpdateFrm.onsubmit=(e)=>{
 			
 		});
 		e.preventDefault(); 
+		document.querySelector("#afterContent").style.display="none";
+		document.querySelector("#riderComplete").style.display="block";
 	}
 }
 </script>
