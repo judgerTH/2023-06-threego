@@ -42,14 +42,14 @@ public class RequestDao {
 				while(rset.next()){
 					Request requset = handleRequestResultSet(rset);
 					requestList.add(requset);
-					System.out.println("requestList@dao = " + requestList);
+					
 				}
 				
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new RequestException(e);
+			
+			throw new RequestException(e);
 		}
 		
 		return requestList;
@@ -58,7 +58,7 @@ public class RequestDao {
 	private Request handleRequestResultSet(ResultSet rset) throws SQLException {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
-		String reqLocationId = rset.getString("req_location_id");
+		String reqLocationId = rset.getString("location_name");
 		String reqPhoto = rset.getString("req_photo");
 		String reqStatus = rset.getString("req_status");
 		Date reqData = rset.getDate("req_Date");

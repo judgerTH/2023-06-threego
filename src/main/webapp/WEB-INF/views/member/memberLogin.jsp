@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>loginMember</title>
+<script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
 </head>
 <%
