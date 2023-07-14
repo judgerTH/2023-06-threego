@@ -71,6 +71,32 @@ public class MemberDao {
 		return new Member(member_id, pwd, name, email, phone, member_role, post, address, regDate);
 	}
 
+
+	public Member findByEmail(Connection conn, String email) {
+		
+		Member member = null; 
+		String sql = prop.getProperty("findByEmail");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+		
+			pstmt.setString(1, email);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+				
+				while(rset.next()) {
+					
+					member = handleMemberResultSet(rset);
+				}
+			}
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		
+		}
+		return member;
+	}
+	
+	
 	public int updateMember(Connection conn, Member member) {
 		int result = 0;
 		String sql = prop.getProperty("updateMember");
@@ -108,6 +134,25 @@ public class MemberDao {
 		} catch (SQLException e) {
 			throw new MemberException(e);
 		}
+		return result;
+	}
+
+	public int updatePwd(Connection conn, String id, String pwd) {
+		int result = 0;
+		String sql = prop.getProperty("updatePwd");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			throw new MemberException(e);
+		}
+		
+		
+		
 		return result;
 	}
 	
