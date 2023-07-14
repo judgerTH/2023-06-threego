@@ -54,7 +54,7 @@ public class MemberEnrollServlet extends HttpServlet {
 		Member member = new Member(id, pwd, name, email, phone, null, post, address, null);
 		
 		int result = memberService.insertMember(member);
-		System.out.println(result);
+		System.out.println("회원가프"+result);
 		response.setContentType("application/json; charset=utf-8");
 //		Map<String, Object> map = new HashMap<>();
 //		map.put("result", "성공");
