@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import com.threego.app.common.util.MemberMvcUtils;
 import com.threego.app.member.model.service.MemberService;
 import com.threego.app.member.model.vo.Member;
 
@@ -35,7 +36,8 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		// 1. 사용자 입력값 
 			String id = request.getParameter("login-id");
-			String pwd = request.getParameter("login-pwd");
+			String pwd = MemberMvcUtils.getEncryptedPassword(request.getParameter("login-pwd"), id);
+					
 		
 		// 2. 업무로직 
 			Member member = memberService.findById(id);
