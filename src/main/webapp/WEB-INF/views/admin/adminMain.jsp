@@ -102,7 +102,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
                         />
                       </svg>
                     </span>
-                    <a href="">라이더 관리</a>
+                    <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
                   </div>
                 </div>
               </li>
@@ -120,7 +120,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
               />
             </svg>
           </span>
-          <a href="">문의사항</a>
+          <a href="<%= request.getContextPath()%>/admin/adminInquiry">문의사항</a>
         </div>
         
         <div class="reportManagement">

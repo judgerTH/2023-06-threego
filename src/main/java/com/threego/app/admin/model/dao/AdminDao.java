@@ -14,7 +14,7 @@ import java.util.Properties;
 import com.threego.app.admin.model.exception.AdminException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
-
+import com.threego.app.rider.model.vo.Rider;
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.board.model.vo.BoardType;
 import com.threego.app.warning.model.vo.WarnigMemberRole;
@@ -38,9 +38,9 @@ private Properties prop = new Properties();
 	}
 
 	// 오늘 방문자 수 db에서 받아오기
-	public int getVisitTodayCount(Connection conn) {
+	public int getSignUpTodayCount(Connection conn) {
 		int todayCount = 0;
-		String sql = prop.getProperty("getVisitTodayCount"); // select count(*) from board
+		String sql = prop.getProperty("getSignUpTodayCount"); // select count(*) from board
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rset = pstmt.executeQuery()) {
@@ -54,9 +54,9 @@ private Properties prop = new Properties();
 	}
 
 	// 어제 방문자수 db에서 받아오기
-	public int getVisitYesterdayCount(Connection conn) {
+	public int getSignUpYesterdayCount(Connection conn) {
 		int yesterdayCount = 0;
-		String sql = prop.getProperty("getVisitYesterdayCount"); // select count(*) from board
+		String sql = prop.getProperty("getSignUpYesterdayCount"); // select count(*) from board
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rset = pstmt.executeQuery()) {
@@ -70,9 +70,9 @@ private Properties prop = new Properties();
 	}
 
 	// 2틀 전 방문자 수 db에서 받기
-	public int getVisitTwoDayAgoCount(Connection conn) {
+	public int getSignUpTwoDayAgoCount(Connection conn) {
 		int twoDayAgoCount = 0;
-		String sql = prop.getProperty("getVisitTwoDayAgoCount"); // select count(*) from board
+		String sql = prop.getProperty("getSignUpTwoDayAgoCount"); // select count(*) from board
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rset = pstmt.executeQuery()) {
@@ -86,9 +86,9 @@ private Properties prop = new Properties();
 	}
 	
 	// 3일 전 방문자 수 db에서 받기
-	public int getVisitThreeDayAgoCount(Connection conn) {
+	public int getSignUpThreeDayAgoCount(Connection conn) {
 		int threeDayAgoCount = 0;
-		String sql = prop.getProperty("getVisitThreeDayAgoCount"); // select count(*) from board
+		String sql = prop.getProperty("getSignUpThreeDayAgoCount"); // select count(*) from board
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rset = pstmt.executeQuery()) {
@@ -449,6 +449,77 @@ private Properties prop = new Properties();
 		
 		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
 
+	}
+
+	public List<Board> getInquiryBoard(Connection conn, int start, int end) {
+		List<Board> boards = new ArrayList<>();
+		String sql = prop.getProperty("getInquiryBoard");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Board board = handleBoardResultSet(rset);
+					boards.add(board);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return boards;
+	}
+
+	public List<Rider> getAllRiderList(Connection conn) {
+		List<Rider> riders = new ArrayList<>();
+		String sql = prop.getProperty("getAllRiderList");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Rider rider = handleRiderResultSet(rset);
+					riders.add(rider);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return riders;
+	}
+
+	private Rider handleRiderResultSet(ResultSet rset) throws SQLException{
+		String riderId = rset.getString("r_id");
+		String riderLocationId = rset.getString("r_location_id");
+		String riderLocationName = rset.getString("l_name");
+		String riderStatus = rset.getString("r_status");
+		Date riderRegDate = rset.getDate("r_reg_date");
+		Date riderUpDate = rset.getDate("up_Date");
+		
+		return new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName);
+	}
+
+	public List<Rider> getApproveRiderList(Connection conn) {
+		List<Rider> waitingRiders = new ArrayList<>();
+		String sql = prop.getProperty("getApproveRiderList");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					String riderId = rset.getString("r_id");
+					String riderLocationId = rset.getString("r_location_id");
+					String riderLocationName = rset.getString("l_name");
+					String riderStatus = rset.getString("r_status");
+					Date riderRegDate = rset.getDate("r_reg_date");
+					Date riderUpDate = rset.getDate("up_Date");;
+					String riderName = rset.getString("name");
+					
+					Rider waitingRider = new Rider(riderId, riderLocationId, riderStatus, riderRegDate, riderUpDate, riderLocationName, riderName);
+					waitingRiders.add(waitingRider);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return waitingRiders;
 	}
 
 	
