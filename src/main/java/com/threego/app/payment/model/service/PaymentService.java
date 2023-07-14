@@ -26,4 +26,19 @@ public class PaymentService {
 		return totalPayment;
 	}
 
+	public int insertPayment(String memberId, String ticketId, int purchaseCount) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = paymentDao.insertPayment(conn, memberId, ticketId, purchaseCount);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 }

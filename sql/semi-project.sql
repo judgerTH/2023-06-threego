@@ -41,9 +41,9 @@ create table ticket(
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
-    );        
---drop table ticket;
-
+    );       
+    
+    
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -57,7 +57,15 @@ create table payment(
    );  
 --drop table payment;
  create sequence seq_payment_no;  
---drop sequence seq_payment_no;
+
+select * from payment;
+select * from member;
+
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
  
 create table board(
     b_no number,
