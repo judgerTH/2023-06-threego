@@ -33,6 +33,8 @@ public class BuyTicketServlet extends HttpServlet {
 	    String ticId = req.getParameter("ticId");
 	    String pMemId = req.getParameter("memberId");
 	    
+	    
+	    
 	    System.out.println(pMemId);
 //	    System.out.println("zzzz");
 	    
