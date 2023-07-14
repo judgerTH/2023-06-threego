@@ -233,7 +233,7 @@ width: 400px;
 					<tr>
 						<th>약관 동의 및 근로계약서</th>
 						<td>
-						<a href="/file/쓰리고근로계약서.pdf" download>근로계약서 다운로드</a>
+						<a href="<%=request.getContextPath() %>/upload/쓰리고근로계약서.pdf" download>근로계약서 다운로드</a>
 						<br>근로계약서 파일은 다운로드 후 꼭 읽어보시고 서명 후 제출 부탁드립니다.
 						</td>
 					</tr>
