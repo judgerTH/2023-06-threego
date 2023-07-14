@@ -42,6 +42,7 @@ create table ticket(
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );        
+    
 create table payment(
     p_no	number,
     p_mem_id	varchar2(30),
@@ -54,7 +55,12 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-
+select * from payment;
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
  
 create table board(
     b_no number,
@@ -71,8 +77,10 @@ create table board(
 );
  create sequence seq_board_no;
  --drop table board;
- 
-
+ select * from board;
+insert into board values(
+    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+);
 create table board_comment(
     c_no number,
     c_level number default 1,
@@ -96,9 +104,10 @@ create table location(
 create table rider(
     r_id varchar2(30),
     r_location_id varchar2(30),
-    r_status char(1),
+    r_status char(1) default '0',
     r_reg_date date default sysdate,
     up_date	date default null,
+    fileName varchar2(500) not null,
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
@@ -153,6 +162,10 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
+select * from warning;
+insert into warning values (
+    seq_w_no.next
+);
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
@@ -174,6 +187,9 @@ create table msgbox(
     constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
+
+create sequence seq_msg_no;
+
 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
@@ -212,7 +228,7 @@ insert into location values(
 );
 
  insert into rider values (
-    'xogus', 'S2','1', sysdate,sysdate
+    'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
  insert into request values(
@@ -235,6 +251,7 @@ select * from request;
 select * from payment;
 select * from del_member;
     -- commit;
+
 
 SELECT sum(p_cnt)
 FROM payment

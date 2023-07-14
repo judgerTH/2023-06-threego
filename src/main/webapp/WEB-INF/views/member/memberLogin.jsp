@@ -22,7 +22,6 @@ window.onload = () => {
 	<% } %>
 }
 
-
 </script>
 
 <body>
