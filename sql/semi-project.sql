@@ -222,3 +222,7 @@ select * from payment;
 select * from del_member;
     -- commit;
 
+SELECT sum(p_cnt)
+FROM payment
+WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
+  AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
