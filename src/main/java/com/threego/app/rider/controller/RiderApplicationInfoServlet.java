@@ -19,10 +19,10 @@ import com.threego.app.rider.model.vo.Rider;
 /**
  * Servlet implementation class RiderApplicationServlet
  */
-@WebServlet("/menu/riderApplication")
+@WebServlet(urlPatterns = {"/menu/riderApplication", "/menu/riderApplications"})
 public class RiderApplicationInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	/**
+	/**"
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
