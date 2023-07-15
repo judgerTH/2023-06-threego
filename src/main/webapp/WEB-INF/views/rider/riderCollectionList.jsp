@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>수저접수 현황</title>
+<script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
 <style>
 #collection-tbl {
 	border-top: 2px solid black;
@@ -119,6 +120,7 @@ input {
 h2 {
 	margin-left: 60px;
 }
+#btn-accept{border : none; border-radius : 3px; background-color: #49B466; color : white; padding : 5px 15px; font-weight : bold;}
 </style>
 </head>
 <body>
@@ -152,19 +154,19 @@ h2 {
 					<div class="collection-wrapper">
 						<div class="collection-sub">
 							<h3>수거접수 리스트</h3>
-							<table id="collection-tbl">
-								<thead>
-									<tr>
-										<th>접수번호</th>
-										<th>접수자</th>
-										<th>접수지역</th>
-										<th>접수사진</th>
-										<th>접수일자</th>
-										<th>접수현황</th>
-									</tr>
-								</thead>
-								<tbody></tbody>
-							</table>
+								<table id="collection-tbl">
+									<thead>
+										<tr>
+											<th>접수번호</th>
+											<th>접수자</th>
+											<th>접수지역</th>
+											<th>접수일자</th>
+											<th>접수현황</th>
+											<th>접수상세</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
 						</div>
 					</div>
 				</div>
@@ -178,19 +180,71 @@ window.onload = () => {
 	findAllList(); 
 } 
 const findAllList = () =>{
-
+	
+	
 	 $.ajax({ 
 	 	url : "<%=request.getContextPath()%>/rider/findAllRequest",
 	 	data : "json",
 	 	success(responseData){
 			
 	 		console.log(responseData);
+	 		responseData.forEach((request)=>{
+	 		
+		 		const {reqNo, reqWriter, reqLocationId, reqPhoto, reqDate} = request;
+		 		let {reqStatus} = request;
+		 		const tbody = document.querySelector("#collection-tbl tbody");
+		 		
+		 		if (reqStatus == '0') {
+		 		    reqStatus = "수거 대기중";
+		 		} else if (reqStatus == '1') {
+		 		    reqStatus = "수거중";
+		 		} else if (reqStatus == '2') {
+		 		    reqStatus = "수거완료";
+		 		} else {
+		 		    reqStatus = "수거취소";		
+		 		}
+				
+		 		if(reqStatus == "수거 대기중"){
+			 		tbody.innerHTML += `
+						<tr>
+			                <td id = "reqNo">\${reqNo}</td>
+			                <td>\${reqWriter}</td>
+			                <td>\${reqLocationId}</td>
+			                <td>\${reqDate}</td>
+			                <td>\${reqStatus}</td>
+			                // <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest">
+				            //</form>
+			                //<td><button id = 'btn-accept' onclick = "acceptRequest();">보기</button></td>
+			                // <input type="hidden" name="reqNo" value="\${reqNo}">
+			            </tr>
+			 		`;
+		 		}
+		 		
+		 		
+		 		
+	 		}); 
+	 		
+	 		
 	 		
 	 	}
-	 
-	 
 	});
+	 
+	const acceptRequest = () => {
+		
+		const title = "acceptRequest"; 
+		const popup = open("", title, "width = 700px, height = 500px");
+		
+		
+		
+		const frm = document.acceptRequestFrm;
+		frm.target = title;
+		frm.submit();
+		
+	}
 } 
+
+
+
 </script>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

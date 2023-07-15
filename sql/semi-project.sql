@@ -269,4 +269,24 @@ FROM payment
 WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
+
+  
+  
+create table msgbox(
+    msg_no number, 
+    msg_type varchar2(50) not null, 
+    msg_sender varchar2(30) not null, 
+    msg_receiver varchar2(30) not null, 
+    msg_content varchar2(4000), 
+    constraints pk_msgbox_msg_no primary key(msg_no),
+    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
+);
+
+-- drop table msgbox;
+
+select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
+
 update rider set r_status = '0', up_date = null where r_id='sukey'
+
