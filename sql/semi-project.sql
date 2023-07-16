@@ -42,7 +42,7 @@ create table ticket(
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );       
-    
+--drop table ticket;
     
 create table payment(
     p_no	number,
@@ -287,7 +287,6 @@ create table msgbox(
 );
 
 -- drop table msgbox;
-
 
 
 
