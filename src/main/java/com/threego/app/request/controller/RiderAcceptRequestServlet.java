@@ -26,10 +26,13 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String req = request.getParameter("reqNo");
 		
-		// 수거 리스트 보기에서 frm submit 하면 정보 받아와서 해당 정보 셋팅하기
-		
-		
+		// request.setAttribute("reqNo", reqNo);
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");	
+		String rId = loginMember.getId();
 		int reqNo = Integer.parseInt(request.getParameter("reqNo"));
 		
 		
