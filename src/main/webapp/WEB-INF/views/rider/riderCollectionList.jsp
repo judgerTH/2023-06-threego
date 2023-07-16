@@ -236,6 +236,65 @@ const findAllList = () => {
    }
 
 
+const findAllList = () =>{
+	
+	
+	 $.ajax({ 
+	 	url : "<%=request.getContextPath()%>/rider/findAllRequest",
+	 	data : "json",
+	 	success(responseData){
+			
+	 		console.log(responseData);
+	 		responseData.forEach((request)=>{
+	 		
+		 		const {reqNo, reqWriter, reqLocationId, reqPhoto, reqDate} = request;
+		 		let {reqStatus} = request;
+		 		const tbody = document.querySelector("#collection-tbl tbody");
+		 		
+		 		if (reqStatus == '0') {
+		 		    reqStatus = "수거 대기중";
+		 		} else if (reqStatus == '1') {
+		 		    reqStatus = "수거중";
+		 		} else if (reqStatus == '2') {
+		 		    reqStatus = "수거완료";
+		 		} else {
+		 		    reqStatus = "수거취소";		
+		 		}
+				
+		 		if(reqStatus == "수거 대기중" || reqStatus == "수거중"){
+			 		tbody.innerHTML += `
+						<tr>
+			                <td>\${reqNo}</td>
+			                <td>\${reqWriter}</td>
+			                <td>\${reqLocationId}</td>
+			                <td>\${reqDate}</td>
+			                <td>\${reqStatus}</td>
+			                <td>
+			                <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest" method="GET">
+			                <input type="hidden" name="reqNo" value="\${reqNo}">
+			                <button id = 'btn-accept' onclick = "acceptRequest();">보기</button>
+				            </form>
+			                </td>
+			            </tr>
+			 		`;
+		 		}
+		 		
+	 		}); 
+	 	}
+	});
+	 
+} 
+// 팝업창이 연결되나 내용이 팝업에 뜨지 않음. 
+const acceptRequest = () => {
+	
+	const title = "acceptRequestFrm"; 
+	const popup = open("", title, "width = 700px, height = 500px");
+	
+	const frm = document.acceptRequestFrm;
+	frm.target = title;
+	frm.submit();
+	
+}
 
 
 </script>

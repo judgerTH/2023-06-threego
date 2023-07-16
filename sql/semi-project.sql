@@ -290,3 +290,5 @@ select r.*, (select l_name from location where l_id = r.req_location_id) locatio
 
 update rider set r_status = '0', up_date = null where r_id='sukey'
 
+
+-- update request set req_status = '1' ,  req_rider = ? where req_no = ?
