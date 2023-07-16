@@ -6,7 +6,7 @@ default tablespace users;
 
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
-
+--select * from request where req_rider = 'xogus';
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
@@ -171,6 +171,8 @@ constraints fk_warning_w_id foreign key(w_writer) references member(id) on delet
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
+
+select * from warning;
 --drop table warning;
 create sequence seq_w_no;
 --drop sequence seq_w_no;
@@ -286,9 +288,9 @@ create table msgbox(
 
 -- drop table msgbox;
 
-select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
-update rider set r_status = '0', up_date = null where r_id='sukey'
 
+
+update member set email = 'admin@naver.com' where id = 'admin';
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?

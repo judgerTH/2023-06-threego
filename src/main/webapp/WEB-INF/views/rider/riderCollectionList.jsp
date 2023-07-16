@@ -29,8 +29,6 @@
 	justify-content: center;
 	margin-top: 30px;
 }
-
-<%--윤아님 cssList--%>
 .left-div ul {
 	list-style: none;
 	padding: 0;
@@ -120,7 +118,15 @@ input {
 h2 {
 	margin-left: 60px;
 }
-#btn-accept{border : none; border-radius : 3px; background-color: #49B466; color : white; padding : 5px 15px; font-weight : bold;}
+
+#btn-accept {
+	border: none;
+	border-radius: 3px;
+	background-color: #49B466;
+	color: white;
+	padding: 5px 15px;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -147,6 +153,9 @@ h2 {
 								<li><a class="" aria-current="page"
 									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
 										리스트</a></li>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
+										수거 목록 조회</a></li>
 								<% } %>
 							</ul>
 						</div>
@@ -154,19 +163,19 @@ h2 {
 					<div class="collection-wrapper">
 						<div class="collection-sub">
 							<h3>수거접수 리스트</h3>
-								<table id="collection-tbl">
-									<thead>
-										<tr>
-											<th>접수번호</th>
-											<th>접수자</th>
-											<th>접수지역</th>
-											<th>접수일자</th>
-											<th>접수현황</th>
-											<th>접수상세</th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
+							<table id="collection-tbl">
+								<thead>
+									<tr>
+										<th>접수번호</th>
+										<th>접수자</th>
+										<th>접수지역</th>
+										<th>접수일자</th>
+										<th>접수현황</th>
+										<th>접수상세</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -177,8 +186,11 @@ h2 {
 </body>
 <script> 
 window.onload = () => { 
-	findAllList(); 
+   findAllList(); 
 } 
+
+
+
 const findAllList = () =>{
 	
 	

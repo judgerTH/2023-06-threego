@@ -16,42 +16,42 @@ import com.threego.app.request.model.vo.Request;
 
 
 public class RequestDao {
-	
+
 	Properties prop = new Properties();
-	
+
 	public RequestDao() {
-		
+
 		String filename = RequestDao.class.getResource("/sql/request/request-query.properties").getPath();
 		try {
 			prop.load(new FileReader(filename));
-		
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	public List<Request> findAllRequest(Connection conn) {
 		List<Request> requestList = new ArrayList<>();
 		String sql = prop.getProperty("findAllRequest");
-		
+
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 
 			try(ResultSet rset = pstmt.executeQuery()){
-				
+
 				while(rset.next()){
 					Request requset = handleRequestResultSet(rset);
 					requestList.add(requset);
-					
+
 				}
-				
+
 			}
-			
+
 		} catch (SQLException e) {
-			
+
 			throw new RequestException(e);
 		}
-		
+
 		return requestList;
 	}
 
@@ -64,24 +64,24 @@ public class RequestDao {
 		Date reqData = rset.getDate("req_Date");
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
-				
+
 		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
 
 	public int acceptRequest(Connection conn, int reqNo, String rId) {
-		
+
 		int result = 0; 
 		String sql = prop.getProperty("acceptRequest");
 		// update request set req_status = '1' , req_rider = ? where req_no = ?
-		
+
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-			
+
 			pstmt.setString(1, rId);
 			pstmt.setInt(2, reqNo);
-			
+
 			result = pstmt.executeUpdate();
-			
-			
+
+
 		} catch (SQLException e) {
 			throw new RequestException(e);
 		}
@@ -89,32 +89,57 @@ public class RequestDao {
 	}
 
 	public Request findByReqno(Connection conn, int reqNo) {
-		
+
 		Request acceptedRequest = null; 
 		String sql = prop.getProperty("findByReqno");
 		// select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r where req_no = ?
-		
+
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-			
+
 			pstmt.setInt(1, reqNo);
-			
+
 			try(ResultSet rset = pstmt.executeQuery()){
-				
+
 				while(rset.next()) {
-					
+
 					acceptedRequest = handleRequestResultSet(rset);
-					
+
 				}
 			}
-			
+
 		} catch (SQLException e) {
-			
+
 			throw new RequestException(e);
 		}
-		
+
 		return acceptedRequest;
 	}
-	
-	
+
+	public List<Request> findByMyReq(Connection conn, String id) {
+	    List<Request> requestList = new ArrayList<>();
+	    String sql = prop.getProperty("findByMyReq");
+	    try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+			pstmt.setString(1, id);
+
+			try(ResultSet rset = pstmt.executeQuery()){
+
+				while(rset.next()) {
+
+					Request request = handleRequestResultSet(rset);
+					requestList.add(request);
+				}
+			}
+
+		} catch (SQLException e) {
+
+			throw new RequestException(e);
+		}
+
+		return requestList;
+	}
+
+
+
 
 }
