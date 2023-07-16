@@ -42,19 +42,11 @@ public class MemberEnrollServlet extends HttpServlet {
 		String detailAddr = multiReq.getParameter("detailAddr");
 		String address = _address+" " +detailAddr;
 		
-		System.out.println(id);
-		System.out.println(pwd);
-		System.out.println(name);
-		System.out.println(phone);
-		System.out.println(post);
-		System.out.println(address);
-		System.out.println(detailAddr);
-		System.out.println(email);
+		
 		
 		Member member = new Member(id, pwd, name, email, phone, null, post, address, null);
 		
 		int result = memberService.insertMember(member);
-		System.out.println("회원가프"+result);
 		response.setContentType("application/json; charset=utf-8");
 //		Map<String, Object> map = new HashMap<>();
 //		map.put("result", "성공");

@@ -6,7 +6,7 @@ default tablespace users;
 
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
-
+--select * from request where req_rider = 'xogus';
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
@@ -41,7 +41,12 @@ create table ticket(
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
+<<<<<<< HEAD
     );        
+=======
+    );       
+--drop table ticket;
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
     
 create table payment(
     p_no	number,
@@ -161,6 +166,10 @@ constraints fk_warning_w_id foreign key(w_writer) references member(id) on delet
 constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 -- 0 신고확인중  1 신고확인완료
 );
+
+select * from warning;
+--drop table warning;
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 create sequence seq_w_no;
 select * from warning;
 insert into warning values (
@@ -250,3 +259,31 @@ select * from payment;
 select * from del_member;
     -- commit;
 
+
+SELECT sum(p_cnt)
+FROM payment
+WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
+  AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
+  
+
+  
+  
+create table msgbox(
+    msg_no number, 
+    msg_type varchar2(50) not null, 
+    msg_sender varchar2(30) not null, 
+    msg_receiver varchar2(30) not null, 
+    msg_content varchar2(4000), 
+    constraints pk_msgbox_msg_no primary key(msg_no),
+    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
+);
+
+-- drop table msgbox;
+
+
+
+update member set email = 'admin@naver.com' where id = 'admin';
+
+-- update request set req_status = '1' ,  req_rider = ? where req_no = ?
