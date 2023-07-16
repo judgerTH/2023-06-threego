@@ -110,7 +110,6 @@ public class MemberDao {
 			pstmt.setString(5, member.getId());
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		} catch (SQLException e) {
 			throw new MemberException(e);
 		}
