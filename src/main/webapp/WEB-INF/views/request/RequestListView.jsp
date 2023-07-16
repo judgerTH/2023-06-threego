@@ -13,10 +13,6 @@
 .btn-accept{margin : 10px 5px;border : none; padding : 5px 15px; color : white; background-color: #49B466; font-weight: bold; border-radius: 3px;}
 </style>
 </head>
-<%
-	int reqNo = (int)request.getAttribute("reqNo");
-
-%>
 <body>
 	 <fieldset id = "requestDetail-wrap">
         <h3>접수 내역 상세</h3>

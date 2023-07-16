@@ -27,8 +27,6 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 		String req = request.getParameter("reqNo");
 		System.out.println(req);
 		
-		int reqNo = Integer.parseInt(request.getParameter("reqNo"));
-		
 		// request.setAttribute("reqNo", reqNo);
 		
 		// Request request = new Re
