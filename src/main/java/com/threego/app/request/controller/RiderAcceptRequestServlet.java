@@ -27,7 +27,6 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 		
 		// 수거 리스트 보기에서 frm submit 하면 정보 받아와서 해당 정보 셋팅하기
 		String req = request.getParameter("reqNo");
-		System.out.println(req);
 		
 		// request.setAttribute("reqNo", reqNo);
 		HttpSession session = request.getSession();

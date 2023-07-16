@@ -56,5 +56,12 @@ public class RequestService {
 		return acceptedRequest;
 	}
 
+	public List<Request> findByMyReq(String id) {
+		Connection conn = getConnection();
+		List<Request> requestList = requestDao.findByMyReq(conn, id);
+		close(conn);
+		return requestList;
+	}
+
 
 }
