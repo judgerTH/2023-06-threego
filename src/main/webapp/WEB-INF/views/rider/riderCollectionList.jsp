@@ -213,7 +213,7 @@ const findAllList = () =>{
 			                <td>\${reqDate}</td>
 			                <td>\${reqStatus}</td>
 			                <td>
-			                <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest" method="GET">
+			                <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest">
 			                <input type="hidden" name="reqNo" value="\${reqNo}">
 			                <button id = 'btn-accept' onclick = "acceptRequest();">보기</button>
 				            </form>
@@ -227,11 +227,11 @@ const findAllList = () =>{
 	});
 	 
 } 
-// 팝업창이 연결되나 내용이 팝업에 뜨지 않음. 
+// 팝업창이 열리나 내용이 팝업에 뜨지 않음. 
 const acceptRequest = () => {
 	
-	const title = "acceptRequestFrm"; 
-	const popup = open("", title, "width = 700px, height = 500px");
+	const title = "acceptRequestPopUp"; 
+	const popup = window.open("", title, "width = 700px, height = 500px");
 	
 	const frm = document.acceptRequestFrm;
 	frm.target = title;

@@ -288,7 +288,18 @@ create table msgbox(
 
 select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
-update rider set r_status = '0', up_date = null where r_id='sukey'
+update rider set r_status = '0', up_date = null where r_id='sukey';
 
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
+
+select * from request;
+insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );

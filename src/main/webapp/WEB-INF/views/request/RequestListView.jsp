@@ -24,14 +24,15 @@
 	 <fieldset id = "requestDetail-wrap">
         <h3>접수 내역 상세</h3>
         <hr>
+        <form name = "requestDetailFrm"  action = "<%=request.getContextPath()%>/request/acceptRequest" method = "POST">
         <table id = "requestDetail">
             <tr>
                 <th>접수번호</th>
-                <td><%=acceptedRequest.getReqNo()%></td>
+                <td><%= acceptedRequest.getReqNo()%></td>
             </tr>
             <tr>
                 <th>접수자</th>
-                <td><%=acceptedRequest.getReqWriter() %></td>
+                <td><%= acceptedRequest.getReqWriter() %></td>
             </tr>
             <tr>
                 <th>접수지역</th>
@@ -49,7 +50,7 @@
             </tr>
             <tr>
                 <th>접수현황</th>
-                <td><%= acceptedRequest.getReqStatus()%></td>
+                <td><%=acceptedRequest.getReqStatus()%></td>
             </tr>
             <tr>
                 <th>담당 수고미</th>
@@ -63,10 +64,17 @@
                 	<td>미등록</td>
                 <%} %>
             </tr>
-    
         </table>
+    	<input type = "hidden" name = "reqNo" value = "<%=acceptedRequest.getReqNo()%>">
+	    <button type="submit" class = "btn-accept" id= "btn-accept">수락</button>
+	    <button type="submit" class = "btn-accept" id = "btn-close">닫기</button>
+        </form>
     </fieldset>
-    <button type="submit" class = "btn-accept">수락</button>
-    <button type="submit" class = "btn-accept">닫기</button>
 </body>
+<script>
+
+
+</script>
+
+
 </html>
