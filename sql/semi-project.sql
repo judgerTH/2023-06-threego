@@ -42,7 +42,7 @@ create table ticket(
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );       
-    
+--drop table ticket;
     
 create table payment(
     p_no	number,
@@ -288,5 +288,5 @@ create table msgbox(
 
 select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
-update rider set r_status = '0', up_date = null where r_id='sukey'
-
+update rider set r_status = '0', up_date = null where r_id='sukey';
+update member set member_role = 'A' where id='sukey0331';
