@@ -77,16 +77,14 @@ create table board(
     constraints ck_board_b_type check(b_type in ('N', 'Q'))
     -- N : 공지사항 Q : 이용문의
 );
-select * from board where b_type = 'N';
 
-select * from (select row_number() over (order by m.id desc) rnum, m.* from member m) where (rnum between ? and ?) and (member_role = 'U' or member_role = 'R')
 
  create sequence seq_board_no;
  --drop table board;
  select * from board;
-insert into board values(
-    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
-);
+ 
+insert into board values(select ROW_NUMBER() OVER (ORDER BY b_no) from board,'N','z','관리자','zz', default, default);
+
 create table board_comment(
     c_no number,
     c_level number default 1,

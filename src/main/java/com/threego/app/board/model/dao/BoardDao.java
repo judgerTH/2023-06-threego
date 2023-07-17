@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.threego.app.admin.model.dao.AdminDao;
 import com.threego.app.board.model.exception.BoardException;
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.board.model.vo.BoardType;
@@ -21,7 +20,7 @@ private Properties prop = new Properties();
 	
 	public BoardDao() {
 		String filename = 
-			BoardDao.class.getResource("/sql/admin/board-query.properties").getPath();
+			BoardDao.class.getResource("/sql/board/board-query.properties").getPath();
 		try {
 			prop.load(new FileReader(filename));
 		} catch (IOException e) {
