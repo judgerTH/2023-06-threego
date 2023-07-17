@@ -137,7 +137,6 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           <nav class="navbar bg-light" style="margin-left: 330px">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">쓰리고</a>
-              <button type="button" class="btn-close" aria-label="Close"></button>
             </div>
           </nav>
         </section>

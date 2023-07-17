@@ -570,9 +570,9 @@ private Properties prop = new Properties();
 		return result;
 	}
 
-	public int updateRiderStatusTo2(Connection conn, String riderRefusalId) {
+	public int deleteRider(Connection conn, String riderRefusalId) {
 		int result = 0;
-		String sql = prop.getProperty("updateRiderStatusTo2");
+		String sql = prop.getProperty("deleteRider");
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, riderRefusalId);

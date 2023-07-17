@@ -146,7 +146,6 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
         <nav class="navbar bg-light" style="margin-left: 330px">
           <div class="container-fluid">
             <a class="navbar-brand" href="#">쓰리고</a>
-            <button type="button" class="btn-close" aria-label="Close"></button>
           </div>
         </nav>
       </section>
@@ -223,25 +222,6 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
             <div class="card" style="width: 635px; height:540px;">
               <div class="card-header">문의사항</div>
               <div class="card-body">
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 주소가 바뀌었어요. 어떻게 변경해야하나요?</p>
-                    <p style="font-size: 13px;">&nbsp;유성근 | 2023.07.10</p>
-                  </div>
-                </div>
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 키트가 계속 반송됩니다. 이유가 뭔가요</p>
-                    <p style="font-size: 13px;">&nbsp;황대호 | 2023.07.10</p>
-                  </div>
-                </div>
-                
                 <%
                                 if(boards != null && !boards.isEmpty()) {
                                 %>

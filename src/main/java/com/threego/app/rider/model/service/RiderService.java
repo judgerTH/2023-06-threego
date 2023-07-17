@@ -6,6 +6,7 @@ import static com.threego.app.common.util.JdbcTemplate.getConnection;
 import static com.threego.app.common.util.JdbcTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.threego.app.rider.model.dao.RiderDao;
 import com.threego.app.rider.model.vo.Rider;
@@ -27,6 +28,14 @@ public class RiderService {
 			close(conn);
 		}
 		return result;
+	}
+
+
+	public Rider findRiderById(String riderId) {
+		Connection conn = getConnection();
+		Rider rider = riderDao.findRiderById(conn, riderId);
+		close(conn);
+		return rider;
 	}
 
 }
