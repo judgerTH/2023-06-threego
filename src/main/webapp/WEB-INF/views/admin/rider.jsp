@@ -151,7 +151,6 @@
           <nav class="navbar bg-light" style="margin-left: 330px">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">쓰리고</a>
-              <button type="button" class="btn-close" aria-label="Close"></button>
             </div>
           </nav>
         </section>
@@ -176,9 +175,30 @@
 		                  <img src="<%= request.getContextPath() %>/img/threeGologo.png" style="padding-top:25px; width:150px;" class="img-fluid rounded-start" alt="...">
 		                </div>
 		                <div class="col-md-8">
-		                  <div class="card-body">
-		                    <h5 class="card-title" style="padding-top:12px; font-weight:600;">ThreeGo Rider</h5>
-		                    <p class="card-text">아이디 : <%= waitingRider.getRiderId() %></p>
+		                  <div class="card-body" >
+		                    <span class="card-title" style="font-size:20px; padding-top:12px; font-weight:600;">ThreeGo Rider</span>
+		                    <!-- 근로계약서 모달창 -->
+		                    &nbsp;&nbsp;&nbsp;&nbsp;
+		                    <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+  								근로계약서 보기
+							</button>
+		                    <div class="modal fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" >
+							    <div class="modal-content" style="width:700px;">
+							      <div class="modal-header" style="width:700px;">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel">근로계약서</h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							      	<iframe style="width:100%; height:80vh;" src="<%= request.getContextPath() %>/upload/file/<%=waitingRider.getFileName()%>"></iframe>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+		                    <p style="padding-top:10px;" class="card-text">아이디 : <%= waitingRider.getRiderId() %></p>
 		                    <p class="card-text">이름 : <%= waitingRider.getRiderName() %></p>
 		                    <p class="card-text">활동구역 : <%= waitingRider.getRiderLocationId() %>(<%= waitingRider.getRiderLocationName() %>)</p>
 		                    <div style="display:flex">
@@ -245,31 +265,31 @@
         	lookUpRiderButton.onclick = (e) => {
         		riderList.style.display = "block";
         		approveRiderContainer.style.display = "none";
-        	}
+        	};
         	
         	
         	approveRiderButton.onclick = (e) => {
         		approveRiderContainer.style.display = "block";
         		riderList.style.display = "none";
-        	}
+        	};
         	
         	// 승인 이벤트
         	const approveButton = document.querySelector("#approveButton");
-        	approveButton.onclick = () => {
-        			if(confirm('승인하시겠습니까?')) {
-        				const frm = document.riderApprovementFrm;
-        				const hiddenVal = frm.querySelector("#riderId");
+        	approveButton.onclick = (e) => {
+        		if(confirm('승인하시겠습니까?')) {
+        			const frm = document.riderApprovementFrm;
+        			const hiddenVal = frm.querySelector("#riderId");
         				
-        				console.log(hiddenVal.value);
-        				frm.submit();
+        			console.log(hiddenVal.value);
+        			frm.submit();
         				
-        			} else {
-        				return false;
-        			}
+        		} else {
+        			return false;
+        		}
         	};
         	
         	const refusalButton = document.querySelector("#rejectButton");
-        	refusalButton.onclick = () => {
+        	refusalButton.onclick = (e) => {
         		if(confirm('반려하시겠습니까?')) {
         			const frm = document.riderRefusalFrm;
         			const hiddenVal = frm.querySelector("#riderRefusalId")

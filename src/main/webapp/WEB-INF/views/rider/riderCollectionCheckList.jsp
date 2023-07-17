@@ -6,6 +6,9 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
 List<Request> MyRequestList = (List<Request>) request.getAttribute("requestList");
+Request acceptedRequest = (Request)request.getAttribute("acceptedRequest");
+String memberId = loginMember.getId();
+
 %>
 <%
 String msg = (String) session.getAttribute("msg");
@@ -25,209 +28,7 @@ alert("<%= msg %>");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>나의 수거 목록</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
-<style>
-#collection-tbl {
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
-	border-collapse: collapse;
-}
-
-#collection-tbl th, #collection-tbl td {
-	border-left: 2px solid black;
-	padding: 10px 40px;
-}
-
-#collection-tbl tr :first-of-type {
-	border-left: none;
-}
-
-.collection-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 30px;
-}
-
-.left-div ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	padding-inline-start: 40px;
-}
-
-.left-div ul li {
-	display: list-item;
-	margin-bottom: 10px;
-}
-
-.left-div ul a {
-	display: inline-block;
-	width: 160px;
-	height: 30px;
-	border-radius: 15px;
-	background-color: #e9e9e9;
-	text-align: center;
-	line-height: 30px;
-	text-decoration: none;
-	color: #000000;
-}
-
-.left-div ul a:hover {
-	background-color: #49B466;
-	color: #fff;
-}
-
-.left-div ul .active a {
-	background-color: #49B466;
-	color: #fff;
-}
-
-.left-div {
-	display: flex;
-	flex-direction: column;
-	align-items: left;
-	margin-left: 180px;
-	width: 200px;
-	float: left;
-}
-
-input {
-	margin: 0;
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-}
-
-.btn {
-	border: solid 2px #24873a;
-	border-radius: 50px;
-	width: 25%;
-	text-align: center;
-	padding: 0.5rem;
-	margin: 20px;
-	margin-top: 20px;
-	font-size: large;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.right-div {
-	flex: 1;
-	margin-left: 500px;
-	flex-direction: column;
-	display: flex;
-	flex-wrap: wrap;
-	width: 1200px;
-}
-
-.mypage-wrap {
-	padding-top: 5rem;
-	padding-bottom: 8rem;
-}
-
-.con {
-	float: left;
-}
-
-h2 {
-	margin-left: 60px;
-}
-
-#btn-accept {
-	border: none;
-	border-radius: 3px;
-	background-color: #49B466;
-	color: white;
-	padding: 5px 15px;
-	font-weight: bold;
-}
-
-#btn-warning {
-	border: none;
-	border-radius: 3px;
-	background-color: red;
-	color: white;
-	padding: 5px 15px;
-	font-weight: bold;
-}
-
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-	background-color: #fefefe;
-	margin: 15% auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 60%;
-	max-width: 600px;
-	position: relative; /* 추가된 속성 */
-}
-
-.modal-close {
-	color: #aaa;
-	font-size: 28px;
-	font-weight: bold;
-	cursor: pointer;
-	position: absolute; /* 추가된 속성 */
-	top: 10px; /* 상단 여백 */
-	right: 10px; /* 우측 여백 */
-}
-
-.modal-close:hover, .modal-close:focus {
-	color: #000;
-	text-decoration: none;
-}
-
-/* 신고 폼 스타일 */
-#warningMadal form {
-	display: flex;
-	flex-direction: column;
-}
-
-#warningMadal form span {
-	margin-bottom: 10px;
-}
-
-#warningMadal form input, #warningMadal form textarea {
-	margin-bottom: 10px;
-	padding: 5px;
-}
-
-#warningMadal form button[type="submit"] {
-	padding: 10px;
-	background-color: #49B466;
-	color: white;
-	border: none;
-	border-radius: 3px;
-	cursor: pointer;
-}
-
-#warningMadal form button[type="submit"]:hover {
-	background-color: #24873a;
-}
-
-.close {
-	display: flex;
-	flex-direction: row-reverse;
-	font-size: 30px; /* 닫기 버튼의 크기 조절 */
-	font-weight: bold;
-}
-</style>
+ <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
 </head>
 <body>
 	<div id="wrapper">
@@ -237,32 +38,28 @@ h2 {
 					src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 				<div class="mypage-wrap">
 					<div class="container">
-						<div class="left-div">
-							<h2>마이페이지</h2>
-							<ul>
-								<li class="active"><a class="" aria-current="page"
-									href="<%=request.getContextPath()%>/member/myPage">회원정보
-										수정</a></li>
-								<%
-								if (loginMember != null && loginMember.getMemberRole() == MemberRole.U) {
-								%>
+				
+                <div class="left-div">
+                <h2>마이페이지</h2>
+                    <ul>
+                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+                       			<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">결제정보</a></li>
+                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
 								<li><a class="" aria-current="page"
-									href="<%=request.getContextPath()%>/member/requestList">수거신청
+									href="<%= request.getContextPath() %>/member/requestList">수거신청
 										내역</a></li>
-								<%
-								} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
-								%>
+								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
 								<li><a class="" aria-current="page"
-									href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
 										리스트</a></li>
 								<li><a class="" aria-current="page"
-									href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
+									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
 										수거 목록 조회</a></li>
-								<%
-								}
-								%>
-							</ul>
-						</div>
+								<% } %>
+                    </ul>        
+                </div>
+            
 					</div>
 					<div class="collection-wrapper">
 						<div class="collection-sub">
@@ -289,16 +86,20 @@ h2 {
 										<td><%=requests.getReqNo()%></td>
 										<td><%=requests.getReqLocationId()%></td>
 										<td><%=requests.getReqDate()%></td>
-										<td><%=requests.getReqStatus().equals("1") ? "수거중" : "수거완료"%></td>
+										<%if(requests.getReqStatus().equals("1")){ %>
+										<td>수거중</td>
+										<%} else if(requests.getReqStatus().equals("2")){ %>
+											<td>수거완료</td>
+										<%} else if(requests.getReqStatus().equals("3")){%>
+											<td>수거취소</td>
+										<%} %>
 
 										<td><%=requests.getReqCpDate() == null ? "미완료" : requests.getReqCpDate()%></td>
 										<td>
-											<form name="requestDetailForm"
-												action="<%=request.getContextPath()%>/collection/detail"
-												method="post" style="display: inline;">
-												<input type="hidden" name="reqNo"
-													value="<%=requests.getReqNo()%>">
-												<button type="submit" id="btn-accept">상세보기</button>
+											<form name="requestDetailForm" action="<%=request.getContextPath()%>/request/requestDetail" style="display: inline;">
+												<input type="hidden" name="reqNo" value="<%=requests.getReqNo()%>">
+												<input type= "hidden" name = "reqWriter" value = "<%=requests.getReqWriter() %>">
+												<button type="button" class="btn-accept" onclick = "requestDetail(this.parentElement);">상세보기</button>
 											</form>
 											<form name="requestwarningForm" style="display: inline;">
 												<input type="hidden" name="reqNo"
@@ -340,6 +141,17 @@ h2 {
 		</div>
 	</div>
 	<script>
+
+// 상세보기 오픈 팝업
+const requestDetail = (frm) => {
+	
+	const title = "requestDetailPopUp"; 
+	const popup = window.open("", title, "width = 700px, height = 500px");
+	
+	frm.target = title;
+	frm.submit();
+	
+}
 
 // 모달 열기
 function openModal(button) {
