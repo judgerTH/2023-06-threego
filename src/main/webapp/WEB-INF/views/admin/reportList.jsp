@@ -160,9 +160,11 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                     	</thead>
                     	<tbody>
                     		<%
-                    		if(warnings != null && !warnings.isEmpty()){ 
-                    		                    			for(Warning warning : warnings){
-                    		%>
+							int index = 0;
+							if (warnings != null && !warnings.isEmpty()) {
+							    for (Warning warning : warnings) {
+							        index++;
+							%>
 								<tr>
 									<td><%=warning.getWarningNo()%></td>
 									<td><%=warning.getWarningWriter()%></td>
@@ -178,7 +180,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 									</td>
 									<td><%= warning.getWarningRegDate() %></td>
 									<td><%= warning.getWarningConfirm() %></td>
-									<td><%= warning.getWarningCaution() %></td>
+									<td><button id="warningCaution<%= index %>">주의조치</button></td>
 								</tr>
 								<% } %>
 							<% } %>
@@ -191,6 +193,36 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
             </div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <form
+    	action="<%= request.getContextPath() %>/admin/warningCaution" 
+	    name="warningCautionFrm" 
+	    method="GET">
+    	<input type="hidden" name="findByName" value = "">
+    </form>
+    
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
+    <script>
+    <% if (warnings != null && !warnings.isEmpty()) {
+        for (int i = 1; i <= warnings.size(); i++) { %>
+            document.getElementById("warningCaution<%= i %>").addEventListener("click", function() {
+                // 팝업창 생성
+                const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
+            
+                // 팝업창에 내용 추가
+                popup.document.write("<h2>주의조치사항 입력</h2>");
+                popup.document.write("<textarea id='cautionInput' rows='5' cols='40'></textarea><br>");
+                popup.document.write("<button onclick='saveCaution()'>저장</button>");
+            
+                // 주의조치사항 저장 함수
+                popup.saveCaution = function() {
+                    const cautionText = popup.document.getElementById("cautionInput").value;
+                    alert("주의조치사항이 저장되었습니다");
+                    popup.close();
+                };
+            });
+    <% }
+    } %>
+  </script>
 </body>
 </html>

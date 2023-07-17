@@ -41,12 +41,9 @@ create table ticket(
     tic_cnt number not null,
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
-<<<<<<< HEAD
     );        
-=======
-    );       
+   
 --drop table ticket;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
     
 create table payment(
     p_no	number,
@@ -169,8 +166,9 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 
 select * from warning;
 --drop table warning;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 create sequence seq_w_no;
+
 select * from warning;
 insert into warning values (
     seq_w_no.next
