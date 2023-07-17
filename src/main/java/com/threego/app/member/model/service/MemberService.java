@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.threego.app.member.model.dao.MemberDao;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.request.model.vo.Request;
 import com.threego.app.ticket.model.vo.TicketPayment;
 
 import static  com.threego.app.common.util.JdbcTemplate.*;
@@ -95,13 +96,23 @@ public class MemberService {
 		return result;
 	}
 	
-	public List<TicketPayment> findRequestList(String memberId) {
+	public List<TicketPayment> findPaymentList(String memberId) {
+		// 마이페이지 - 결제정보
 		Connection conn = getConnection();
-		List<TicketPayment> requestList = memberDao.findRequestList(conn, memberId);
+		List<TicketPayment> requestList = memberDao.findPaymentList(conn, memberId);
 		close(conn);
 	
 		return requestList;
 
+	}
+
+
+	public List<Request> findRequestList(String memberId) {
+		// 마이페이지 - 수거목록
+		Connection conn = getConnection();
+		List<Request> requestList = memberDao.findRequestList(conn, memberId);
+		close(conn);
+		return requestList;
 	}
 
 }

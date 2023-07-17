@@ -1,8 +1,11 @@
+<%@page import="com.threego.app.ticket.model.vo.TicketPayment"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file = "/WEB-INF/views/common/header.jsp" %>
-    <%
-    	String memberId = loginMember.getId();
+    <% 
+   		 String memberId = loginMember.getId();
+    	List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("paymentList");
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,9 +13,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쓰리고 | 회원정보수정</title>
-    <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
-  <style>
+    <title>Document</title>
+    <style>
          .left-div ul {
 		  list-style: none;
 		  padding: 0;
@@ -147,26 +149,40 @@
                 <div class="left-div">
                 <h2>마이페이지</h2>
                     <ul>
-                     	 <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
+                       <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
                         <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청목록</a></li>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
                     </ul>        
                 </div>
             </div>
             </div>
             <div class="right-div">
-                <h3>받은 메시지</h3>
+                <h3>결제정보</h3>
                 <table class="mypage-table">
                     <tbody>
                         <tr>
-                            <td>NO</td>
-                            <td>제목</td>
-                            <td>등록일</td>
-                            <td>상태</td>
+                        	<td>NO</td>
+                            <td>이용권명</td>
+                            <td>결제금액</td>
+                            <td>결제일</td>
+                            <td>잔여 이용권</td>
                         </tr>
                         <tr>
-                        	<td colspan="7" class="empty_table">주문 내역이 없습니다.</td>
+                   		<% if(requestList.isEmpty() || requestList == null) { %>
+                        	<td colspan="7" class="empty_table">신청 내역이 없습니다.</td>
+                        </tr>
+                        <% } else {
+                        			for(TicketPayment reqList : requestList) {	 %>
+                        <tr>
+                        <td><%= reqList.getNo() %></td>
+                        <td><%= reqList.getTicName()%></td>
+                        <td><%= reqList.getTicPrice() %></td>
+                        <td><%= reqList.getpDate() %></td>
+                        <td><%= reqList.getpCnt() %></td>
+                        <% 		}
+                        		}
+                       	%>
                         </tr>           
                      </tbody>
                 </table>
