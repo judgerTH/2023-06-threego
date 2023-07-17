@@ -136,6 +136,8 @@ create table request(
     req_no	number,
     req_writer varchar2(30) not null,
     req_location_id	varchar2(30) not null,
+    req_post char(5) not null,
+    req_address	varchar2(400) not null,
     req_photo varchar2(200) not null,
     req_status	char(1) default 0,
     req_date	date default sysdate,
@@ -299,6 +301,20 @@ create table msgbox(
 
 alter table rider modify r_status check (r_status in ('0', '1', '2'));
 
+update rider set r_status = '0', up_date = null where r_id='sukey';
+
+
 update member set email = 'admin@naver.com' where id = 'admin';
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
+
+select * from request;
+insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
