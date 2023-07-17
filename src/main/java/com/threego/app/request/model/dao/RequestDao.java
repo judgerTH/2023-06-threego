@@ -59,13 +59,15 @@ public class RequestDao {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
 		String reqLocationId = rset.getString("location_name");
+		String reqPost = rset.getString("req_post");
+		String reqAddress = rset.getString("req_address");
 		String reqPhoto = rset.getString("req_photo");
 		String reqStatus = rset.getString("req_status");
-		Date reqData = rset.getDate("req_Date");
+		Date reqDate = rset.getDate("req_Date");
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
 
-		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
+		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqPost, reqAddress, reqDate, reqRider, reqCpDate);
 	}
 
 	public int acceptRequest(Connection conn, int reqNo, String rId) {
@@ -138,6 +140,37 @@ public class RequestDao {
 
 		return requestList;
 	}
+
+	//INSERT INTO request (req_no, req_writer, req_location_id, req_post, req_address, req_photo, req_status, req_date, req_rider, req_cp_date)
+	//VALUES (seq_req_no.NEXTVAL, ?, ?, ?, ?, ?, '0', SYSDATE, NULL, NULL)
+	public boolean reqGarbagePickup(Connection conn, String id, String location, String post, String address, String photo) {
+	    boolean result = false;
+	    String sql = prop.getProperty("reqGarbagePickup");
+	    
+	    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, id);
+	        pstmt.setString(2, location);
+	        pstmt.setString(3, post);
+	        pstmt.setString(4, address);
+	        pstmt.setString(5, photo);
+
+	        int rowsInserted = pstmt.executeUpdate();
+	        if (rowsInserted > 0) {
+	            result = true;
+	        }
+	    } catch (SQLException e) {
+	        throw new RequestException(e);
+	    }
+
+	    return result;
+	}
+
+
+
+
+
+
+
 
 
 

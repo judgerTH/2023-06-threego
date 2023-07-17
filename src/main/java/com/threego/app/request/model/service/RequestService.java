@@ -63,5 +63,23 @@ public class RequestService {
 		return requestList;
 	}
 
+	public boolean reqGarbagePickup(String id, String location, String post, String address, String photo) {
+        Connection conn = getConnection();
+        boolean result = false;
+
+        try {
+            result = requestDao.reqGarbagePickup(conn, id, location, post, address, photo);
+            commit(conn);
+        } catch (Exception e) {
+            rollback(conn);
+            e.printStackTrace();
+            // 오류 처리 로직을 추가해야 함
+        } finally {
+            close(conn);
+        }
+
+        return result;
+    }
+
 
 }

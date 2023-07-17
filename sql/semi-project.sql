@@ -123,12 +123,14 @@ create table rider(
 
 
 create table request(
-    req_no	number,
+    req_no   number,
     req_writer varchar2(30) not null,
-    req_location_id	varchar2(30) not null,
+    req_location_id   varchar2(30) not null,
+    req_post char(5) not null,
+    req_address   varchar2(400) not null,
     req_photo varchar2(200) not null,
-    req_status	char(1) default 0,
-    req_date	date default sysdate,
+    req_status   char(1) default 0,
+    req_date   date default sysdate,
     req_rider varchar2(30) , 
     req_cp_date date default null,
     constraints pk_request_req_no primary key(req_no),
@@ -139,7 +141,13 @@ create table request(
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
  create sequence seq_req_no;
+  insert into request values(
+    seq_req_no.nextval, 'tlfprl', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
+    );
+    
 
+ -- drop table request;
+ SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = request;
 
 create table del_member(
 
@@ -212,6 +220,7 @@ create sequence seq_msg_no;
  insert into member values (
     'xogus', 'xogus','이태현','xogus@naver.com','01021111111','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
 );
+
  insert into ticket values (
     'tic1', '1회권',1,5000 
  );
@@ -252,6 +261,7 @@ insert into location values(
    insert into request values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
  );
+   
 
 --delete from member where id = 'eogh';
 
@@ -292,3 +302,18 @@ create table msgbox(
 update member set email = 'admin@naver.com' where id = 'admin';
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
+
+
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE WARNING CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE REQUEST CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE BOARD_COMMENT CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE BOARD CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE PAYMENT CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE TICKET CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE RIDER CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE LOCATION CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE MEMBER CASCADE CONSTRAINTS';
+END;
+
