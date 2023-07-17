@@ -104,19 +104,7 @@ tbody, td, tfoot, th, thead, tr {
 	border-width: 0;
 }
 
-input {
-	border: 1px solid #d0d3db;
-	background: #fff;
-	color: #000;
-	vertical-align: middle;
-	border-radius: 3px;
-	padding: 5px;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.119);
-}
 
-span {
-	color: #248739;
-}
 </style>
 </head>
 <body>
@@ -131,4 +119,6 @@ span {
 	
 </body>
 </html>
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+
+
+    <%@ include file = "/WEB-INF/views/common/footer.jsp" %>
