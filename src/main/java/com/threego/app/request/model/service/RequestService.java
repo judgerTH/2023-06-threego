@@ -19,11 +19,11 @@ public class RequestService {
 		return requestList;
 	}
 
-	public int acceptRequest(int reqNo, String rId) {
+	public int updateRequest(int reqNo, String rId, String reqStatus) {
 		Connection conn = getConnection();
 		int result = 0; 
 		try {
-			result = requestDao.acceptRequest(conn, reqNo, rId);
+			result = requestDao.updateRequest(conn, reqNo, rId, reqStatus);
 			commit(conn);
 			
 		} catch (Exception e) {

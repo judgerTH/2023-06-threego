@@ -5,129 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>수저접수 현황</title>
+<title>수거접수 현황</title>
 <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
-<style>
-#collection-tbl {
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
-	border-collapse: collapse;
-}
-
-#collection-tbl th, td {
-	border-left: 2px solid black;
-	padding: 10px 40px;
-}
-
-#collection-tbl tr :first-of-type {
-	border-left: none;
-}
-
-.collection-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 30px;
-}
-.left-div ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	padding-inline-start: 40px;
-}
-
-.left-div ul li {
-	display: list-item;
-	margin-bottom: 10px;
-}
-
-.left-div ul a {
-	display: inline-block;
-	width: 160px;
-	height: 30px;
-	border-radius: 15px;
-	background-color: #e9e9e9;
-	text-align: center;
-	line-height: 30px;
-	text-decoration: none;
-	color: #000000;
-}
-
-.left-div ul a:hover {
-	background-color: #49B466;
-	color: #fff;
-}
-
-.left-div ul .active a {
-	background-color: #49B466;
-	color: #fff;
-}
-
-.left-div {
-	display: flex;
-	flex-direction: column;
-	align-items: left;
-	margin-left: 180px;
-	width: 200px;
-	float: left;
-}
-
-input {
-	margin: 0;
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-}
-
-.btn {
-	border: solid 2px #24873a;
-	border-radius: 50px;
-	width: 25%;
-	text-align: center;
-	padding: 0.5rem;
-	margin: 20px;
-	margin-top: 20px;
-	font-size: large;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.right-div {
-	flex: 1;
-	margin-left: 500px;
-	flex-direction: column;
-	display: flex;
-	flex-wrap: wrap;
-	width: 1200px;
-}
-
-.mypage-wrap {
-	padding-top: 5rem;
-	padding-bottom: 8rem;
-}
-
-.con {
-	float: left;
-}
-
-h2 {
-	margin-left: 60px;
-}
-
-#btn-accept {
-	border: none;
-	border-radius: 3px;
-	background-color: #49B466;
-	color: white;
-	padding: 5px 15px;
-	font-weight: bold;
-}
-</style>
+<%
+    	String memberId = loginMember.getId();
+%>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css"/>
 </head>
 <body>
 
@@ -140,11 +23,11 @@ h2 {
 					<div class="container">
 
 						<div class="left-div">
-							<h2>마이페이지</h2>
-							<ul>
-								<li class="active"><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/myPage">회원정보
-										수정</a></li>
+                <h2>마이페이지</h2>
+                    <ul>
+                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+                       			<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">결제정보</a></li>
+                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
 								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
 								<li><a class="" aria-current="page"
 									href="<%= request.getContextPath() %>/member/requestList">수거신청
@@ -157,8 +40,8 @@ h2 {
 									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
 										수거 목록 조회</a></li>
 								<% } %>
-							</ul>
-						</div>
+                    </ul>        
+                </div>
 					</div>
 					<div class="collection-wrapper">
 						<div class="collection-sub">
@@ -216,7 +99,7 @@ const findAllList = () =>{
 		 		    reqStatus = "수거취소";		
 		 		}
 				
-		 		if(reqStatus == "수거 대기중" || reqStatus == "수거중"){
+		 		if(reqStatus == "수거 대기중"){
 			 		tbody.innerHTML += `
 						<tr>
 			                <td>\${reqNo}</td>
@@ -226,8 +109,10 @@ const findAllList = () =>{
 			                <td>\${reqStatus}</td>
 			                <td>
 			                <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest">
-			                <input type="hidden" name="reqNo" value="\${reqNo}">
-			                <button id = 'btn-accept' onclick = "acceptRequest();">보기</button>
+				                <input type="hidden" name="reqNo" value="\${reqNo}">
+				                <input type="hidden" name="reqWriter" value="\${reqWriter}">
+				                <button type="button" class = "btn-accept" onclick = "acceptRequest(this.parentElement);">보기</button>
+				       
 				            </form>
 			                </td>
 			            </tr>
@@ -239,18 +124,16 @@ const findAllList = () =>{
 	});
 	 
 } 
-// 팝업창이 열리나 내용이 팝업에 뜨지 않음. 
-const acceptRequest = () => {
+// 각 행마다 내용을 받아와야 하니 frm을 받아와서 함수를 실행하도록
+const acceptRequest = (frm) => {
 	
 	const title = "acceptRequestPopUp"; 
-	const popup = window.open("", title, "width = 700px, height = 500px");
+	const popup = window.open("", title, "width = 1100px, height = 600px");
 	
-	const frm = document.acceptRequestFrm;
 	frm.target = title;
 	frm.submit();
 	
 }
-
 
 </script>
 </html>
