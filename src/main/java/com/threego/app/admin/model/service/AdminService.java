@@ -283,11 +283,11 @@ public class AdminService {
 		return result;
 	}
 
-	public int updateRiderStatusTo2(String riderRefusalId) {
+	public int deleteRider(String riderRefusalId) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = adminDao.updateRiderStatusTo2(conn, riderRefusalId);
+			result = adminDao.deleteRider(conn, riderRefusalId);
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);
