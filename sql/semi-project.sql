@@ -128,6 +128,8 @@ create table request(
     req_no	number,
     req_writer varchar2(30) not null,
     req_location_id	varchar2(30) not null,
+    req_post char(5) not null,
+    req_address	varchar2(400) not null,
     req_photo varchar2(200) not null,
     req_status	char(1) default 0,
     req_date	date default sysdate,
