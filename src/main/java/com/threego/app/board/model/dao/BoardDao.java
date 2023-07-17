@@ -58,6 +58,89 @@ private Properties prop = new Properties();
 		board.setBoardCnt(rset.getInt("b_cnt"));
 		return board;
 	}
+
+	public List<Board> findAll(Connection conn, int start, int end) {
+		List<Board> boards = new ArrayList<>();
+		String sql = prop.getProperty("findAll");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Board board = handleBoardResultSet(rset);
+					boards.add(board);
+				}
+			}
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		}
+		return boards;
+	}
+
+	public int getTotalContent(Connection conn) {
+		int totalContent = 0;
+		String sql = prop.getProperty("getTotalContent"); // select count(*) from board
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		}
+		return totalContent;
+	}
+
+	public int insertBoard(Connection conn, Board board) {
+		int result = 0;
+		String sql = prop.getProperty("insertBoard");
+		//insertBoard = insert into board values (seq_board_no.nextval,'Q',?,?,?,default,0)
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardWriter());
+			pstmt.setString(3, board.getBoardContent());
+			
+			result = pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		}
+		
+		return result;
+	}
+
+	public int getLastBoardNo(Connection conn) {
+		int boardNo = 0;
+		String sql = prop.getProperty("getLastBoardNo");
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if(rset.next()) {
+					boardNo = rset.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		}
+		
+		return boardNo;
+	}
+
+	public Board findByNo(Connection conn, int no) {
+		Board board = null;
+		String sql = prop.getProperty("findByNo");
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, no);
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if (rset.next())
+					board = handleBoardResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		}
+		return board;
+	}
+
 	
 	
 }
