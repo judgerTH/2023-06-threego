@@ -57,6 +57,26 @@ public class PaymentDao {
 
 		return payment;
 	}
+	
+	public List<Payment> findByDate(Connection conn, int start, int end, String startDay, String endDay) {
+		List<Payment> payments = new ArrayList<>();
+		String sql = prop.getProperty("findByDate");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, startDay);
+			pstmt.setString(4, endDay);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					Payment payment = handlePaymentResultSet(rset);
+					payments.add(payment);
+				}
+			}
+		} catch (SQLException e) {
+			throw new PaymentException(e);
+		}
+		return payments;
+	}
 
 	public int getTotalPayment(Connection conn) {
 		int totalPayment = 0;
@@ -71,6 +91,9 @@ public class PaymentDao {
 		}
 		return totalPayment;
 	}
+
+
+
 
 	public int insertPayment(Connection conn, String memberId, String ticketId, int purchaseCount) {
 		int result= 0;
@@ -89,6 +112,7 @@ public class PaymentDao {
 		
 		return result;
 	}
+
 
 
 }

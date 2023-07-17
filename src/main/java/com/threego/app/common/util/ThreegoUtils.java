@@ -46,5 +46,8 @@ public class ThreegoUtils {
 				
 		return pagebar.toString();
 	}
+	public static String escapeHtml(String unsecureText) {
+		return unsecureText.replace("<", "&lt;").replace(">", "&gt;");
+	}
 
 }

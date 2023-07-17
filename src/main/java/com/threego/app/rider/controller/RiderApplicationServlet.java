@@ -52,13 +52,10 @@ public class RiderApplicationServlet extends HttpServlet {
 
 				
 				String filename = multiReq.getFilesystemName("upFile");
-				System.out.println(filename);
 				// 2. 업무로직
-//				
 				Rider rider = new Rider(id, location, null, null, null, null, null, filename);
 				int result = riderService.insertRider(rider);
 				
-//				response.sendRedirect(request.getContextPath() + "/board/boardDetail?no=" + board.getNo());
 				
 			}
 

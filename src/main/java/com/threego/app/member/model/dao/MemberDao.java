@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
+import com.threego.app.request.model.vo.Request;
 import com.threego.app.ticket.model.vo.TicketPayment;
 
 public class MemberDao {
@@ -171,7 +172,7 @@ public class MemberDao {
 	}
 
 
-	public List<TicketPayment> findRequestList(Connection conn, String memberId) {
+	public List<TicketPayment> findPaymentList(Connection conn, String memberId) {
 		List<TicketPayment> requestList = new ArrayList<>();
 		String sql = "SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt " +
 			                "FROM payment p " +
@@ -182,6 +183,8 @@ public class MemberDao {
 			pstmt.setString(1, memberId);
 			ResultSet rset = pstmt.executeQuery();
 			
+			int count = 1;
+			
 			while(rset.next()) {
 				String ticName = rset.getString("tic_name");
 			    int ticPrice = rset.getInt("tic_price");
@@ -189,6 +192,7 @@ public class MemberDao {
 			    int pCnt = rset.getInt("p_cnt");
 			    
 				TicketPayment ticketPayment = new TicketPayment();
+				ticketPayment.setNo(count++);
 				ticketPayment.setTicName(ticName);
 			    ticketPayment.setTicPrice(ticPrice);
 			    ticketPayment.setpDate(pDate);
@@ -200,9 +204,45 @@ public class MemberDao {
 			
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new MemberException(e);
 		}
 		return requestList;
 	}
+
+	public List<Request> findRequestList(Connection conn, String memberId) {
+		List<Request> reqList = new ArrayList<>();
+		  String sql = "SELECT req_no, req_writer, req_location_id, req_photo, req_status, req_date, req_rider, req_cp_date " +
+	                 "FROM request " +
+	                 "WHERE req_writer = ?";
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			
+			pstmt.setString(1, memberId);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+
+				while(rset.next()){
+					Request request = handleRequestResultSet(rset);
+					reqList.add(request);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return reqList;
+	}
 	
+	private Request handleRequestResultSet(ResultSet rset) throws SQLException {
+		int reqNo = rset.getInt("req_no");
+		String reqWriter = rset.getString("req_writer");
+		String reqLocationId = rset.getString("req_location_id");
+		String reqPhoto = rset.getString("req_photo");
+		String reqStatus = rset.getString("req_status");
+		Date reqData = rset.getDate("req_Date");
+		String reqRider = rset.getString("req_rider");
+		Date reqCpDate = rset.getDate("req_cp_date");
+
+		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
+	}
+
 }

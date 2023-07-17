@@ -202,6 +202,19 @@ public class AdminService {
 
 	}
 
+	public List<Member> findById(String memberId) {
+		Connection conn = getConnection();
+		List<Member> members = adminDao.findById(conn, memberId);
+		close(conn);
+		return members;
+	}
+
+	public List<Member> findByName(String memberName) {
+		Connection conn = getConnection();
+		List<Member> members = adminDao.findByName(conn, memberName);
+		close(conn);
+		return members;
+	}
 	// 문의사항 받아오기
 	public List<Board> getInquiryBoard(int start, int end) {
 		Connection conn = getConnection();
@@ -270,11 +283,11 @@ public class AdminService {
 		return result;
 	}
 
-	public int updateRiderStatusTo2(String riderRefusalId) {
+	public int deleteRider(String riderRefusalId) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = adminDao.updateRiderStatusTo2(conn, riderRefusalId);
+			result = adminDao.deleteRider(conn, riderRefusalId);
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);

@@ -131,6 +131,17 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
           </span>
           <a href="<%=request.getContextPath()%>/admin/reportList">신고내역</a>
         </div>
+        
+        <div class="reportManagement">
+          <span>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+			  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+			  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+			</svg>
+		  </span>
+          <a href="<%=request.getContextPath()%>/admin/writeNotice">공지사항 작성</a>
+        </div>
+        
         <hr>
         <div class="showMeTheMoney">
           <span>
@@ -146,7 +157,6 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
         <nav class="navbar bg-light" style="margin-left: 330px">
           <div class="container-fluid">
             <a class="navbar-brand" href="#">쓰리고</a>
-            <button type="button" class="btn-close" aria-label="Close"></button>
           </div>
         </nav>
       </section>
@@ -223,25 +233,6 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
             <div class="card" style="width: 635px; height:540px;">
               <div class="card-header">문의사항</div>
               <div class="card-body">
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 주소가 바뀌었어요. 어떻게 변경해야하나요?</p>
-                    <p style="font-size: 13px;">&nbsp;유성근 | 2023.07.10</p>
-                  </div>
-                </div>
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[문의사항] 키트가 계속 반송됩니다. 이유가 뭔가요</p>
-                    <p style="font-size: 13px;">&nbsp;황대호 | 2023.07.10</p>
-                  </div>
-                </div>
-                
                 <%
                                 if(boards != null && !boards.isEmpty()) {
                                 %>
