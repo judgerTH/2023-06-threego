@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>수저접수 현황</title>
+<script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
 <style>
 #collection-tbl {
 	border-top: 2px solid black;
@@ -28,8 +29,6 @@
 	justify-content: center;
 	margin-top: 30px;
 }
-
-<%--윤아님 cssList--%>
 .left-div ul {
 	list-style: none;
 	padding: 0;
@@ -119,6 +118,15 @@ input {
 h2 {
 	margin-left: 60px;
 }
+
+#btn-accept {
+	border: none;
+	border-radius: 3px;
+	background-color: #49B466;
+	color: white;
+	padding: 5px 15px;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -145,6 +153,9 @@ h2 {
 								<li><a class="" aria-current="page"
 									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
 										리스트</a></li>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
+										수거 목록 조회</a></li>
 								<% } %>
 							</ul>
 						</div>
@@ -158,9 +169,9 @@ h2 {
 										<th>접수번호</th>
 										<th>접수자</th>
 										<th>접수지역</th>
-										<th>접수사진</th>
 										<th>접수일자</th>
 										<th>접수현황</th>
+										<th>접수상세</th>
 									</tr>
 								</thead>
 								<tbody></tbody>
@@ -175,22 +186,72 @@ h2 {
 </body>
 <script> 
 window.onload = () => { 
-	findAllList(); 
+   findAllList(); 
 } 
-const findAllList = () =>{
 
+
+
+const findAllList = () =>{
+	
+	
 	 $.ajax({ 
 	 	url : "<%=request.getContextPath()%>/rider/findAllRequest",
 	 	data : "json",
 	 	success(responseData){
 			
 	 		console.log(responseData);
+	 		responseData.forEach((request)=>{
 	 		
+		 		const {reqNo, reqWriter, reqLocationId, reqPhoto, reqDate} = request;
+		 		let {reqStatus} = request;
+		 		const tbody = document.querySelector("#collection-tbl tbody");
+		 		
+		 		if (reqStatus == '0') {
+		 		    reqStatus = "수거 대기중";
+		 		} else if (reqStatus == '1') {
+		 		    reqStatus = "수거중";
+		 		} else if (reqStatus == '2') {
+		 		    reqStatus = "수거완료";
+		 		} else {
+		 		    reqStatus = "수거취소";		
+		 		}
+				
+		 		if(reqStatus == "수거 대기중" || reqStatus == "수거중"){
+			 		tbody.innerHTML += `
+						<tr>
+			                <td>\${reqNo}</td>
+			                <td>\${reqWriter}</td>
+			                <td>\${reqLocationId}</td>
+			                <td>\${reqDate}</td>
+			                <td>\${reqStatus}</td>
+			                <td>
+			                <form name = "acceptRequestFrm" action = "<%= request.getContextPath()%>/request/acceptRequest" method="GET">
+			                <input type="hidden" name="reqNo" value="\${reqNo}">
+			                <button id = 'btn-accept' onclick = "acceptRequest();">보기</button>
+				            </form>
+			                </td>
+			            </tr>
+			 		`;
+		 		}
+		 		
+	 		}); 
 	 	}
-	 
-	 
 	});
+	 
 } 
+// 팝업창이 연결되나 내용이 팝업에 뜨지 않음. 
+const acceptRequest = () => {
+	
+	const title = "acceptRequestFrm"; 
+	const popup = open("", title, "width = 700px, height = 500px");
+	
+	const frm = document.acceptRequestFrm;
+	frm.target = title;
+	frm.submit();
+	
+}
+
+
 </script>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

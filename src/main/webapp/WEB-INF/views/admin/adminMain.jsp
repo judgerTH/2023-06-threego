@@ -220,7 +220,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
             </div>
           </div>
           <div class="col" style="padding-top: 20px">
-            <div class="card" style="width: 635px;">
+            <div class="card" style="width: 635px; height:540px;">
               <div class="card-header">문의사항</div>
               <div class="card-body">
                 <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
@@ -268,27 +268,10 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
             </div>
           </div>
           <div class="col" style="padding-top: 20px">
-            <div class="card" style="width: 635px;">
+            <div class="card" style="width: 635px; height:540px;">
               <div class="card-header">신고현황</div>
               <div class="card-body">
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[라이더 신고] 라이더가 집 앞을 쓰레기로 테러해놨습니다.</p>
-                    <p style="font-size: 13px;">&nbsp;유성근 | 2023.07.10</p>
-                  </div>
-                </div>
-                <div class="warning-box" style="display: flex; padding: 20px 0 0 20px;">
-                  <div class="warning-img">
-                    <img src="<%=request.getContextPath()%>/img/threeGologo.png" style="width: 60px;">
-                  </div>
-                  <div class="warning-content" style="float: left; text-align: left; line-height: 0.7; padding-top: 9px;">
-                    <p style="font-weight: 600;">[유저 신고] 쓰레기 수거 외에 개인적인 심부름을 요구합니다.</p>
-                    <p style="font-size: 13px;">&nbsp;이태현 | 2023.07.10</p>
-                  </div>
-                </div>
+                
                 <%
                 if(warnings != null && !warnings.isEmpty()){ 
                                     for(Warning warning : warnings){

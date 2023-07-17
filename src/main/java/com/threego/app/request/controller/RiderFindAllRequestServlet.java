@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.threego.app.request.model.service.RequestService;
 import com.threego.app.request.model.vo.Request;
 
@@ -24,13 +25,15 @@ public class RiderFindAllRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		
 		List<Request> requestList = requestService.findAllRequest();
 		
-		request.setAttribute("requestList", requestList);
-		request.getRequestDispatcher("/WEB-INF/views/rider/riderCollectionList.jsp");
+		//헤더
+		response.setContentType("application/json; charset=utf-8");
 		
+		// 바디 
+		new Gson().toJson(requestList, response.getWriter());
 		
 	}
 

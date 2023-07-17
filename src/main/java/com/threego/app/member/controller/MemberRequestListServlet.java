@@ -27,7 +27,6 @@ public class MemberRequestListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String memberId = request.getParameter("memberId");
-		System.out.println(memberId); // 회원아이디 가져오기 
 		
 		List<TicketPayment> requestList = memberService.findRequestList(memberId);
 		// 이용권이름, 결제금액, 결제일, 잔여횟수 조회
