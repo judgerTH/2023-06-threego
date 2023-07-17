@@ -9,23 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.threego.app.admin.model.service.AdminService;
+import com.threego.app.board.model.service.BoardService;
+import com.threego.app.board.model.vo.Board;
 import com.threego.app.common.util.ThreegoUtils;
-import com.threego.app.payment.model.service.PaymentService;
-import com.threego.app.payment.model.vo.Payment;
 
 /**
- * Servlet implementation class AdminPaymentListServlet
+ * Servlet implementation class AdminWriteNotice
  */
-@WebServlet("/admin/paymentList")
-public class AdminPaymentListServlet extends HttpServlet {
+@WebServlet("/admin/writeNotice")
+public class AdminWriteNotice extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final int LIMIT = 10; // 한페이지당 회원 수
-	private final PaymentService paymentService = new PaymentService();
-	
+	private final AdminService adminService = new AdminService();
+	private final BoardService boardService = new BoardService();
+	private final int LIMIT = 10; // 한페이지당 공지사항 수
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// 페이징처리
 		int cpage = 1; // 기본값처리
 		try {
@@ -39,18 +41,19 @@ public class AdminPaymentListServlet extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
-		// 매출 전체조회
-		List<Payment> payments = paymentService.findAll(start, end);
-		System.out.println(payments);
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
+		List<Board> boards = boardService.findAllBoards(start, end); // 작성된 공지사항 전체조회
+
 		// 페이지바영역 처리
-		int totalPayment = paymentService.getTotalPayment();
+		int totalMember = adminService.getTotalMember();
 		String url = request.getRequestURI();
-		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalPayment, url);
+		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalMember, url);
 		
-		request.setAttribute("payments", payments);
+		request.setAttribute("boards", boards);
 		request.setAttribute("pagebar", pagebar);
-		request.getRequestDispatcher("/WEB-INF/views/admin/paymentList.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/admin/writeNotice.jsp")
 		.forward(request, response);
 	}
 

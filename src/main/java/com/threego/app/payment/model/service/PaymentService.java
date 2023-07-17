@@ -26,6 +26,16 @@ public class PaymentService {
 		return totalPayment;
 	}
 
+
+	public List<Payment> findByDate(int start, int end, String startDay, String endDay) {
+		Connection conn = getConnection();
+		List<Payment> payments = paymentDao.findByDate(conn, start, end, startDay, endDay);
+		close(conn);
+		return payments;
+	}
+
+
+
 	public int insertPayment(String memberId, String ticketId, int purchaseCount) {
 		Connection conn = getConnection();
 		int result = 0;
@@ -40,5 +50,6 @@ public class PaymentService {
 		}
 		return result;
 	}
+
 
 }

@@ -210,6 +210,20 @@
     	<input type="hidden" name="id" value = "">
     </form>
     
+    <form
+    	action="<%= request.getContextPath() %>/admin/findById" 
+	    name="findByIdFrm" 
+	    method="GET">
+    	<input type="hidden" name="findById" value = "">
+    </form>
+    
+    <form
+    	action="<%= request.getContextPath() %>/admin/findByName" 
+	    name="findByNameFrm" 
+	    method="GET">
+    	<input type="hidden" name="findByName" value = "">
+    </form>
+    
     <script>    	
     <% 	if(msg != null) { %>
 		alert('<%= msg %>');
@@ -228,6 +242,42 @@
 			}
 		}
 	});
+    
+    const findByIdInput = document.getElementById('findById');
+    const findByNameInput = document.getElementById('findByName');
+    
+    findByIdInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            handleIdSubmit();
+        }
+    });
+    
+    findByNameInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            handleNameSubmit();
+        }
+    });
+    
+    // 아이디로 회원검색
+    function handleIdSubmit() {
+    	const findById = document.getElementById('findById').value;
+        const frm = document.findByIdFrm;
+        const hiddenVal = frm.querySelector("input[name='findById']");
+
+        console.log(findById);
+        hiddenVal.value = findById;
+        frm.submit();
+    }
+    // 이름으로 회원검색
+    function handleNameSubmit() {
+    	const findByName = document.getElementById('findByName').value;
+        const frm = document.findByNameFrm;
+        const hiddenVal = frm.querySelector("input[name='findByName']");
+
+        console.log(findByName);
+        hiddenVal.value = findByName;
+        frm.submit();
+    }
     </script>
     
 </body>

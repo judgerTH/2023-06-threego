@@ -14,14 +14,13 @@ import com.threego.app.payment.model.service.PaymentService;
 import com.threego.app.payment.model.vo.Payment;
 
 /**
- * Servlet implementation class AdminPaymentListServlet
+ * Servlet implementation class AdminPaymentListFindByDateServlet
  */
-@WebServlet("/admin/paymentList")
-public class AdminPaymentListServlet extends HttpServlet {
+@WebServlet("/admin/PaymentFindByDate")
+public class AdminPaymentListFindByDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final int LIMIT = 10; // 한페이지당 회원 수
 	private final PaymentService paymentService = new PaymentService();
-	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -39,9 +38,11 @@ public class AdminPaymentListServlet extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
-		// 매출 전체조회
-		List<Payment> payments = paymentService.findAll(start, end);
-		System.out.println(payments);
+		String startDay = request.getParameter("searchStart");
+		String endDay = request.getParameter("searchEnd");
+		
+		// 선택 날짜 매출조회
+		List<Payment> payments = paymentService.findByDate(start, end, startDay, endDay);
 		
 		// 페이지바영역 처리
 		int totalPayment = paymentService.getTotalPayment();
