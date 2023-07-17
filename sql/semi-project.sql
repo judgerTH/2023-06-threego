@@ -77,6 +77,10 @@ create table board(
     constraints ck_board_b_type check(b_type in ('N', 'Q'))
     -- N : 공지사항 Q : 이용문의
 );
+select * from board where b_type = 'N';
+
+select * from (select row_number() over (order by m.id desc) rnum, m.* from member m) where (rnum between ? and ?) and (member_role = 'U' or member_role = 'R')
+
  create sequence seq_board_no;
  --drop table board;
  select * from board;
