@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.threego.app.board.model.service.BoardService;
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.common.util.ThreegoUtils;
 
@@ -20,7 +21,7 @@ import com.threego.app.common.util.ThreegoUtils;
 public class UseInquiryListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final int LIMIT = 10; // 한페이지당 게시물수
-
+	private final BoardService boardService = new BoardService();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -40,20 +41,19 @@ public class UseInquiryListServlet extends HttpServlet {
 		int end = cpage * LIMIT;
 		
 		// 2. 업무로직
-//		List<Board> boards = boardService.findAll(start, end);
-		
+		List<Board> boards = boardService.findAll(start, end);
 		// xss공격대비처리
-//		for(Board board : boards) {
-//			board.setTitle(ThreegoUtils.escapeHtml(board.getTitle()));
-//		}
-		
-		// 페이지바영역 처리
-//		int totalContent = boardService.getTotalContent();
+		for(Board board : boards) {
+			board.setBoardTitle(ThreegoUtils.escapeHtml(board.getBoardTitle()));
+		}
+//		
+//		// 페이지바영역 처리
+		int totalContent = boardService.getTotalContent();
 		String url = request.getRequestURI(); // /mvc/board/boardList
-//		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalContent, url);
-		
-//		request.setAttribute("boards", boards);
-//		request.setAttribute("pagebar", pagebar);
+		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalContent, url);
+//		
+		request.setAttribute("boards", boards);
+		request.setAttribute("pagebar", pagebar);
 		// 3. 응답처리
 
 		
