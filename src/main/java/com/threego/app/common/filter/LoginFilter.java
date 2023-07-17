@@ -48,7 +48,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 			httpRes.sendRedirect(httpReq.getContextPath() + "/");
 			return;
 		}
-		
+
 		chain.doFilter(request, response);
 	}
 
