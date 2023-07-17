@@ -173,6 +173,9 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
 
 select * from warning;
+select * from request;
+
+select * from request where req_no in (select w_req_no  from warning where w_writer = 'xogus' and w_req_no=1 ); 
 --drop table warning;
 create sequence seq_w_no;
 --drop sequence seq_w_no;

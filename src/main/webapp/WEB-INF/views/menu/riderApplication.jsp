@@ -219,7 +219,7 @@ width: 400px;
 						<%if(loginMember != null){%>
 						
 						<td> 
-						<input type="text" name="id" id="userId" value="<%= loginMember.getId() %>" disabled required></td><%}%>
+						<input type="text" name="id" id="userId" value="<%= loginMember.getId() %>" required readonly></td><%}%>
 					</tr>
 					<tr>
 						<th>수거지역 <span>*</span>
