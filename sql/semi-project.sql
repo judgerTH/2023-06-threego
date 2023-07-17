@@ -138,6 +138,7 @@ create table request(
 );
  create sequence seq_req_no;
 
+select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
 create table del_member(
 
@@ -285,7 +286,7 @@ create table msgbox(
 
 -- drop table msgbox;
 
-
+alter table rider modify r_status check (r_status in ('0', '1', '2'));
 
 update member set email = 'admin@naver.com' where id = 'admin';
 

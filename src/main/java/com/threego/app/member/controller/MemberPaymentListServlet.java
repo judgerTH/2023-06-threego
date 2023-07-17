@@ -11,29 +11,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.threego.app.member.model.service.MemberService;
-import com.threego.app.request.model.vo.Request;
-
+import com.threego.app.ticket.model.vo.TicketPayment;
 
 /**
  * Servlet implementation class MemberRequestListServlet
  */
-@WebServlet("/member/requestList")
-public class MemberRequestListServlet extends HttpServlet {
+@WebServlet("/member/paymentList")
+public class MemberPaymentListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final MemberService memberService = new MemberService();
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 		String memberId = request.getParameter("memberId");
 		
-		List<Request> requestList = memberService.findRequestList(memberId);
+		List<TicketPayment> paymentList = memberService.findPaymentList(memberId);
+		// 이용권이름, 결제금액, 결제일, 잔여횟수 조회
 		
-		request.setAttribute("requestList", requestList);
-		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberRequestList.jsp");
+		request.setAttribute("paymentList", paymentList);
+		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberPaymentList.jsp");
 		reqDispatcher.forward(request, response);
 	}
 
