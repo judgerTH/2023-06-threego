@@ -159,23 +159,6 @@ input:not(#address), input[type="file"] {
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용권 구매</a></li>
 		</ul>
 	</div>
-	<section id="board-container">
-		<div id="tbl-boardWarpper">
-			<table id="tbl-board">
-				<thead>
-					<tr>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr></tr>
-					<th></th>
-
-				</tbody>
-			</table>
-		</div>
-
-	</section>
 	<div class="rider-info-boxes" id="beforeContent">
 		<div class="rider-info-box">
 			<img id="riderimg" src="../images/riderinfo.png">

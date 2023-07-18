@@ -60,7 +60,6 @@ create table payment(
 
 -- drop sequence seq_payment_no;
 
-
 select * from payment;
  select * from ticket;
  

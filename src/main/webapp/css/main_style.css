@@ -1,17 +1,58 @@
 @CHARSET "UTF-8";
+/*카페24슈퍼매직*/
+@font-face {
+    font-family: 'Cafe24Supermagic-Bold-v1.0';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/Cafe24Supermagic-Bold-v1.0.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/*앨리스디지털배움체*/
+@font-face {
+    font-family: 'EliceDigitalBaeum-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/*주아체*/
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 /* main css */
-body{margin : 0 auto; width: 100vw; height: 100vh;}
+body{margin : 0 auto; width: 100vw; height: 100vh;  font-family: 'GmarketSansMedium';}
 header{display : flex; flex-direction: row; justify-content: space-around; align-items: center; }
-#menubar{display : flex; flex-direction: row; margin : 0 150px;}
+.main-container { height : 900px;}
+#menubar{display : flex; flex-direction: row; margin : 0 150px; font-size : 100px;}
 #menubar li{list-style: none; margin : 0 50px;}
-li a{text-decoration: none;}
-#enterance{display : flex; flex-direction: row; justify-content: space-between; margin-left : 50px;}
+li a{text-decoration: none; font-size : 20px;}
+#enterance{display : flex; flex-direction: row; justify-content: space-between; margin-left : 60px;}
 .ent-button{margin : 0 5px; display : flex; flex-direction: column; margin: 5px 5px; justify-content: center; align-items: center;}
 .ent-img{width : 45px; height: 45px; margin-bottom: 10px;}
 main{display : flex; flex-direction: column; justify-content: center; align-items: center;}
 main img{width: 100vw; height: 500px;}
 #btn-container{display: flex; flex-direction: row; justify-content: center;}
-.btn-main{margin: 30px 100px; padding : 20px 50px; border-radius: 5px; border : none; background-color: #49B466; color : white; font-weight: bold; font-size: 20px;}
+.btn-main{margin: 30px 100px; width:200px; height : 70px;  padding : 10px 10px; border-radius: 10px; border : none; background-color: #49B466; color : white; font-weight: bold; font-family: 'GmarketSansMedium'; font-size: 30px;}
 .footerRow{display : flex; flex-direction: row; margin : 10px 10px; justify-content: flex-start; align-items : center;}
 
 /* loginFrm css*/
