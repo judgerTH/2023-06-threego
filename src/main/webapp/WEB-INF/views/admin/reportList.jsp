@@ -215,6 +215,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 	    method="POST">
     	<input type="hidden" name="warningNotice" value = "">
     	<input type="hidden" name="warningID" value = "">
+    	<input type="hidden" name="warningNo" value = "">
     </form>
     
     
@@ -224,9 +225,11 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
         for (int i = 1; i <= warnings.size(); i++) {
             Warning warning = warnings.get(i-1);
             String userID = warning.getWarningWriter();
+            int warningNo = warning.getWarningNo();
     %>
             document.getElementById("warningCaution<%= i %>").addEventListener("click", function() {
                const userID = '<%= userID %>'; // 사용자의 ID를 변수에 저장
+               const warningNo = '<%= warningNo %>';
                // 팝업창 생성
                const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
               
@@ -244,8 +247,11 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                    const content = cautionText;
                    const hiddenVal1 = frm.querySelector("input[name='warningNotice']");
                    const hiddenVal2 = frm.querySelector("input[name='warningID']");
+                   const hiddenVal3 = frm.querySelector("input[name='warningNo']");
                    hiddenVal1.value = content;
                    hiddenVal2.value = userID;
+                   hiddenVal3.value = warningNo;
+                   console.log(warningNo);
                    frm.submit();
                };
            });

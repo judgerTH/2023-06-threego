@@ -42,8 +42,10 @@ public class AdminWarningNoticeServlet extends HttpServlet {
 		// 2. 업무로직
 		String warningID = request.getParameter("warningID"); // 신고자 ID
 		String warningNotice = request.getParameter("warningNotice"); // 주의조치사항 내용
+		int warningNo = Integer.parseInt(request.getParameter("warningNo"));
 		
 		int result = adminService.insertWarningNotice(warningID, warningNotice);
+		int result2 = adminService.updateWarningCaution(warningNo, warningNotice);
 		
 		List<Warning> warnings = adminService.findAllReports();
 		
