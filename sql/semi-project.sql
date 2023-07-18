@@ -61,6 +61,23 @@ create table payment(
 -- drop sequence seq_payment_no;
 
 
+CREATE OR REPLACE TRIGGER trg_request_insert
+AFTER INSERT ON request
+FOR EACH ROW
+BEGIN
+  UPDATE payment
+  SET p_cnt = p_cnt - 1,
+      p_use_cnt = p_use_cnt + 1
+  WHERE p_no = :new.req_no;
+END;
+/
+
+
+
+
+
+
+
 select * from payment;
  select * from ticket;
  
@@ -87,10 +104,12 @@ select * from (select row_number() over (order by m.id desc) rnum, m.* from memb
 
  create sequence seq_board_no;
  --drop table board;
- select * from board;
+
 insert into board values(
-    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+   seq_board_no.nextval ,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
 );
+ 
+ update board set b_tittle = 'sdsdsd', b_content = 'sdsdsdsd' where b_no = 1;
 create table board_comment(
     c_no number,
     c_level number default 1,
@@ -326,6 +345,7 @@ update member set email = 'admin@naver.com' where id = 'admin';
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
 
+select * from member;
 
 
 

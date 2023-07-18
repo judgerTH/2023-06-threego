@@ -3,6 +3,7 @@ package com.threego.app.request.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import com.threego.app.payment.model.vo.Payment;
 import com.threego.app.request.model.dao.RequestDao;
 import com.threego.app.request.model.vo.Request;
 import static  com.threego.app.common.util.JdbcTemplate.*;
@@ -81,5 +82,53 @@ public class RequestService {
         return result;
     }
 
+	public int countUpdate(String id) {
+	      Connection conn = getConnection();
+	      int result = 0; 
+	      try {
+	         result = requestDao.countUpdate(conn, id);
+	         commit(conn);
+	         
+	      } catch (Exception e) {
+	         rollback(conn);
+	         throw e;
+	      
+	      }finally {
+	         close(conn);
+	      }
+	      
+	      return result;
+	   }
+
+	public Payment findPayment(String id) {
+	      Payment payment = null;
+	      Connection conn = getConnection();
+	      try {
+	         payment = requestDao.findPayment(conn, id);
+	         commit(conn);
+	      } catch (Exception e) {
+	         rollback(conn);
+	         throw e;
+	      }finally {
+	         close(conn);
+	      }
+	      
+	      return payment;
+	   }
+
+	public int deletePayment(String id) {
+      Connection conn = getConnection();
+      int result = 0; 
+      try {
+         result = requestDao.deletePayment(conn, id);
+         commit(conn);
+      } catch (Exception e) {
+         rollback(conn);
+         throw e;
+      }finally {
+         close(conn);
+      }
+      return result;
+   }
 
 }
