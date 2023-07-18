@@ -288,7 +288,7 @@ WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
 
-  
+
   
 create table msgbox(
     msg_no number, 
