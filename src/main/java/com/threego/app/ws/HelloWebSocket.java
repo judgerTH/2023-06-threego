@@ -28,7 +28,7 @@ public class HelloWebSocket {
 	
 	@OnOpen
 	public void onOpen(EndpointConfig config, Session session) {
-		System.out.println("open");
+//		System.out.println("open");
 		Map<String, Object> configProperties = config.getUserProperties();
 		String memberId = (String) configProperties.get("memberId");
 		
@@ -44,19 +44,19 @@ public class HelloWebSocket {
 	public void onMessage(String message, Session session) {
 		// db chatService.insertChat(chat) 시작!
 		
-		System.out.println("message : " + message);
+//		System.out.println("message : " + message);
 		Map<String, Object> payload = new Gson().fromJson(message, Map.class);
-		System.out.println("payload from message : " + payload);
+//		System.out.println("payload from message : " + payload);
 	}
 	
 	@OnError
 	public void onError(Throwable e) {
-		System.out.println("error");
+//		System.out.println("error");
 		e.printStackTrace();
 	}
 	@OnClose
 	public void onClose(Session session) {
-		System.out.println("close");
+//		System.out.println("close");
 		Map<String, Object> sessionProperties = session.getUserProperties();
 		String memberId = (String) sessionProperties.get("memberId");
 		clientMap.remove(memberId); // 해당 memberId의 WebSocket Session객체 제거

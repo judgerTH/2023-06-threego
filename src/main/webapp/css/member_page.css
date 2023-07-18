@@ -149,3 +149,6 @@
 	font-size: 30px; /* 닫기 버튼의 크기 조절 */
 	font-weight: bold;
 }
+/* 받은 메세지 스타일*/
+.letterBox {width:1200px; display:flex; border-style:solid; border-color:grey; border-radius:10px;}
+.letterIcon {width:50px; justify-content: center; align-items: center; text-align: center;}

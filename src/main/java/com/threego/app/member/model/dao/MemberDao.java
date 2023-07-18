@@ -14,6 +14,8 @@ import java.util.Properties;
 import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
+import com.threego.app.msgbox.model.vo.MsgBox;
+import com.threego.app.msgbox.model.vo.MsgType;
 import com.threego.app.request.model.vo.Request;
 import com.threego.app.ticket.model.vo.TicketPayment;
 
@@ -243,6 +245,41 @@ public class MemberDao {
 		Date reqCpDate = rset.getDate("req_cp_date");
 
 		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
+	}
+
+	public List<MsgBox> getMsgBoxList(Connection conn, String memberId) {
+		List<MsgBox> msgBoxes = new ArrayList<>();
+		String sql = prop.getProperty("getMsgBoxList");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			
+			pstmt.setString(1, memberId);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+
+				while(rset.next()){
+					MsgBox msgBox = handleMsgBoxResultSet(rset);
+					msgBoxes.add(msgBox);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return msgBoxes;
+	}
+
+	private MsgBox handleMsgBoxResultSet(ResultSet rset) throws SQLException {
+		MsgBox msgBox = new MsgBox();
+		msgBox.setMsgNo(rset.getInt("msg_no"));
+		MsgType msgType = MsgType.valueOf(rset.getString("msg_type"));
+		msgBox.setMsgType(msgType);
+		msgBox.setMsgSender(rset.getString("msg_sender"));
+		msgBox.setMsgReceiver(rset.getString("msg_receiver"));
+		msgBox.setMsgContent(rset.getString("msg_content"));
+		msgBox.setMsgSendingDate(rset.getDate("msg_sending_date"));
+		
+		
+		return msgBox;
 	}
 
 }
