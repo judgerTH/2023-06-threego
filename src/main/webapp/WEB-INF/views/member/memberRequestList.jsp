@@ -1,9 +1,9 @@
 <%@page import="com.threego.app.request.model.vo.Request"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ include file = "/WEB-INF/views/common/header.jsp" %>
-    <% 
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<% 
    		 String memberId = loginMember.getId();
     	List<Request> requestList = (List<Request>) request.getAttribute("requestList");
     %>
@@ -11,91 +11,89 @@
 <html lang="en">
 <head>
 
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
-   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/css/member_page.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/css//member_payment_list.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/css/warning.css" />
 </head>
 <body>
-    <div id="wrapper">
-        <div id="container_wr">
-        <div id="container">
-    <div class="mypage-wrap">
-        <div class="container">
-            <div>
-                <div class="left-div">
-                <h2>마이페이지</h2>
-     				<ul>
-                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
-                       			<li><a class="" aria-current="page"
-                       				href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-								<li class="active"><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청 내역</a></li>
-								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
-										리스트</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
-										수거 목록 조회</a></li>
-								<% } %>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
-                    </ul>
-                </div>
-            </div>
-            </div>
-            <div class="right-div">
-                <h3>수거신청목록 조회</h3>
-                <table class="mypage-table">
-                    <tbody>
-                        <tr>
-                            <td>NO</td>
-                            <td>접수현황</td>
-                            <td>접수일자</td>
-                            <td>배정 라이더</td>
-                            <td>완료일자</td>
-                        </tr>
-                        <tr>
-                        <% int count = 1; %>
-                   		<% if(requestList.isEmpty() || requestList == null) { %>
-                        	<td colspan="7" class="empty_table">수거신청 내역이 없습니다.</td>
-                        </tr>
-                        <% } else {
+	<div class="mypage-container">
+		<div class="left-div">
+			<h2>마이페이지</h2>
+			<ul>
+				<li><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+				<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
+				<li class="active"><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
+				<li><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
+				<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
+				<li><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
+						리스트</a></li>
+				<li><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
+						수거 목록 조회</a></li>
+				<% } %>
+				<li><a class="" aria-current="page"
+					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
+			</ul>
+
+		</div>
+
+	<div class="right-div">
+		<h3>수거신청목록 조회</h3>
+		<div class="mypage-content-box">
+			<table id="mypage-table">
+				<tbody>
+					<tr>
+						<td>NO</td>
+						<td>접수현황</td>
+						<td>접수일자</td>
+						<td>배정 라이더</td>
+						<td>완료일자</td>
+					</tr>
+					<tr>
+						<% int count = 1; %>
+						<% if(requestList.isEmpty() || requestList == null) { %>
+						<td colspan="7" class="empty_table">수거신청 내역이 없습니다.</td>
+					</tr>
+					<% } else {
                         			for(Request reqList : requestList) {	 %>
-                        <tr>
-                        <td><%= count++%></td>
-                        <td>
-				                <%= (reqList.getReqStatus().equals("0")) ? "수거 대기중" :
+					<tr>
+						<td><%= count++%></td>
+						<td><%= (reqList.getReqStatus().equals("0")) ? "수거 대기중" :
 				                    (reqList.getReqStatus().equals("1")) ? "수거중" :
 				                    (reqList.getReqStatus().equals("2")) ? "수거완료" :
 				                    (reqList.getReqStatus().equals("3")) ? "수거취소" : "" %>
-		           		</td>
-                        <td><%= reqList.getReqDate() %></td>
-                        <td><%= reqList.getReqRider() %>
-						    <% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
-						       	<form name="requestwarningForm" style="display: inline;">
-												<input type="hidden" name="reqNo"
-													value="<%= reqList.getReqNo()%>"> <input
-													type="hidden" name="memberId"
-													value="<%=loginMember.getId()%>">
-												<button type="button" id="btn-warning"
-													onclick="openModal(this)">라이더 신고</button>
-											</form>
-						    <% } %>
 						</td>
-                        <td><%= reqList.getReqCpDate() == null ? "미완료" : reqList.getReqCpDate() %></td>
-                        <% 		}
+						<td><%= reqList.getReqDate() %></td>
+						<td><%= reqList.getReqRider() %> <% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
+							<form name="requestwarningForm" style="display: inline;">
+								<input type="hidden" name="reqNo"
+									value="<%= reqList.getReqNo()%>"> <input type="hidden"
+									name="memberId" value="<%=loginMember.getId()%>">
+								<button type="button" id="btn-warning" onclick="openModal(this)">라이더
+									신고</button>
+							</form> <% } %></td>
+						<td><%= reqList.getReqCpDate() == null ? "미완료" : reqList.getReqCpDate() %></td>
+						<% 		}
                         		}
                        	%>
-                        </tr>           
-                     </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    	<div id="warningMadal" class="modal">
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+	<div id="warningMadal" class="modal">
 		<div class="modal-content">
 			<span class="close" onclick="closeModal()">&times;</span>
 			<h3>신고하기</h3>
@@ -112,7 +110,7 @@
 			</form>
 		</div>
 	</div>
-    <script>
+	<script>
 
 // 모달 열기
 function openModal(button) {
@@ -164,4 +162,4 @@ document.warningForm.onsubmit = (e) => {
 </script>
 </body>
 </html>
-    <%@ include file = "/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

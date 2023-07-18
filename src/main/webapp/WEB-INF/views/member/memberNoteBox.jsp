@@ -18,10 +18,8 @@
      <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
 </head>
 <body>
-        <div id="container">
-    <div class="mypage-wrap">
-        <div class="container">
-            <div>
+      
+    <div class="mypage-container">
                 <div class="left-div">
                 <h2>마이페이지</h2>
                     <ul>
@@ -42,7 +40,6 @@
                         		<li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
                     </ul>
                 </div>
-            </div>
             </div>
             <div class="right-div">
                 <h3>받은 메시지</h3>

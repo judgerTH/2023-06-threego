@@ -13,22 +13,21 @@ import com.threego.app.admin.model.service.AdminService;
 import com.threego.app.board.model.service.BoardService;
 import com.threego.app.board.model.vo.Board;
 import com.threego.app.common.util.ThreegoUtils;
+import com.threego.app.member.model.vo.Member;
 
 /**
- * Servlet implementation class AdminWriteNotice
+ * Servlet implementation class AdminNoticeDeleteServlet
  */
-@WebServlet("/admin/writeNotice")
-public class AdminWriteNotice extends HttpServlet {
+@WebServlet("/admin/noticeDelete")
+public class AdminNoticeDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AdminService adminService = new AdminService();
 	private final BoardService boardService = new BoardService();
-	private final int LIMIT = 10; // 한페이지당 공지사항 수
+	private final int LIMIT = 10; // 한페이지당 공지 수
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 페이징처리
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cpage = 1; // 기본값처리
 		try {
 			cpage = Integer.parseInt(request.getParameter("cpage")); 			
@@ -41,20 +40,20 @@ public class AdminWriteNotice extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		String noticeNo = request.getParameter("noticeNo");
 		
-		List<Board> boards = boardService.findAllBoards(start, end); // 작성된 공지사항 전체조회
+		int result = adminService.deleteNotice(noticeNo);
+		
+		
+		List<Board> boards = boardService.findAllBoards(start, end);
+	    // 페이지바 영역 처리
+	    int totalNotice = adminService.getTotalNotice();
+	    String url = request.getRequestURI();
+	    String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalNotice, url);
 
-		// 페이지바영역 처리
-		int totalMember = adminService.getTotalMember();
-		String url = request.getRequestURI();
-		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalMember, url);
-		
-		request.setAttribute("boards", boards);
-		request.setAttribute("pagebar", pagebar);
-		request.getRequestDispatcher("/WEB-INF/views/admin/writeNotice.jsp")
-		.forward(request, response);
+	    request.setAttribute("boards", boards);
+	    request.setAttribute("pagebar", pagebar);
+	    response.sendRedirect(request.getContextPath() + "/admin/writeNotice");
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.threego.app.board.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.threego.app.board.model.service.BoardService;
 import com.threego.app.board.model.vo.Board;
+import com.threego.app.board.model.vo.BoardComment;
 import com.threego.app.common.util.ThreegoUtils;
 
 
@@ -30,14 +32,12 @@ public class UseInquiryDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 사용자입력값 처리 ?no=12
 		int no = Integer.parseInt(request.getParameter("no"));
-		
 		// 2. 업무로직
 		
 		
 		
 		Board board = boardService.findByNo(no); //
-		
-		
+		List<BoardComment> boardComments = boardService.findAllComentByBoardNo(no);
 		// secure coding처리 
 		String unsecureTitle = board.getBoardTitle();
 		String secureTitle = ThreegoUtils.escapeHtml(unsecureTitle);
@@ -46,7 +46,7 @@ public class UseInquiryDetailServlet extends HttpServlet {
 		
 		// 3. 응답처리 jsp
 		request.setAttribute("board", board);
-		
+		request.setAttribute("boardComments", boardComments);
 		
 		request.getRequestDispatcher("/WEB-INF/views/board/useInquiryDetail.jsp")
 			.forward(request, response);
