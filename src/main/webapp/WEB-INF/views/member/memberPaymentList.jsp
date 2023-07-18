@@ -148,12 +148,23 @@
             <div>
                 <div class="left-div">
                 <h2>마이페이지</h2>
-                    <ul>
-                       <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청목록</a></li>
-                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
-                    </ul>        
+                     <ul>
+                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
+                       			<li class="active"><a class="" aria-current="page"
+                       				href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
+								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
+										리스트</a></li>
+								<li><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
+										수거 목록 조회</a></li>
+								<% } %>
+                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+                    </ul>    
                 </div>
             </div>
             </div>

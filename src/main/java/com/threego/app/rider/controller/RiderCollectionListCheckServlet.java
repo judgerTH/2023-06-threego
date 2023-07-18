@@ -29,7 +29,6 @@ public class RiderCollectionListCheckServlet extends HttpServlet {
 		// 내 수거목록에 관한 정보 설정
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");	
-//		System.out.println(loginMember);
 		String id = loginMember.getId();
 		List<Request> requestList = requestService.findByMyReq(id);
 
