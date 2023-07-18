@@ -388,8 +388,6 @@ input:not(#address), input[type="file"] {
 	}
 	
 	
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 	paysubmit.onclick =()=>{
 	 const selectElement = document.getElementById('ticketSelect');
 	 const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -425,7 +423,6 @@ function updatePrice() {
 		<%}%>
 	}
 	
-<<<<<<< HEAD
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
 		
 		
