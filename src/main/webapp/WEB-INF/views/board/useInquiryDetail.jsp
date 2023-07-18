@@ -1,9 +1,12 @@
+<%@page import="com.threego.app.board.model.vo.BoardComment"%>
+<%@page import="java.util.List"%>
 <%@page import="com.threego.app.board.model.vo.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
 Board board = (Board) request.getAttribute("board");
+List<BoardComment> boardComments = (List<BoardComment>) request.getAttribute("boardComments");
 %>
 <style>
 .left-div ul li {
@@ -125,7 +128,7 @@ input #writer {
 
 #tbl-board-view textarea {
 	width: 900px;
-	height: 250px;
+	height: 200px;
 	resize: none;
 }
 
@@ -161,7 +164,7 @@ li {
 	<div class="left-div">
 		<h2>고객센터</h2>
 		<ul>
-			<li><a class="active" aria-current="page" href="">공지사항</a></li>
+			<li><a class="active" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" id="active1" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>
 		</ul>
@@ -187,6 +190,37 @@ li {
 					<td><textarea disabled readonly style="resize: none;"
 							rows="10"><%=board.getBoardContent()%></textarea></td>
 				</tr>
+				<tr>
+					<th>답변 작성</th>
+					<td>
+						<form
+							action="<%=request.getContextPath()%>/board/CommentCreate" 
+							method="post" 
+							name="boardCommentFrm">
+			                <input type="hidden" name="boardNo" value="<%= board.getBoardNo() %>" />
+			                <input type="hidden" name="writer" value="<%= loginMember != null ? loginMember.getId() : "" %>" />
+			                <input type="hidden" name="commentLevel" value="1" />
+			                <input type="hidden" name="commentRef" value="0" />    
+							<textarea name="content" cols="10" rows="1" style="height: 100px"></textarea>
+			                <button type="submit" id="btn-comment-enroll">등록</button>
+			            </form>
+					</td>
+				</tr>
+				<tr>
+					<th>댓글</th>
+					<td><%
+					if(boardComments != null && !boardComments.isEmpty()) {
+						for(BoardComment bc : boardComments) {
+					%>
+					<sub class=comment-writer><%= bc.getC_writer() %></sub>
+					<sub class=comment-date><%= bc.getC_reg_date() %></sub>
+					<br />
+					<%= bc.getC_content() %>
+					<br>
+					<%  } 
+					} %>
+					</td>
+				</tr>
 			</table>
 			<div class="bottom-div">
 				<ul>
@@ -201,6 +235,4 @@ li {
 		</div>
 	</section>
 </body>
-<script>
-    </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.threego.app.board.model.dao.BoardDao;
 import com.threego.app.board.model.vo.Board;
+import com.threego.app.board.model.vo.BoardComment;
 
 public class BoardService {
 
@@ -86,5 +87,27 @@ public class BoardService {
 			close(conn);
 		}
 		return result;
+	}
+
+	public int commentCreate(BoardComment boardComment) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = boardDao.commentCreate(conn, boardComment);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public List<BoardComment> findAllComentByBoardNo(int boardNo) {
+		Connection conn = getConnection();
+		List<BoardComment> boardComments = boardDao.findAllComentByBoardNo(conn, boardNo);
+		close(conn);
+		return boardComments;
 	}
 }

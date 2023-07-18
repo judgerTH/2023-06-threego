@@ -80,18 +80,21 @@ create table board(
     constraints ck_board_b_type check(b_type in ('N', 'Q'))
     -- N : 공지사항 Q : 이용문의
 );
-select * from board where b_type = 'N';
 
-select * from (select row_number() over (order by m.id desc) rnum, m.* from member m) where (rnum between ? and ?) and (member_role = 'U' or member_role = 'R')
 
  create sequence seq_board_no;
  --drop table board;
+ select * from board;
+ 
+insert into board values(select ROW_NUMBER() OVER (ORDER BY b_no) from board,'N','z','관리자','zz', default, default);
+
 
 insert into board values(
    seq_board_no.nextval ,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
 );
  
  update board set b_tittle = 'sdsdsd', b_content = 'sdsdsdsd' where b_no = 1;
+
 create table board_comment(
     c_no number,
     c_level number default 1,
@@ -104,6 +107,9 @@ create table board_comment(
     constraints fk_board_comment_c_ref foreign key(c_board_no) references board(b_no) on delete cascade
 );
  create sequence seq_c_no;
+
+select * from board_comment;
+
 
 create table location(
     l_id varchar2(30),	
@@ -186,10 +192,7 @@ select * from warning;
 
 create sequence seq_w_no;
 
-select * from warning;
-insert into warning values (
-    seq_w_no.next
-);
+
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
@@ -211,7 +214,9 @@ create table msgbox(
     constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
+
 create sequence seq_msg_no;
+select * from msgbox;
 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default

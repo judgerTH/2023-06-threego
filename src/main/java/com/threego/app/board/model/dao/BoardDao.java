@@ -3,6 +3,7 @@ package com.threego.app.board.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.Properties;
 
 import com.threego.app.board.model.exception.BoardException;
 import com.threego.app.board.model.vo.Board;
+import com.threego.app.board.model.vo.BoardComment;
 import com.threego.app.board.model.vo.BoardType;
 
 public class BoardDao {
@@ -172,6 +174,51 @@ private Properties prop = new Properties();
 			throw new BoardException(e);
 		} 
 		return result;
+	}
+
+	public int commentCreate(Connection conn, BoardComment boardComment) {
+		int result = 0;
+		String sql = prop.getProperty("commentCreate");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, boardComment.getC_writer());
+			pstmt.setString(2, boardComment.getC_content());
+			pstmt.setInt(3, boardComment.getC_board_no());
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new BoardException(e);
+		}
+		return result;
+	}
+
+	public List<BoardComment> findAllComentByBoardNo(Connection conn, int boardNo) {
+		List<BoardComment> boardComments = new ArrayList<BoardComment>();
+		String sql = prop.getProperty("findAllComentByBoardNo");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, boardNo);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					BoardComment boardComment = handleBoardCommentResultSet(rset);
+					boardComments.add(boardComment);
+				}
+			}
+		}catch(SQLException e) {
+			throw new BoardException(e);
+		}
+		return boardComments;
+	}
+
+	private BoardComment handleBoardCommentResultSet(ResultSet rset) throws SQLException {
+		int c_no = rset.getInt("c_no");
+		int c_level = rset.getInt("c_level");
+		String c_writer = rset.getString("c_writer");
+		String c_content = rset.getString("c_content");
+		int c_board_no = rset.getInt("c_board_no");
+		Date c_reg_date = rset.getDate("c_reg_date");
+		
+		return new BoardComment(c_no, c_level, c_writer, c_content, c_board_no, c_reg_date);
+		
 	}
 
 	
