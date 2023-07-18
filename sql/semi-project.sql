@@ -88,10 +88,12 @@ select * from (select row_number() over (order by m.id desc) rnum, m.* from memb
 
  create sequence seq_board_no;
  --drop table board;
- select * from board;
+
 insert into board values(
-    1,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+   seq_board_no.nextval ,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
 );
+ 
+ update board set b_tittle = 'sdsdsd', b_content = 'sdsdsdsd' where b_no = 1;
 create table board_comment(
     c_no number,
     c_level number default 1,
