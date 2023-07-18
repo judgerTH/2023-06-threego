@@ -67,7 +67,6 @@ public class RequestDao {
 		Date reqData = rset.getDate("req_date");
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
-
 		return new Request(reqNo, reqWriter, reqLocationId, reqPost, reqAddress, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
 
@@ -143,44 +142,62 @@ public class RequestDao {
 	}
 
 	//INSERT INTO request (req_no, req_writer, req_location_id, req_post, req_address, req_photo, req_status, req_date, req_rider, req_cp_date)
-		//VALUES (seq_req_no.NEXTVAL, ?, ?, ?, ?, ?, '0', SYSDATE, NULL, NULL)
-		public boolean reqGarbagePickup(Connection conn, String id, String location, String post, String address, String photo) {
-		    boolean result = false;
-		    String sql = prop.getProperty("reqGarbagePickup");
-		    
-		    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		        pstmt.setString(1, id);
-		        pstmt.setString(2, location);
-		        pstmt.setString(3, post);
-		        pstmt.setString(4, address);
-		        pstmt.setString(5, photo);
+	//VALUES (seq_req_no.NEXTVAL, ?, ?, ?, ?, ?, '0', SYSDATE, NULL, NULL)
+	public boolean reqGarbagePickup(Connection conn, String id, String location, String post, String address, String photo) {
+	    boolean result = false;
+	    String sql = prop.getProperty("reqGarbagePickup");
+	    
+	    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, id);
+	        pstmt.setString(2, location);
+	        pstmt.setString(3, post);
+	        pstmt.setString(4, address);
+	        pstmt.setString(5, photo);
 
-		        int rowsInserted = pstmt.executeUpdate();
-		        if (rowsInserted > 0) {
-		            result = true;
-		        }
-		    } catch (SQLException e) {
-		        throw new RequestException(e);
-		    }
+	        int rowsInserted = pstmt.executeUpdate();
+	        if (rowsInserted > 0) {
+	            result = true;
+	        }
+	    } catch (SQLException e) {
+	        throw new RequestException(e);
+	    }
 
-		    return result;
+	    return result;
+	}
+
+	public int countUpdate(Connection conn, String id) {
+        int result = 0;
+        String sql = "update payment set p_cnt = p_cnt -1, p_use_cnt = p_use_cnt +1 where p_mem_id = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+           pstmt.setString(1, id);
+           
+           result = pstmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+           throw new RequestException(e);
+        }
+        return result;
+     }
+
+	public int insertRequest(Connection conn, String _writer, String msg) {
+		int result = 0; 
+		String sql = prop.getProperty("insertRequest");
+		// insert into msgbox values(seq_msg_no.nextval, 'P', 'admin', ?, ?, default)
+
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, _writer);
+			pstmt.setString(2, msg);
+
+			result = pstmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			throw new RequestException(e);
 		}
-
-		public int countUpdate(Connection conn, String id) {
-			int result = 0;
-			String sql = "update payment set p_cnt = p_cnt -1, p_use_cnt = p_use_cnt +1 where p_mem_id = ?";
-			
-			try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-				pstmt.setString(1, id);
-				
-				result = pstmt.executeUpdate();
-
-
-			} catch (SQLException e) {
-				throw new RequestException(e);
-			}
-			return result;
-		}
+		return result;
+	}
 
 		public Payment findPayment(Connection conn, String id) {
 			Payment payment = null;

@@ -12,6 +12,8 @@ public class Warning {
 	int WarningConfirm; // 신고 확인여부 - 0: 신고확인중, 1: 신고확인완료 
 	String WarningCaution; // 주의조치
 	private WarnigMemberRole memberRole;
+	String requestWriter;
+	String requestRider;
 	
 	public Warning() {
 		super();
@@ -43,6 +45,24 @@ public class Warning {
 		WarningConfirm = warningConfirm;
 		WarningCaution = warningCaution;
 	}
+
+		
+	public Warning(int warningNo, int warningReqNo, String warningWriter, String warningContent, Date warningRegDate,
+			int warningConfirm, String warningCaution, WarnigMemberRole memberRole, String requestWriter,
+			String requestRider) {
+		super();
+		WarningNo = warningNo;
+		WarningReqNo = warningReqNo;
+		WarningWriter = warningWriter;
+		WarningContent = warningContent;
+		WarningRegDate = warningRegDate;
+		WarningConfirm = warningConfirm;
+		WarningCaution = warningCaution;
+		this.memberRole = memberRole;
+		this.requestWriter = requestWriter;
+		this.requestRider = requestRider;
+	}
+
 
 	public int getWarningNo() {
 		return WarningNo;
@@ -108,6 +128,28 @@ public class Warning {
 		this.memberRole = memberRole;
 	}
 	
+	
+	
+	public String getRequestWriter() {
+		return requestWriter;
+	}
+
+
+	public String getRequestRider() {
+		return requestRider;
+	}
+
+
+	public void setRequestWriter(String requestWriter) {
+		this.requestWriter = requestWriter;
+	}
+
+
+	public void setRequestRider(String requestRider) {
+		this.requestRider = requestRider;
+	}
+
+
 	@Override
 	public String toString() {
 		return "WarningVO [WarningNo=" + WarningNo + ", WarningReqNo=" + WarningReqNo + ", WarningWriter="

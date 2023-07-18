@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/request_list_view.css"/>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f2398d9caf132d6eea659a665e6afbaf&libraries=services,clusterer,drawing"></script>
 <style>
@@ -33,7 +34,7 @@
 <body>
 	<!-- 여기는 수거리스트 보기 클릭시 팝업에 들어가는 html 입니다 -->
 	<div class="requestDetail-container">
-		<div calss="requestDetail-tbl-container">
+		<div class="requestDetail-tbl-container">
 			<fieldset id="requestDetail-wrap">
 				<h3>접수 내역 상세</h3>
 				<hr>

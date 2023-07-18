@@ -83,48 +83,69 @@ public class RequestService {
     }
 
 	public int countUpdate(String id) {
+	      Connection conn = getConnection();
+	      int result = 0; 
+	      try {
+	         result = requestDao.countUpdate(conn, id);
+	         commit(conn);
+	         
+	      } catch (Exception e) {
+	         rollback(conn);
+	         throw e;
+	      
+	      }finally {
+	         close(conn);
+	      }
+	      
+	      return result;
+	   }
+
+	public Payment findPayment(String id) {
+	      Payment payment = null;
+	      Connection conn = getConnection();
+	      try {
+	         payment = requestDao.findPayment(conn, id);
+	         commit(conn);
+	      } catch (Exception e) {
+	         rollback(conn);
+	         throw e;
+	      }finally {
+	         close(conn);
+	      }
+	      
+	      return payment;
+	   }
+
+	public int deletePayment(String id) {
+      Connection conn = getConnection();
+      int result = 0; 
+      try {
+         result = requestDao.deletePayment(conn, id);
+         commit(conn);
+      } catch (Exception e) {
+         rollback(conn);
+         throw e;
+      }finally {
+         close(conn);
+      }
+      return result;
+   }
+	public int insertRequest(String _writer, String msg) {
+		// 접수취소 시 or 수거 완료 시 메세지함 전송
 		Connection conn = getConnection();
 		int result = 0; 
 		try {
-			result = requestDao.countUpdate(conn, id);
+			result = requestDao.insertRequest(conn, _writer, msg);
 			commit(conn);
+			
 		} catch (Exception e) {
 			rollback(conn);
 			throw e;
-		}finally {
-			close(conn);
-		}
-		return result;
-	}
-
-	public Payment findPayment(String id) {
-		Payment payment = null;
-		Connection conn = getConnection();
-		try {
-			payment = requestDao.findPayment(conn, id);
-			commit(conn);
-		} catch (Exception e) {
-			rollback(conn);
-			throw e;
+		
 		}finally {
 			close(conn);
 		}
 		
-		return payment;
-	}
-
-	public int deletePayment(String id) {
-		Connection conn = getConnection();
-		int result = 0; 
-		try {
-			result = requestDao.deletePayment(conn, id);
-			commit(conn);
-		} catch (Exception e) {
-			rollback(conn);
-			throw e;
-		}finally {
-			close(conn);
-		}
 		return result;
 	}
 

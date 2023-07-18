@@ -87,11 +87,7 @@
 	display: Felx;
 }
 
-<<<<<<< HEAD
 #riderbtn, #paysubmit, #reqsubmit {
-=======
-#riderbtn, #paysubmit {
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -99,11 +95,7 @@
 	margin-left: 20px;
 }
 
-<<<<<<< HEAD
 #riderbtn button, #paysubmit, #reqsubmit {
-=======
-#riderbtn button, #paysubmit {
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 	width: 400px;
 	height: 50px;
 	background-color: #49B466;
@@ -123,11 +115,7 @@ h1 {
 	margin-left: 150px;
 }
 
-<<<<<<< HEAD
 #btn1, #btn3, #btn4, #btn5, #applicationForm, #paysubmit, #reqsubmit {
-=======
-#btn1, #btn3, #btn4, #btn5, #applicationForm, #paysubmit {
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 	margin-top: 10px;
 	margin-left: 150px;
 }
@@ -168,6 +156,7 @@ input:not(#address), input[type="file"] {
 		<ul>
 			<li><button id="reqGarbage"><a class="active" aria-current="page" >수거 신청</a></button></li>
 			<li><button id="buyTicket"><a class="active" id="active1" aria-current="page">이용권 구매</a></button></li>
+			
 		</ul>
 	</div>
 	<div class="rider-info-boxes" id="beforeContent">
@@ -209,6 +198,7 @@ input:not(#address), input[type="file"] {
 		</div>
 	</div>
 
+
 	<div id="afterContent">
 		<form name="memberUpdateFrm" style="display: none;" id="memberUpdateFrm"
 			action="<%= request.getContextPath() %>/payment/insertpayment"
@@ -242,49 +232,7 @@ input:not(#address), input[type="file"] {
 							<div id="gunroinfo" style="font-size: 12px;">중복구매가 불가하오니
 								이용중인 상품권이 있으면 소진 후 구매 부탁드립니다.</div></td>
 					</tr>
-					<tr>
-						<th>입금계좌</th>
-						<td>카카오뱅크 : 3333-1111-9999 <br> 예금주 명 : 황대호 <br> <br>
-							<div id="gunroinfo" style="font-size: 12px;">중복구매가 불가하오니
-								이용중인 상품권이 있으면 소진 후 구매 부탁드립니다.</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="riderbtn">
-				<button type="button" id="paysubmit">입금완료</button>
-	<div id="afterContent">
-		<form name="memberUpdateFrm"
-			action="<%= request.getContextPath() %>/payment/insertpayment"
-			method="post">
-			<table class="mypage-table"
-				style="width: 800px; height: 400px; margin: 0 auto;">
-				<tbody>
-					<tr>
-						<th>아이디</th>
-						<% if (loginMember != null) { %>
-						<td><input type="text" name="id" id="userId"
-							value="<%= loginMember.getId() %>" required readonly></td>
-						<% } %>
-					</tr>
-					<tr>
-						<th>상품권 종류 <span>*</span></th>
-						<td><select name="ticketSelect" id="ticketSelect"
-							required="required" onchange="updatePrice()">
-								<option value="">선택하세요</option>
-								<option value="tic1">1회권 &#8361;5,000원</option>
-								<option value="tic3">3회권 &#8361;15,000원</option>
-								<option value="tic5">5회권 &#8361;23,900원</option>
-								<option value="tic10">10회권 &#8361;46,900원</option>
-						</select></td>
-					</tr>
-					<tr>
-						<th>결제금액</th>
-						<td><input type="text" name="price" id="priceInput"
-							required="required" readonly> <br>
-							<div id="gunroinfo" style="font-size: 12px;">중복구매가 불가하오니
-								이용중인 상품권이 있으면 소진 후 구매 부탁드립니다.</div></td>
-					</tr>
+					
 					<tr>
 						<th>입금계좌</th>
 						<td>카카오뱅크 : 3333-1111-9999 <br> 예금주 명 : 황대호 <br> <br>
@@ -300,6 +248,10 @@ input:not(#address), input[type="file"] {
 			</div>
 		</form>
 	</div>
+	
+	
+	
+	
 	
 	<div id="afterContent">
   <form name="reqGarbagePickupFrm" style="display: none;" id="reqGarbagePickupFrm">
@@ -354,6 +306,8 @@ input:not(#address), input[type="file"] {
     </div>
   </form>
 </div>
+	
+
 	<script>
 	
 	reqGarbage.onclick = () => {
@@ -433,6 +387,9 @@ function updatePrice() {
 		// 기본 설정: 폼 초기화
 		const reqGarbagePickupFrm = document.getElementById("reqGarbagePickupFrm");
 		reqGarbagePickupFrm.style.display = "none";
+	
+	
+	
 	</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

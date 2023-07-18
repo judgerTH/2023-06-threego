@@ -1,0 +1,5 @@
+@charset "UTF-8";
+/* 수거 접수 리스트 목록*/
+#collection-tbl{border-top: 2px solid black; border-bottom: 2px solid black; border-collapse: collapse;}
+#collection-tbl th, td {border-top: 2px solid black; border-bottom: 2px solid black; padding : 10px; width: 150px; text-align : center; height : 35px;}
+#collection-tbl tr :first-of-type {border-left: none;}

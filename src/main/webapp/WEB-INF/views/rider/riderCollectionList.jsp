@@ -10,62 +10,55 @@
 <%
     	String memberId = loginMember.getId();
 %>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/request_lists.css" />
 </head>
 <body>
+	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+	<div class="mypage-container">
+			<div class="left-div">
+				<h2>마이페이지</h2>
+				<ul>
+					<li><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+					<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
+					<li><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
+					<li><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
 
-	<div id="wrapper">
-		<div id="container_wr">
-			<div id="con">
-				<script
-					src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
-				<div class="mypage-wrap">
-					<div class="container">
+					<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
+					<li class="active"><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
+							접수 리스트</a></li>
+					<li><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
+							수거 목록 조회</a></li>
+					<% } %>
+					<li><a class="" aria-current="page"
+						href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 
-						<div class="left-div">
-                <h2>마이페이지</h2>
-                     <ul>
-                        <li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
-                       			<li><a class="" aria-current="page"
-                       				href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
-								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
-								<li class="active"><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
-										리스트</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
-										수거 목록 조회</a></li>
-								<% } %>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
-                    </ul>
-                </div>
-					</div>
-					<div class="collection-wrapper">
-						<div class="collection-sub">
-							<h3>수거접수 리스트</h3>
-							<table id="collection-tbl">
-								<thead>
-									<tr>
-										<th>접수번호</th>
-										<th>접수자</th>
-										<th>접수지역</th>
-										<th>접수일자</th>
-										<th>접수현황</th>
-										<th>접수상세</th>
-									</tr>
-								</thead>
-								<tbody></tbody>
-							</table>
-						</div>
+				</ul>
+			</div>
+			<div class="right-div">
+				<h3>수거접수 리스트</h3>
+				<div class="mypage-content-box">
+						<table id="collection-tbl">
+							<thead>
+								<tr>
+									<th>접수번호</th>
+									<th>접수자</th>
+									<th>접수지역</th>
+									<th>접수일자</th>
+									<th>접수현황</th>
+									<th>접수상세</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
 </body>
 <script> 
 window.onload = () => { 

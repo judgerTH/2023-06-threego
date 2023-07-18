@@ -576,6 +576,7 @@ private Properties prop = new Properties();
 	public int sendApprovementMsg(Connection conn, String riderId, String approvementMsg) {
 		int result = 0;
 		String sql = prop.getProperty("sendApprovementMsg");
+		// insert into msgbox values (seq_msg_no.nextval, 'A', ?, 'admin', ?, default)
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, riderId);
@@ -637,6 +638,107 @@ private Properties prop = new Properties();
 		}
 		return result;
 	}
+
+	public int writeNotice(Connection conn, String title, String content) {
+		int result = 0;
+		String sql = prop.getProperty("writeNotice");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int getTotalNotice(Connection conn) {
+		int totalNotice = 0;
+		String sql = prop.getProperty("getTotalNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalNotice = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return totalNotice;
+	}
+
+	public int deleteNotice(Connection conn, String noticeNo) {
+		int result = 0;
+		String sql = prop.getProperty("deleteNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		
+		return result;
+		
+	}
+
+	public int insertWarningNotice(Connection conn, String warningID, String warningNotice) {
+		int result = 0;
+		String sql = prop.getProperty("insertWarningNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, warningID);
+			pstmt.setString(2, warningNotice);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int updateWarningCaution(Connection conn, int warningNo, String warningNotice) {
+		int result = 0;
+		String sql = prop.getProperty("updateWarningCaution");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, warningNotice);
+			pstmt.setInt(2, warningNo);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public Warning getInfoFromRequestAndMember(Connection conn, int warningNo) {
+		Warning warning = new Warning();
+		String sql = prop.getProperty("getInfoFromRequestAndMember");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, warningNo);
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					int warningReqNo = rset.getInt("w_req_no");
+					String warningWriter = rset.getString("w_writer");
+					String warningContent = rset.getString("w_content");
+					Date warningRegDate = rset.getDate("w_reg_date");
+					int warningConfirm = rset.getInt("w_confirm");
+					String warningCaution = rset.getString("w_caution");
+					String requestWriter = rset.getString("req_writer");
+					String requestRider = rset.getString("req_rider");
+					WarnigMemberRole warningMemberRole = WarnigMemberRole.valueOf(rset.getString("member_role"));
+					
+					warning = new Warning(warningNo, warningReqNo, warningWriter, warningContent, warningRegDate, warningConfirm, warningCaution, warningMemberRole, requestWriter, requestRider);
+					
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return warning;
+	}
+	
 
 	
 	

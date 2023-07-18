@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/*수거 상세보기 CSS*/
+.requestDetail-container{display: flex; flex-direction: row;}
+#requestDetail{border-collapse: collapse; margin-top : 20px;}
+#requestDetail th, td{padding : 10px; border : 2px solid black;}
+#requestDetail-wrap{border : none; width : 500px;}
+.btn-accept{margin : 10px 5px;border : none; padding : 5px 15px; color : white; background-color: #49B466; font-weight: bold; border-radius: 3px;}
+.map-btn {margin : 10px 5px; border : none; padding : 5px 15px; color : white; background-color :#468B97; font-weight: bold; border-radius: 3px;}
+.btn-wrapper{display : flex; flex-direction : row;}
+#map{margin-top : 20px;}
+.map-wrapper h3{margin-top : 23px;}

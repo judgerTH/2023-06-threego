@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.threego.app.payment.model.service.PaymentService;
@@ -26,14 +27,10 @@ public class InsertPaymentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 // 파라미터 값 가져오기
-        String memberId = request.getParameter("memberId");
-        String _ticketId = request.getParameter("ticketId");
-        String ticketId = "tic" + _ticketId;
+        String id = request.getParameter("id");
+        String ticketId = request.getParameter("ticketSelect");
         
-        int purchaseCount = Integer.parseInt(request.getParameter("purchaseCount"));
-        
-        
-        int result = paymentService.insertPayment(memberId, ticketId, purchaseCount);
+        int result = paymentService.insertPayment(id, ticketId);
         // 수거신청 등 다른 동작 수행
         
         
@@ -48,6 +45,7 @@ public class InsertPaymentServlet extends HttpServlet {
 
         // 맵을 JSON 데이터로 변환
         gson.toJson(map, response.getWriter());
+        response.sendRedirect(request.getContextPath() + "/menu/buyTicket");
 
         
 	}

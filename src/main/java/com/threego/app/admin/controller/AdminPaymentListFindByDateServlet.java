@@ -40,7 +40,8 @@ public class AdminPaymentListFindByDateServlet extends HttpServlet {
 		
 		String startDay = request.getParameter("searchStart");
 		String endDay = request.getParameter("searchEnd");
-		
+		System.out.println(start);
+		System.out.println(end);
 		// 선택 날짜 매출조회
 		List<Payment> payments = paymentService.findByDate(start, end, startDay, endDay);
 		
