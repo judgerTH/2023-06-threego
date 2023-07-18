@@ -320,3 +320,5 @@ insert into request values(
  insert into request values(
  seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
  );
+
+select * from rider;
