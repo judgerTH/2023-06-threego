@@ -16,6 +16,7 @@ import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
 import com.threego.app.msgbox.model.vo.MsgBox;
 import com.threego.app.msgbox.model.vo.MsgType;
+import com.threego.app.payment.model.vo.PaymentDetail;
 import com.threego.app.request.model.vo.Request;
 import com.threego.app.ticket.model.vo.TicketPayment;
 
@@ -174,12 +175,9 @@ public class MemberDao {
 	}
 
 
-	public List<TicketPayment> findPaymentList(Connection conn, String memberId) {
-		List<TicketPayment> requestList = new ArrayList<>();
-		String sql = "SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt " +
-			                "FROM payment p " +
-			                "JOIN ticket t ON p.p_tic_id = t.tic_id " +
-			                "WHERE p.p_mem_id = ?";
+	public List<PaymentDetail> findPaymentList(Connection conn, String memberId) {
+		List<PaymentDetail> requestList = new ArrayList<>();
+		String sql = "select * from paymentDetail where pd_mem_id = ?";
 		
 		try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, memberId);
@@ -188,17 +186,17 @@ public class MemberDao {
 			int count = 1;
 			
 			while(rset.next()) {
-				String ticName = rset.getString("tic_name");
-			    int ticPrice = rset.getInt("tic_price");
-			    Date pDate = rset.getDate("p_date");
-			    int pCnt = rset.getInt("p_cnt");
+				String pdId = rset.getString("pd_mem_id");
+				String pdTicId = rset.getString("pd_tic_id");
+			    int pdTicPrice = rset.getInt("pd_tic_price");
+			    Date pdDate = rset.getDate("pd_date");
 			    
-				TicketPayment ticketPayment = new TicketPayment();
-				ticketPayment.setNo(count++);
-				ticketPayment.setTicName(ticName);
-			    ticketPayment.setTicPrice(ticPrice);
-			    ticketPayment.setpDate(pDate);
-			    ticketPayment.setpCnt(pCnt);
+			    PaymentDetail ticketPayment = new PaymentDetail();
+				ticketPayment.setPd_no(count++);
+				ticketPayment.setPd_mem_id(pdTicId);
+				ticketPayment.setPd_tic_id(pdTicId);
+			    ticketPayment.setPd_tic_price(pdTicPrice);
+			    ticketPayment.setPd_date(pdDate);
 
 			    // 생성한 TicketPayment 객체를 requestList에 추가
 			    requestList.add(ticketPayment);
