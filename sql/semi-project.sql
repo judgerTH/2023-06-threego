@@ -57,11 +57,10 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-<<<<<<< HEAD
+
 -- drop sequence seq_payment_no;
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 select * from payment;
  select * from ticket;
  
@@ -298,7 +297,32 @@ create table msgbox(
     constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
+create table paymentDetail(
+    pd_no   number,
+    pd_mem_id varchar2(30),
+    pd_tic_id   varchar2(30),
+    pd_tic_price number,
+    pd_date date default sysdate,
+    constraint  pk_payment_pd_no primary key(pd_no),
+    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
+);
+create sequence seq_pd_no;
+insert into paymentDetail 
+select * from payment;
 
+
+
+CREATE OR REPLACE TRIGGER trg_insert_payment_detail
+AFTER INSERT ON payment
+FOR EACH ROW
+BEGIN
+  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
+  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
+END;
+/
+select * from payment;
+
+INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
 -- drop table msgbox;
 
 alter table rider modify r_status check (r_status in ('0', '1', '2'));
@@ -320,3 +344,4 @@ insert into request values(
  insert into request values(
  seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
  );
+
