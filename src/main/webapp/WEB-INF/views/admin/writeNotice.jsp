@@ -1,9 +1,13 @@
+<%@page import="com.threego.app.board.model.vo.Board"%>
 <%@page import="com.threego.app.member.model.vo.Member"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+<%
+	List<Board> boards = (List<Board>) request.getAttribute("boards");
+%>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
@@ -118,6 +122,15 @@
             </span>
             <a href="<%= request.getContextPath()%>/admin/reportList">신고내역</a>
           </div>
+          <div class="reportManagement">
+	          <span>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+				  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+				  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+				</svg>
+			  </span>
+          	<a href="<%=request.getContextPath()%>/admin/writeNotice">공지사항 작성</a>
+          </div>
           <hr>
           <div class="showMeTheMoney">
             <span>
@@ -128,6 +141,15 @@
             </span>
             <a href="<%=request.getContextPath()%>/admin/paymentList">매출조회</a>
           </div>
+        </div>
+        <div class="reportManagement">
+          <span>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+			  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+			  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+			</svg>
+		  </span>
+          <a href="<%=request.getContextPath()%>/admin/writeNotice">공지사항 작성</a>
         </div>
         <section style="width: 1630px">
           <nav class="navbar bg-light" style="margin-left: 330px">
@@ -146,15 +168,38 @@
                 <div class="card-body" id="todayIssueBody">
                     <table>
                     	<thead>
+
                     		<tr>
-		                        <th style="width: 100px;">No</th>
 		                        <th style="width: 300px;">제목</th>
 		                        <th>내용</th>
-		                        <th style="width: 150px;">작성일</th>      	                    		
+		                        <th style="width: 150px;">작성일</th>    
+		                        <th style="width: 100px;">삭제</th>  	                    		
                     		</tr>
                     	</thead>
                         <tbody>
-                        	
+                        <%
+						  if (boards != null && !boards.isEmpty()) {
+						    for (Board board : boards) {
+						%>
+                        	<tr>
+ 								<td><%= board.getBoardTitle() %>
+ 								<td><%= board.getBoardContent() %>
+ 								<td><%= board.getBoardRegDate() %>
+ 								<td><button 
+                        				id="noticeDelete" 
+                        				value="<%= board.getBoardNo() %>">삭제
+                        			</button>
+                        		</td>
+							</tr>
+							<%
+	            					}
+                        		}
+                        		else {
+							%>
+							<tr>
+								<td>조회된 게시글이 없습니다.</td>
+							</tr>
+							<% } %>
                         </tbody>
                     </table>
                 </div>
@@ -169,12 +214,33 @@
     <form
     	action="<%= request.getContextPath() %>/admin/writeNotice" 
 	    name="writeNoticeFrm" 
-	    method="GET">
+	    method="POST">
     	<input type="hidden" name="title" value = "">
     	<input type="hidden" name="content" value = "">
     </form>
     
+    <form 
+	    action="<%= request.getContextPath() %>/admin/noticeDelete" 
+	    name="noticeDeleteFrm" 
+	    method="POST">
+    	<input type="hidden" name="noticeNo" value = "">
+    </form>
+    
     <script>
+    document.querySelectorAll("#noticeDelete").forEach((button) => {
+		button.onclick = (e) => {
+			if(confirm("해당 공지를 삭제하시겠습니까?")){
+				const frm = document.noticeDeleteFrm;
+				const value = e.target.value;
+				const hiddenVal = frm.querySelector("input[name='noticeNo']");
+				hiddenVal.value = value;
+				frm.submit();
+			}else {
+				return false;
+			}
+		}
+	});
+    
  // 버튼 클릭 시 이벤트 핸들러
     document.getElementById("writeNotice").addEventListener("click", function() {
       // 팝업창 생성
@@ -188,17 +254,18 @@
 
       // 주의조치사항 저장 함수
       popup.saveCaution = function() {
-    	  var title = popup.document.getElementById("title").value;
-          var content = popup.document.getElementById("content").value;
-          alert("공지사항이 작성되었습니다.");
-          popup.close();
-          const frm = document.writeNoticeFrm;
-          const hiddenTitle = frm.querySelector("input[name='title']");
-          const hiddenContent = frm.querySelector("input[name='content']");
-          hiddenTitle.value = title;
-          hiddenContent.value = content;
-          frm.submit();
-      };
+    	    const title = popup.document.getElementById("title").value;
+    	    const content = popup.document.getElementById("content").value;
+    	    alert("공지사항이 작성되었습니다.");
+    	    popup.close();
+    	    const frm = document.writeNoticeFrm;
+    	    const hiddenTitle = frm.querySelector("input[name='title']");
+    	    const hiddenContent = frm.querySelector("input[name='content']");
+    	    hiddenTitle.value = title;
+    	    hiddenContent.value = content;
+    	    console.log(title);
+    	    frm.submit();
+    	};
     });
     </script>
 </body>

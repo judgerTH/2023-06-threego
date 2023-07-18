@@ -1,144 +1,139 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ include file = "/WEB-INF/views/common/header.jsp" %>
-    <%
-    	String memberId = loginMember.getId();
-    	String name = loginMember.getName();
-    	String password = loginMember.getPwd();
-    	String email = loginMember.getEmail();
-    	String phone = loginMember.getPhone();
-    	String post = loginMember.getPost();
-    	String address = loginMember.getAddress();
-    	
-    	String addr1 = address.substring(0, address.indexOf(" "));
-    	String addr2 = address.substring(address.indexOf(" ") + 1);
-    	
-    %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%
+String memberId = loginMember.getId();
+String name = loginMember.getName();
+String password = loginMember.getPwd();
+String email = loginMember.getEmail();
+String phone = loginMember.getPhone();
+String post = loginMember.getPost();
+String address = loginMember.getAddress();
+
+String addr1 = address.substring(0, address.indexOf(" "));
+String addr2 = address.substring(address.indexOf(" ") + 1);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쓰리고 | 회원정보수정</title>
-    <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
- 
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쓰리고 | 회원정보수정</title>
+<script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/member_page.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/mypage_content.css" />
+
 </head>
 <body>
-    <div id="wrapper">
-        <div id="container_wr">
-        <div id="con">
-         <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
-    <div class="mypage-wrap">
-        <div class="container">
-            <div>
-                <div class="left-div">
-                <h2>마이페이지</h2>
-                    <ul>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
-                       			<li><a class="" aria-current="page"
-                       				href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
-								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
-										리스트</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
-										수거 목록 조회</a></li>
-								<% } %>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
-                    </ul>        
-                </div>
-            </div>
-            <div class="right-div">
-                <h3>회원정보 수정</h3>
-                <div class="new-mypage-form-box">
-                    <form name="memberUpdateFrm" action="<%= request.getContextPath() %>/member/memberUpdate" method="post" >                
-                        <table class ="mypage-table">
-                            <tbody>
-                            <tr>
-                                <th>
-                                    아이디
-                                </th>
-                                <td>
-                                <%= memberId %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    이름
-                                </th>
-                                <td>
-                                <%= name %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    비밀번호 <span>*</span>
-                                </th>
-                                <td>
-                                    <input type="password" id="pwd" name="mb_password" minlength="3" maxlength="20" placeholder="비밀번호">
-                                    <span>(영문 대소문자/숫자/특수문자 조합, 10자~16자)</span>
-                                <div id="userPwdAlert"></div></td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    비밀번호 확인 <span>*</span>
-                                </th>
-                                <td>
-                                    <input type="password"  id="pwdCheck" name="mb_password_re" minlength="3" maxlength="20" placeholder="비밀번호 확인">
-                                </td>
-                            </tr>
-    
-                            <tr>
-                                <th>
-                                    휴대전화 <span>*</span>
-                                </th>
-                                <td>
-                                    <input type="text" id="phone" name="mb_tel" value="<%= phone %>" required maxlength="20" placeholder="전화번호">
-                                <div id="phoneAlert"></div> </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    이메일 <span>*</span>
-                                </th>
-                                <td>
-                                    <input type="text" id="email"  name="mb_email" value="<%= email %>" required size="70" maxlength="100" placeholder="E-mail">
-                                <div id="emailAlert"></div> </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    주소 <span>*</span>
-                                </th>
-                                <td>
-                                        <label for="reg_mb_zip" class="sound_only">우편번호 (필수)</label>
-                                        <input type="text" id="postal" name="mb_zip" value="<%= post %>"  required  size="5" maxlength="6"  placeholder="우편번호">
-                                        <button type="button"  id="postal-search" class="btn_frmline" onclick="addressSearch()">주소 검색</button><br><br>
-                                        <input type="text" id="userAddress" name="mb_addr1" value="<%= addr1 %>" required size="50"  placeholder="기본주소">
-                                        <label for="reg_mb_addr1" class="sound_only">기본주소 (필수)</label><br><br>
-                                        <input type="text" name="mb_addr2" value="<% %>" size="50" placeholder="상세주소">
-                                        <label for="reg_mb_addr2" id="userDetailAddress"  class="sound_only">상세주소</label><br><br>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="f_btn">
-                            <button type="submit" id="btn-save">
-                                변경사항 저장하기
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+	<div class="mypage-container">
+		<div class="left-div">
+			<h2>마이페이지</h2>
+			<ul>
+				<li class="active"><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/member/myPage">회원정보 수정</a></li>
+				<%
+				if (loginMember != null && loginMember.getMemberRole() == MemberRole.U) {
+				%>
+				<li><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/member/paymentList?memberId=<%=memberId%>">결제정보</a></li>
+				<li><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/member/requestList?memberId=<%=memberId%>">수거신청내역</a></li>
+				<%
+				} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
+				%>
+				<li><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+						리스트</a></li>
+				<li><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
+						수거 목록 조회</a></li>
+				<%
+				}
+				%>
+				<li><a class="" aria-current="page"
+					href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
+			</ul>
+		</div>
+		<div class="right-div">
+			<h3>회원정보 수정</h3>
+			<div class="mypage-content-box">
+				<form name="memberUpdateFrm"
+					action="<%=request.getContextPath()%>/member/memberUpdate"
+					method="post">
+					<table id="mypage-table">
+						<tbody>
+							<tr>
+								<th>아이디</th>
+								<td><%=memberId%></td>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<td><%=name%></td>
+							</tr>
+							<tr>
+								<th>비밀번호 <span>*</span>
+								</th>
+								<td><input type="password" id="pwd" name="mb_password"
+									minlength="3" maxlength="20" placeholder="비밀번호"> <span>(영문
+										대소문자/숫자/특수문자 조합, 10자~16자)</span>
+									<div id="userPwdAlert"></div></td>
+							</tr>
+							<tr>
+								<th>비밀번호 확인 <span>*</span>
+								</th>
+								<td><input type="password" id="pwdCheck"
+									name="mb_password_re" minlength="3" maxlength="20"
+									placeholder="비밀번호 확인"></td>
+							</tr>
+
+							<tr>
+								<th>휴대전화 <span>*</span>
+								</th>
+								<td><input type="text" id="phone" name="mb_tel"
+									value="<%=phone%>" required maxlength="20" placeholder="전화번호">
+									<div id="phoneAlert"></div></td>
+							</tr>
+							<tr>
+								<th>이메일 <span>*</span>
+								</th>
+								<td><input type="text" id="email" name="mb_email"
+									value="<%=email%>" required size="70" maxlength="100"
+									placeholder="E-mail">
+									<div id="emailAlert"></div></td>
+							</tr>
+							<tr>
+								<th>주소 <span>*</span>
+								</th>
+								<td><label for="reg_mb_zip" class="sound_only">우편번호
+										(필수)</label> <input type="text" id="postal" name="mb_zip"
+									value="<%=post%>" required size="5" maxlength="6"
+									placeholder="우편번호">
+									<button type="button" id="postal-search" class="btn_frmline"
+										onclick="addressSearch()">주소 검색</button> <br> <br> <input
+									type="text" id="userAddress" name="mb_addr1"
+									value="<%=addr1%>" required size="50" placeholder="기본주소">
+									<label for="reg_mb_addr1" class="sound_only">기본주소 (필수)</label><br>
+									<br> <input type="text" name="mb_addr2" value="<%%>"
+									size="50" placeholder="상세주소"> <label for="reg_mb_addr2"
+									id="userDetailAddress" class="sound_only">상세주소</label><br>
+									<br></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				<div class="btn-save-box">
+					<button type="submit" id="btn-save">변경사항 저장하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
-</html>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function addressSearch() {
         new daum.Postcode({
@@ -313,6 +308,6 @@ document.memberUpdateFrm.onsubmit = (e) => {
 		  }
 };
 
-
 </script>
-    <%@ include file = "/WEB-INF/views/common/footer.jsp" %>
+</html>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

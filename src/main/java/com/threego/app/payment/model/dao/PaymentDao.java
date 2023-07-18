@@ -93,8 +93,6 @@ public class PaymentDao {
 	}
 
 
-
-
 	public int insertPayment(Connection conn, String id, String ticketId) {
 		int result= 0;
 		String sql = prop.getProperty("insertPayment");

@@ -6,19 +6,18 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
 List<Request> MyRequestList = (List<Request>) request.getAttribute("requestList");
-Request acceptedRequest = (Request)request.getAttribute("acceptedRequest");
+Request acceptedRequest = (Request) request.getAttribute("acceptedRequest");
 String memberId = loginMember.getId();
-
 %>
 <%
 String msg = (String) session.getAttribute("msg");
 if (msg != null && !msg.isEmpty()) {
 %>
 <script>
-alert("<%= msg %>");
+alert("<%=msg%>");
 </script>
 <%
-  session.removeAttribute("msg");
+session.removeAttribute("msg");
 }
 %>
 <!DOCTYPE html>
@@ -28,101 +27,115 @@ alert("<%= msg %>");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>나의 수거 목록</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
- <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/member_page.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/request_lists.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/css/warning.css" />
 </head>
 <body>
-	<div id="wrapper">
-		<div id="container_wr">
-			<div id="con">
-				<script
-					src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
-				<div class="mypage-wrap">
-					<div class="container">
-				
-                <div class="left-div">
-                <h2>마이페이지</h2>
-                     <ul>
-                        <li ><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
-                       			<li><a class="" aria-current="page"
-                       				href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
-								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
-										리스트</a></li>
-								<li class="active"><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
-										수거 목록 조회</a></li>
-								<% } %>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
-                    </ul>
-                </div>
-            
-					</div>
-					<div class="collection-wrapper">
-						<div class="collection-sub">
-							<h3>나의 수거 목록 리스트</h3>
-							<table id="collection-tbl">
-								<thead>
-									<tr>
-										<th>요청번호</th>
-										<th>수거지역</th>
-										<th>수거일자</th>
-										<th>수거상태</th>
-										<th>완료날짜</th>
-										<th>비고</th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- JSP에서 데이터를 반복해서 출력하는 부분 -->
-									<%-- 예시 데이터 --%>
+	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+	<div class="mypage-container">
+			<div class="left-div">
+				<h2>마이페이지</h2>
+				<ul>
+					<li><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/member/myPage">회원정보 수정</a></li>
+					<%
+					if (loginMember != null && loginMember.getMemberRole() == MemberRole.U) {
+					%>
+					<li><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/member/paymentList?memberId=<%=memberId%>">결제정보</a></li>
+					<li><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/member/requestList?memberId=<%=memberId%>">수거신청내역</a></li>
+					<%
+					} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
+					%>
+					<li><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+							리스트</a></li>
+					<li class="active"><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
+							수거 목록 조회</a></li>
+					<%
+					}
+					%>
+					<li><a class="" aria-current="page"
+						href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
+				</ul>
+			</div>
+			<div class="right-div">
+				<h3>나의 수거 목록 리스트</h3>
+				<div class="mypage-content-box">
+						<table id="collection-tbl">
+							<thead>
+								<tr>
+									<th>요청번호</th>
+									<th>수거지역</th>
+									<th>수거일자</th>
+									<th>수거상태</th>
+									<th>완료날짜</th>
+									<th>비고</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- JSP에서 데이터를 반복해서 출력하는 부분 -->
+								<%-- 예시 데이터 --%>
+								<%
+								for (Request requests : MyRequestList) {
+								%>
+
+								<tr>
+									<td><%=requests.getReqNo()%></td>
+									<td><%=requests.getReqLocationId()%></td>
+									<td><%=requests.getReqDate()%></td>
 									<%
-									for (Request requests : MyRequestList) {
+									if (requests.getReqStatus().equals("1")) {
+									%>
+									<td>수거중</td>
+									<%
+									} else if (requests.getReqStatus().equals("2")) {
+									%>
+									<td>수거완료</td>
+									<%
+									} else if (requests.getReqStatus().equals("3")) {
+									%>
+									<td>수거취소</td>
+									<%
+									}
 									%>
 
-									<tr>
-										<td><%=requests.getReqNo()%></td>
-										<td><%=requests.getReqLocationId()%></td>
-										<td><%=requests.getReqDate()%></td>
-										<%if(requests.getReqStatus().equals("1")){ %>
-										<td>수거중</td>
-										<%} else if(requests.getReqStatus().equals("2")){ %>
-											<td>수거완료</td>
-										<%} else if(requests.getReqStatus().equals("3")){%>
-											<td>수거취소</td>
-										<%} %>
+									<td><%=requests.getReqCpDate() == null ? "미완료" : requests.getReqCpDate()%></td>
+									<td>
+										<form name="requestDetailForm"
+											action="<%=request.getContextPath()%>/request/requestDetail"
+											style="display: inline;">
+											<input type="hidden" name="reqNo"
+												value="<%=requests.getReqNo()%>"> <input
+												type="hidden" name="reqWriter"
+												value="<%=requests.getReqWriter()%>">
+											<button type="button" class="btn-accept"
+												onclick="requestDetail(this.parentElement);">상세보기</button>
+										</form>
+										<form name="requestwarningForm" style="display: inline;">
+											<input type="hidden" name="reqNo"
+												value="<%=requests.getReqNo()%>"> <input
+												type="hidden" name="riderId"
+												value="<%=loginMember.getId()%>">
+											<button type="button" id="btn-warning"
+												onclick="openModal(this)">신고</button>
+										</form>
+									</td>
 
-										<td><%=requests.getReqCpDate() == null ? "미완료" : requests.getReqCpDate()%></td>
-										<td>
-											<form name="requestDetailForm" action="<%=request.getContextPath()%>/request/requestDetail" style="display: inline;">
-												<input type="hidden" name="reqNo" value="<%=requests.getReqNo()%>">
-												<input type= "hidden" name = "reqWriter" value = "<%=requests.getReqWriter() %>">
-												<button type="button" class="btn-accept" onclick = "requestDetail(this.parentElement);">상세보기</button>
-											</form>
-											<form name="requestwarningForm" style="display: inline;">
-												<input type="hidden" name="reqNo"
-													value="<%=requests.getReqNo()%>"> <input
-													type="hidden" name="riderId"
-													value="<%=loginMember.getId()%>">
-												<button type="button" id="btn-warning"
-													onclick="openModal(this)">신고</button>
-											</form>
-										</td>
-
-									</tr>
-								</tbody>
-								<%
-								}
-								%>
-							</table>
-						</div>
+								</tr>
+							</tbody>
+							<%
+							}
+							%>
+						</table>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+
 	<div id="warningMadal" class="modal">
 		<div class="modal-content">
 			<span class="close" onclick="closeModal()">&times;</span>
