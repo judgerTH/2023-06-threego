@@ -24,11 +24,15 @@ import com.threego.app.member.model.vo.Member;
 	"/member/memberDetail", 
 	"/member/memberUpdate", 
 	"/member/memberDelete",
+	"/member/myPage",
 	"/board/boardCreate",
 	"/board/boardUpdate",
 	"/board/boardDelete",
 	"/board/boardCommentCreate",
 	"/board/boardCommentUpdate",
+	"/board/useInquiryDetail",
+	"/board/useInquiryUpdate",
+	"/rider/*"
 })
 public class LoginFilter extends HttpFilter implements Filter {
        
