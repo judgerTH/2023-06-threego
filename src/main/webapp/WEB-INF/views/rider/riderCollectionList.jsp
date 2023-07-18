@@ -56,7 +56,6 @@
 							</thead>
 							<tbody></tbody>
 						</table>
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 					</div>
 				</div>
 			</div>

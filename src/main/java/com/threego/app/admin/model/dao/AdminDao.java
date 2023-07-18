@@ -711,6 +711,35 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public Warning getInfoFromRequestAndMember(Connection conn, int warningNo) {
+		Warning warning = new Warning();
+		String sql = prop.getProperty("getInfoFromRequestAndMember");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, warningNo);
+			
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					int warningReqNo = rset.getInt("w_req_no");
+					String warningWriter = rset.getString("w_writer");
+					String warningContent = rset.getString("w_content");
+					Date warningRegDate = rset.getDate("w_reg_date");
+					int warningConfirm = rset.getInt("w_confirm");
+					String warningCaution = rset.getString("w_caution");
+					String requestWriter = rset.getString("req_writer");
+					String requestRider = rset.getString("req_rider");
+					WarnigMemberRole warningMemberRole = WarnigMemberRole.valueOf(rset.getString("member_role"));
+					
+					warning = new Warning(warningNo, warningReqNo, warningWriter, warningContent, warningRegDate, warningConfirm, warningCaution, warningMemberRole, requestWriter, requestRider);
+					
+				}
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return warning;
+	}
+	
+
 	
 	
 }

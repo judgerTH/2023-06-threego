@@ -188,7 +188,13 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 											<%= warning.getWarningContent() %>
 									</td>
 									<td><%= warning.getWarningRegDate() %></td>
-									<td><%= warning.getWarningConfirm() %></td>
+									<td>
+										<% if(warning.getWarningConfirm() == 0) { %>
+											<span style="color:red;">미확인</span>
+										<% } else { %>
+											<span>완료</span>
+										<% } %>
+									</td>
 									<td><button id="warningCaution<%= index %>">주의조치</button></td>
 								</tr>
 								<% } %>

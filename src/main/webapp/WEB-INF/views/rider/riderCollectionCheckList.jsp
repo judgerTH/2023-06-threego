@@ -89,7 +89,6 @@ session.removeAttribute("msg");
 									<td><%=requests.getReqNo()%></td>
 									<td><%=requests.getReqLocationId()%></td>
 									<td><%=requests.getReqDate()%></td>
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 									<%
 									if (requests.getReqStatus().equals("1")) {
 									%>
