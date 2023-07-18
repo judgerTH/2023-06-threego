@@ -696,6 +696,20 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public int updateWarningCaution(Connection conn, int warningNo, String warningNotice) {
+		int result = 0;
+		String sql = prop.getProperty("updateWarningCaution");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, warningNotice);
+			pstmt.setInt(2, warningNo);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
 	
 	
 }

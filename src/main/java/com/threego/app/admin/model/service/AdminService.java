@@ -365,5 +365,20 @@ public class AdminService {
 		return result;
 	}
 
+	public int updateWarningCaution(int warningNo, String warningNotice) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.updateWarningCaution(conn, warningNo, warningNotice);
+			commit(conn);
+		}catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+
 	
 }
