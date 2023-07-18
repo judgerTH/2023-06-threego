@@ -160,7 +160,7 @@ div#pagebar {
 	<div class="left-div">
 		<h2>고객센터</h2>
 		<ul>
-			<li><a class="active" aria-current="page" href="">공지사항</a></li>
+			<li ><a class="active" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" id="active1" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>
 		</ul>

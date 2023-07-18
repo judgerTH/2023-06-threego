@@ -313,5 +313,57 @@ public class AdminService {
 		return result;
 	}
 
+	public int writeNotice(String title, String content) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.writeNotice(conn, title, content);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int getTotalNotice() {
+		Connection conn = getConnection();
+		int totalNotice = adminDao.getTotalNotice(conn);
+		close(conn);
+		return totalNotice;
+	}
+
+	public int deleteNotice(String noticeNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.deleteNotice(conn, noticeNo);
+			commit(conn);
+		}catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int insertWarningNotice(String warningID, String warningNotice) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = adminDao.insertWarningNotice(conn, warningID, warningNotice);
+			commit(conn);
+		}catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+
 	
 }

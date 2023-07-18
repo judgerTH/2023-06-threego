@@ -638,6 +638,64 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public int writeNotice(Connection conn, String title, String content) {
+		int result = 0;
+		String sql = prop.getProperty("writeNotice");
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
+	public int getTotalNotice(Connection conn) {
+		int totalNotice = 0;
+		String sql = prop.getProperty("getTotalNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalNotice = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return totalNotice;
+	}
+
+	public int deleteNotice(Connection conn, String noticeNo) {
+		int result = 0;
+		String sql = prop.getProperty("deleteNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		
+		return result;
+		
+	}
+
+	public int insertWarningNotice(Connection conn, String warningID, String warningNotice) {
+		int result = 0;
+		String sql = prop.getProperty("insertWarningNotice");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, warningID);
+			pstmt.setString(2, warningNotice);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new AdminException(e);
+		}
+		return result;
+	}
+
 	
 	
 }
