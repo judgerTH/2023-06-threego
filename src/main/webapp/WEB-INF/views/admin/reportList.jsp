@@ -209,26 +209,46 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
     	<input type="hidden" name="findByName" value = "">
     </form>
     
+    <form
+    	action="<%= request.getContextPath() %>/admin/warningNotice" 
+	    name="warningNoticeFrm" 
+	    method="POST">
+    	<input type="hidden" name="warningNotice" value = "">
+    	<input type="hidden" name="warningID" value = "">
+    </form>
+    
+    
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
     <script>
     <% if (warnings != null && !warnings.isEmpty()) {
-        for (int i = 1; i <= warnings.size(); i++) { %>
+        for (int i = 1; i <= warnings.size(); i++) {
+            Warning warning = warnings.get(i-1);
+            String userID = warning.getWarningWriter();
+    %>
             document.getElementById("warningCaution<%= i %>").addEventListener("click", function() {
-                // 팝업창 생성
-                const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
-            
-                // 팝업창에 내용 추가
-                popup.document.write("<h2>주의조치사항 입력</h2>");
-                popup.document.write("<textarea id='cautionInput' rows='5' cols='40'></textarea><br>");
-                popup.document.write("<button onclick='saveCaution()'>저장</button>");
-            
-                // 주의조치사항 저장 함수
-                popup.saveCaution = function() {
-                    const cautionText = popup.document.getElementById("cautionInput").value;
-                    alert("주의조치사항이 저장되었습니다");
-                    popup.close();
-                };
-            });
+               const userID = '<%= userID %>'; // 사용자의 ID를 변수에 저장
+               // 팝업창 생성
+               const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
+              
+               // 팝업창에 내용 추가
+               popup.document.write("<h2>주의조치사항 입력</h2>");
+               popup.document.write("<textarea id='cautionInput' rows='5' cols='40'></textarea><br>");
+               popup.document.write("<button onclick='saveCaution()'>저장</button>");
+           
+               // 주의조치사항 저장 함수
+               popup.saveCaution = function() {
+                   const cautionText = popup.document.getElementById("cautionInput").value;
+                   alert("주의조치사항이 저장되었습니다");
+                   popup.close();
+                   const frm = document.warningNoticeFrm;
+                   const content = cautionText;
+                   const hiddenVal1 = frm.querySelector("input[name='warningNotice']");
+                   const hiddenVal2 = frm.querySelector("input[name='warningID']");
+                   hiddenVal1.value = content;
+                   hiddenVal2.value = userID;
+                   frm.submit();
+               };
+           });
     <% }
     } %>
   </script>

@@ -193,10 +193,7 @@ select * from warning;
 
 create sequence seq_w_no;
 
-select * from warning;
-insert into warning values (
-    seq_w_no.next
-);
+
  
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
@@ -218,7 +215,9 @@ create table msgbox(
     constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
+
 create sequence seq_msg_no;
+select * from msgbox;
 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
