@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.oreilly.servlet.multipart.FileRenamePolicy;
 import com.threego.app.request.model.service.RequestService;
 
 @WebServlet("/request/reqGarbagePickup")
@@ -17,6 +20,16 @@ public class ReqGarbagePickupServlet extends HttpServlet {
     private final RequestService requestService = new RequestService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+//    	// 0. MultipartRequest객체 생성
+//    	String saveDirectory = getServletContext().getRealPath("/images");
+//    	int maxPostSize = 1024 * 1024 * 10; 
+//    	String encoding = "utf-8";
+//    	FileRenamePolicy policy = new DefaultFileRenamePolicy();
+//    	MultipartRequest multiReq = 
+//    			new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
+    	
+    	
         // 파라미터 값 가져오기
         String id = request.getParameter("id");
         String address = request.getParameter("address");

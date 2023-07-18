@@ -57,6 +57,10 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
+
+-- drop sequence seq_payment_no;
+
+
 select * from payment;
  select * from ticket;
  
@@ -117,10 +121,15 @@ create table rider(
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
-    constraints ck_rider_r_status check (r_status in ('0', '1'))
+    constraints ck_rider_r_status check (r_status in ('0', '1', '2'))
     -- 0 승인 대기중 1 승인완료 2 승인거부
 );
 
+--drop table rider;
+alter table rider modify r_status check (r_status in ('0', '1', '2'));
+update rider set r_status = '2' where r_id ='sukey0331';
+
+SELECT * FROM user_constraints WHERE table_name = 'rider' ;
 
 create table request(
     req_no   number,
@@ -128,6 +137,9 @@ create table request(
     req_location_id   varchar2(30) not null,
     req_post char(5) not null,
     req_address   varchar2(400) not null,
+    req_location_id	varchar2(30) not null,
+    req_post char(5) not null,
+    req_address	varchar2(400) not null,
     req_photo varchar2(200) not null,
     req_status   char(1) default 0,
     req_date   date default sysdate,
@@ -148,6 +160,7 @@ create table request(
 
  -- drop table request;
  SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = request;
+select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
 create table del_member(
 
@@ -177,9 +190,6 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 );
 
 select * from warning;
-select * from request;
-
-select * from request where req_no in (select w_req_no  from warning where w_writer = 'xogus' and w_req_no=1 ); 
 --drop table warning;
 
 create sequence seq_w_no;
@@ -272,8 +282,10 @@ select * from rider;
 select * from request; 
 select * from payment;
 select * from del_member;
+select * from msgbox;
     -- commit;
-
+delete from rider where r_id='sukey0331';
+update member set member_role='A' where id = 'admin2';
 
 SELECT sum(p_cnt)
 FROM payment
@@ -281,6 +293,14 @@ WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
 
+select count(*) from request where req_writer = 'tlfprl' and req_staus=2;
+
+  
+  select 
+  sum(p_cnt)
+  from payment 
+  where
+  p_mem_id = 'tlfprl' ;
   
   
 create table msgbox(
@@ -297,6 +317,9 @@ create table msgbox(
 
 -- drop table msgbox;
 
+alter table rider modify r_status check (r_status in ('0', '1', '2'));
+
+update rider set r_status = '0', up_date = null where r_id='sukey';
 
 
 update member set email = 'admin@naver.com' where id = 'admin';
@@ -305,15 +328,14 @@ update member set email = 'admin@naver.com' where id = 'admin';
 
 
 
-BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE WARNING CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE REQUEST CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE BOARD_COMMENT CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE BOARD CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE PAYMENT CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE TICKET CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE RIDER CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE LOCATION CASCADE CONSTRAINTS';
-    EXECUTE IMMEDIATE 'DROP TABLE MEMBER CASCADE CONSTRAINTS';
-END;
 
+select * from request;
+insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );

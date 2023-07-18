@@ -70,16 +70,16 @@ public class RequestDao {
 		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqPost, reqAddress, reqDate, reqRider, reqCpDate);
 	}
 
-	public int acceptRequest(Connection conn, int reqNo, String rId) {
+	public int updateRequest(Connection conn, int reqNo, String rId, String reqStatus) {
 
 		int result = 0; 
-		String sql = prop.getProperty("acceptRequest");
-		// update request set req_status = '1' , req_rider = ? where req_no = ?
+		String sql = prop.getProperty("updateRequest");
+		// update request set req_status = ? , req_rider = ? where req_no = ?
 
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-
-			pstmt.setString(1, rId);
-			pstmt.setInt(2, reqNo);
+			pstmt.setString(1, reqStatus);
+			pstmt.setString(2, rId);
+			pstmt.setInt(3, reqNo);
 
 			result = pstmt.executeUpdate();
 

@@ -1,3 +1,7 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -14,6 +18,10 @@ String address = loginMember.getAddress();
 
 String addr1 = address.substring(0, address.indexOf(" "));
 String addr2 = address.substring(address.indexOf(" ") + 1);
+
+
+
+
 %>
 <head>
 <meta charset="UTF-8">
@@ -161,7 +169,7 @@ input:not(#address), input[type="file"] {
 		</p>
 	</div>
 
-	<form id="applicationForm">
+	<form id="applicationForm" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="id">아이디:</label> <input id="id"
 				value="<%=loginMember.getId()%>" disabled>
@@ -178,7 +186,10 @@ input:not(#address), input[type="file"] {
 					id="postalCode" value="<%=loginMember.getPost()%>" readonly>
 			</div>
 		</div>
-
+		<div class="form-group">
+			<label for="tCnt">남은이용권:</label><input id="tCnt" value="" disabled>
+		
+		</div>
 		<div class="form-group">
 			<label for="address">주소*:</label> <input type="text" id="address"
 				value="<%=loginMember.getAddress()%>" readonly>
