@@ -41,11 +41,11 @@
 }
 /* main css */
 body{margin : 0 auto; width: 100vw; height: 100vh;  font-family: 'GmarketSansMedium';}
-header{display : flex; flex-direction: row; justify-content: space-around; align-items: center; }
+#nav{display : flex; flex-direction: row; justify-content: space-around; align-items: center; }
 .main-container { height : 900px;}
-#menubar{display : flex; flex-direction: row; margin : 0 150px; font-size : 100px;}
-#menubar li{list-style: none; margin : 0 50px;}
-li a{text-decoration: none; font-size : 20px;}
+#menubar{display : flex; flex-direction: row; margin : 0 90px; font-size : 100px; font-family: 'GmarketSansMedium';}
+#menubar li{list-style: none; margin : 0 50px; font-family: 'GmarketSansMedium';}
+li a{text-decoration: none; font-size : 20px; font-family: 'GmarketSansMedium';}
 #enterance{display : flex; flex-direction: row; justify-content: space-between; margin-left : 60px;}
 .ent-button{margin : 0 5px; display : flex; flex-direction: column; margin: 5px 5px; justify-content: center; align-items: center;}
 .ent-img{width : 45px; height: 45px; margin-bottom: 10px;}
@@ -64,9 +64,9 @@ main img{width: 100vw; height: 500px;}
 #iogin-tbl{margin-top: 20px;}
 .login-input{margin: 5px; width : 300px; height: 30px; border-radius: 5px; border : 0.5px solid black;}
 .btn-loginMem-wrap{display : flex; justify-content: center; align-items: center; flex-direction: column; }
-.btn-loginMem {margin : 5px 5px; width : 310px; height: 35px; border: none; border-radius: 5px; background-color: #49B466; color: white; font-weight:bold;}
+.btn-loginMem {margin : 5px 5px;font-family: 'GmarketSansMedium';  width : 310px; height: 35px; border: none; border-radius: 5px; background-color: #49B466; color: white; font-size : 20px; text-align:center;}
 .searchInfo{display : center; justify-content: center; text-align: center; align-items: center;  width: 500px; height: 300px;}
-.searchInfo a{cursor: pointer;}
+.searchInfo a{cursor: pointer; font-size : 20px;}
 
 /* searchId, searchPwd*/
 .search-wrapper{display: flex; flex-direction: column; align-items: center; text-align: center; translate : 0 10%;}

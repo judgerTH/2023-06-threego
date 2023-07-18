@@ -51,7 +51,7 @@ session.removeAttribute("msg");
 					} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
 					%>
 					<li><a class="" aria-current="page"
-						href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+						href="<%=request.getContextPath()%>/rider/requestCollectionList">수거 접수
 							리스트</a></li>
 					<li class="active"><a class="" aria-current="page"
 						href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
@@ -157,9 +157,15 @@ session.removeAttribute("msg");
 
 // 상세보기 오픈 팝업
 const requestDetail = (frm) => {
+	const popupWidth = 700;
+	const popupHeight = 900;
+	
+	let popupX = (window.screen.width-popupWidth)/2;
+	let popupY = (window.screen.height - popupHeight)/2;
 	
 	const title = "requestDetailPopUp"; 
 	const popup = window.open("", title, "width = 700px, height = 500px");
+	//const popup = window.open("", title, "height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY");
 	
 	frm.target = title;
 	frm.submit();

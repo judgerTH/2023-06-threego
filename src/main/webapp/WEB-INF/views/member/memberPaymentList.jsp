@@ -52,7 +52,6 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 					href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
 			</ul>
 		</div>
-
 		<div class="right-div">
 				<h3>결제정보</h3>
 				<div class="mypage-content-box">

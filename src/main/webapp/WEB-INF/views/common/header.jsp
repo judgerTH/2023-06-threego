@@ -11,7 +11,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main_style.css" />
-
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 <% 	if(loginMember != null) { %>
 	<script src="<%= request.getContextPath() %>/js/ws.js"></script>		
@@ -20,25 +19,25 @@
 <body>
 
 
-<header>
+<div class="header-container">
     <div class="header">
         <!--로고 및 메뉴바 -->
-        <header id = "nav">
+        <div id = "nav">
 
             <div><a href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
 
             <div id="menu-container">
-                <ul id = "menubar">
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction">서비스소개</a></li>
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/information">이용안내</a></li>
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket">수거신청</a></li>
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/riderApplication">라이더 지원</a></li>
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceCenter">고객센터</a></li>
+                <ul id = "menubar" style = "font-family: 'GmarketSansMedium'; color:black;">
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction" style = "color : black;">서비스소개</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/information" style = "color : black;">이용안내</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket" style = "color : black;">수거신청</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/riderApplication" style = "color : black;">수고미 지원</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceCenter" style = "color : black;">고객센터</a></li>
                 </ul>
             </div>
             <!--로고 및 메뉴바 끝-->
             <!--로그인, 회원가입 버튼 -->
-            <div id="enterance">
+            <div id="enterance"  style = "font-family: 'GmarketSansMedium';">
             <% if(loginMember != null){ 
             		if(loginMember.getMemberRole()==MemberRole.U || loginMember.getMemberRole()==MemberRole.R){
             
@@ -81,9 +80,9 @@
              <% } %>
             </div>
             <!--로그인, 회원가입 버튼 끝 -->
-        </header>
+        </div>
     </div>
-</header>
+</div>
 
 
 

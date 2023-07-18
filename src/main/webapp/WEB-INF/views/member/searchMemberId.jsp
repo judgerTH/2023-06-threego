@@ -65,11 +65,5 @@ document.serchIdFrm.onsubmit = (e) => {
 	
 }
 
-
-
-
-
-
-
 </script>
 </html>

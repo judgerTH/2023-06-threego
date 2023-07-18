@@ -48,7 +48,7 @@ window.onload = () => {
                             </table>
                             <div class="btn-loginMem-wrap">
                                 <button type="submit" class = "btn-loginMem" name = "btn-login" id="btn-login">로그인</button>
-                                <button class = "btn-loginMem" name = "btn-enroll" id = "btn-enroll" onclick = "location.href='<%= request.getContextPath()%>/member/memberEnroll'">회원가입</button>
+                                <button type = "button" class = "btn-loginMem" name = "btn-enroll" id = "btn-enroll" onclick = "location.href='<%= request.getContextPath()%>/member/memberEnroll'">회원가입</button>
                             </div>
                         </fieldset>
                     </form>
