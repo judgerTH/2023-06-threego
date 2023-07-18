@@ -192,11 +192,18 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 
 select * from warning;
 --drop table warning;
-
+ insert into member values (
+    'xogus10', 'xogus','이태현','xogus10@naver.com','01021111121','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
+);
+ insert into payment values (
+     seq_payment_no.nextval, 'eogh','tic3',sysdate,3,0
+ );
 create sequence seq_w_no;
 
+select * from payment;
+delete from payment where p_no = 1;
+select * from payment where (p_no between ? and ?) and(p_date >= TO_DATE(?, 'YYYY/MM/DD') AND p_date <= TO_DATE(?, 'YYYY/MM/DD'))
 
- 
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
 FOR EACH ROW
