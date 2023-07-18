@@ -10,7 +10,8 @@
 <%
     	String memberId = loginMember.getId();
 %>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css"/>
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/css/member_page.css" />
 </head>
 <body>
 
@@ -23,25 +24,22 @@
 					<div class="container">
 
 						<div class="left-div">
-                <h2>마이페이지</h2>
-                    <ul>
-                        <li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
-                       			<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">결제정보</a></li>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+							<h2>마이페이지</h2>
+							<ul>
+								<li class="active"><a class="" aria-current="page"
+									href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
+								<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">결제정보</a></li>
+								<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
 								<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
 								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/member/requestList">수거신청
-										내역</a></li>
+									href="<%= request.getContextPath() %>/member/requestList">수거신청 내역</a></li>
 								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
 								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
-										리스트</a></li>
-								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
-										수거 목록 조회</a></li>
+									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거 리스트</a></li>
+								<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의 수거 목록 조회</a></li>
 								<% } %>
-                    </ul>        
-                </div>
+							</ul>
+						</div>
 					</div>
 					<div class="collection-wrapper">
 						<div class="collection-sub">

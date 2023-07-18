@@ -57,11 +57,11 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-<<<<<<< HEAD
+
 -- drop sequence seq_payment_no;
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
+
 select * from payment;
  select * from ticket;
  
