@@ -129,6 +129,9 @@ input #writer {
 	resize: none;
 }
 
+#tbl-board-view #title{
+	width : 900px;
+}
 #inquiryTag {
 	margin-top: 130px;
 	margin-bottom: 35px;
@@ -146,12 +149,14 @@ input #writer {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 16px;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 	float: right;
 	margin-top: 20px;
 	border-radius: 3px;
 	margin-left:5px; 
 }
+
+
 
 li {
 	list-style: none;
