@@ -122,6 +122,15 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
             </span>
             <a href="<%=request.getContextPath()%>/admin/reportList">신고내역</a>
           </div>
+          <div class="reportManagement">
+	          <span>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+				  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+				  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+				</svg>
+			  </span>
+          	<a href="<%=request.getContextPath()%>/admin/writeNotice">공지사항 작성</a>
+          </div>
           <hr>
           <div class="showMeTheMoney">
             <span>
@@ -200,26 +209,52 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
     	<input type="hidden" name="findByName" value = "">
     </form>
     
+    <form
+    	action="<%= request.getContextPath() %>/admin/warningNotice" 
+	    name="warningNoticeFrm" 
+	    method="POST">
+    	<input type="hidden" name="warningNotice" value = "">
+    	<input type="hidden" name="warningID" value = "">
+    	<input type="hidden" name="warningNo" value = "">
+    </form>
+    
+    
     <script src="<%=request.getContextPath() %>/js/adminMain.js"></script>
     <script>
     <% if (warnings != null && !warnings.isEmpty()) {
-        for (int i = 1; i <= warnings.size(); i++) { %>
+        for (int i = 1; i <= warnings.size(); i++) {
+            Warning warning = warnings.get(i-1);
+            String userID = warning.getWarningWriter();
+            int warningNo = warning.getWarningNo();
+    %>
             document.getElementById("warningCaution<%= i %>").addEventListener("click", function() {
-                // 팝업창 생성
-                const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
-            
-                // 팝업창에 내용 추가
-                popup.document.write("<h2>주의조치사항 입력</h2>");
-                popup.document.write("<textarea id='cautionInput' rows='5' cols='40'></textarea><br>");
-                popup.document.write("<button onclick='saveCaution()'>저장</button>");
-            
-                // 주의조치사항 저장 함수
-                popup.saveCaution = function() {
-                    const cautionText = popup.document.getElementById("cautionInput").value;
-                    alert("주의조치사항이 저장되었습니다");
-                    popup.close();
-                };
-            });
+               const userID = '<%= userID %>'; // 사용자의 ID를 변수에 저장
+               const warningNo = '<%= warningNo %>';
+               // 팝업창 생성
+               const popup = window.open("", "주의조치사항 입력", "width=400,height=300");
+              
+               // 팝업창에 내용 추가
+               popup.document.write("<h2>주의조치사항 입력</h2>");
+               popup.document.write("<textarea id='cautionInput' rows='5' cols='40'></textarea><br>");
+               popup.document.write("<button onclick='saveCaution()'>저장</button>");
+           
+               // 주의조치사항 저장 함수
+               popup.saveCaution = function() {
+                   const cautionText = popup.document.getElementById("cautionInput").value;
+                   alert("주의조치사항이 저장되었습니다");
+                   popup.close();
+                   const frm = document.warningNoticeFrm;
+                   const content = cautionText;
+                   const hiddenVal1 = frm.querySelector("input[name='warningNotice']");
+                   const hiddenVal2 = frm.querySelector("input[name='warningID']");
+                   const hiddenVal3 = frm.querySelector("input[name='warningNo']");
+                   hiddenVal1.value = content;
+                   hiddenVal2.value = userID;
+                   hiddenVal3.value = warningNo;
+                   console.log(warningNo);
+                   frm.submit();
+               };
+           });
     <% }
     } %>
   </script>

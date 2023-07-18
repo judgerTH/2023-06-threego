@@ -156,7 +156,7 @@ font-size :20px;
 	<div class="left-div">
 		<div id="center-tag">고객센터</div>
 		<ul>
-			<li class="active"><a class="" aria-current="page" href="">공지사항</a></li>
+			<li class="active"><a class="" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" id="active1" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>
 		</ul>
