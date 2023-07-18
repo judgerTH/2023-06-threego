@@ -31,7 +31,7 @@
 									href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
 								<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
 								<li><a class="" aria-current="page"
-									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거
+									href="<%= request.getContextPath() %>/rider/requestCollectionList">수거 접수
 										리스트</a></li>
 								<li><a class="" aria-current="page"
 									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
@@ -40,8 +40,8 @@
                         		<li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="right-div">
+         
+            <div class="right-div" >
                 <h3>받은 메시지</h3>
                 <% if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
                 	<% for(MsgBox msgBox : msgBoxes) { %>
@@ -60,8 +60,8 @@
                 	<div class="letterBox">받은 메시지가 없습니다</div>
                 <% } %>
             </div>
-        </div>
-    </div>
+    
+       </div>
 </body>
 </html>
     <%@ include file = "/WEB-INF/views/common/footer.jsp" %>

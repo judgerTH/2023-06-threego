@@ -17,7 +17,7 @@
 	<div class="search-wrapper">
         <div class="search-subwrapper">
             <h2>아이디 찾기</h2>
-            <p>아이디는 가입시 입력하신 이메일을 통해 찾을 수 있습니다.</p>
+            <p style ="font-size : 20px;">아이디는 가입시 입력하신 이메일을 통해 찾을 수 있습니다.</p>
             <form name = "serchIdFrm" id = "serchIdFrm">
             <p id = "confirm-id"></p>
             <input type="text" class= "search-input" name="email" id="email" placeholder="등록하신 이메일">
@@ -47,10 +47,10 @@ document.serchIdFrm.onsubmit = (e) => {
 	        	if(responseData != null){
 	        		const {id, email} = responseData;
 	        		
-	        		pTag.innerHTML = `조회하신 아이디는 <span id = "searched-id">\${id}</span>입니다.`;
+	        		pTag.innerHTML = `조회하신 아이디는 <span id = "searched-id" style = "color : blue; font-size : 20px; font-weight: bold;">[ \${id} ]</span> 입니다.`;
 	        		
 	        	} else {
-	        		pTag.innerHTML = `등록된 이메일이 아닙니다. 다시 확인해주시길 바랍니다.`;
+	        		pTag.innerHTML = `<span style ="color:red;">등록된 이메일이 아닙니다. 다시 확인해주시길 바랍니다.<span>`;
 	        	}
 	            
 	        },
@@ -64,12 +64,6 @@ document.serchIdFrm.onsubmit = (e) => {
 	
 	
 }
-
-
-
-
-
-
 
 </script>
 </html>

@@ -13,7 +13,7 @@ h2 { display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-
   		margin-inline-start: 21%; margin-inline-end: 0px; font-weight: bold; }
 strong { letter-spacing: -1px; font-weight: bolder; font-size: 1.3rem !important; }
 span { color: #49B466; }
-p { letter-spacing: -1px; padding-top: 6px; font-size: 1rem !important; word-break: keep-all; margin-top: 0; margin: 0; }
+p { letter-spacing: -1px; padding-top: 6px; font-size: 1.1rem !important; word-break: keep-all; margin-top: 0; margin: 0; }
 .text-box { padding: 1.5rem; }
 .info-bg-box1, .info-bg-box2, .info-bg-box3, .info-bg-box4, .info-bg-box5, .info-bg-box6 {
 				    box-shadow: 1px 2px 8px #c0c0c04d; border-radius: 20px; height: 470px; background-size: cover; 
