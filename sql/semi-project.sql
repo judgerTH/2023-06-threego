@@ -54,9 +54,7 @@ create table payment(
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
--- drop table payment;
  create sequence seq_payment_no;  
-<<<<<<< HEAD
  
 create table paymentDetail(
     pd_no   number,
@@ -67,12 +65,9 @@ create table paymentDetail(
     constraint  pk_payment_pd_no primary key(pd_no),
     constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
 );
-=======
 
 -- drop sequence seq_payment_no;
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 
-<<<<<<< HEAD
 create sequence seq_pd_no;
 
 CREATE OR REPLACE TRIGGER trg_insert_payment_detail
@@ -85,7 +80,7 @@ END;
 /
 
 select * from paymentDetail;
-
+select * from payment;
 
 drop trigger trg_insert_payment_detail;
 
