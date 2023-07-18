@@ -9,7 +9,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '872,29767';
+-- alter system kill SESSION '272,1667';
  
 ---------------------------------------------------------------
 -- drop table member;
@@ -41,8 +41,6 @@ create table ticket(
     tic_price number not null,
     constraint  pk_ticket_no primary key(tic_id)
     );        
-   
---drop table ticket;
     
 create table payment(
     p_no	number,
@@ -55,11 +53,60 @@ create table payment(
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
--- drop table payment;
  create sequence seq_payment_no;  
+ 
+create table paymentDetail(
+    pd_no   number,
+    pd_mem_id varchar2(30),
+    pd_tic_id   varchar2(30),
+    pd_tic_price number,
+    pd_date date default sysdate,
+    constraint  pk_payment_pd_no primary key(pd_no),
+    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
+);
 
 -- drop sequence seq_payment_no;
 
+create sequence seq_pd_no;
+
+CREATE OR REPLACE TRIGGER trg_insert_payment_detail
+AFTER INSERT ON payment
+FOR EACH ROW
+BEGIN
+  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
+  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
+END;
+/
+
+select * from paymentDetail;
+select * from payment;
+
+drop trigger trg_insert_payment_detail;
+
+
+select * from ticket;
+
+create table request(
+    req_no	number,
+    req_writer varchar2(30) not null,
+    req_location_id	varchar2(30) not null,
+    req_post char(5) not null,
+    req_address	varchar2(400) not null,
+    req_photo varchar2(200) not null,
+    req_status	char(1) default 0,
+    req_date	date default sysdate,
+    req_rider varchar2(30) , 
+    req_cp_date date default null,
+    constraints pk_request_req_no primary key(req_no),
+    constraints fk_request_id foreign key(req_writer) references member(id) on delete cascade, 
+    constraints fk_request_location_id foreign key(req_location_id) references location(l_id) on delete cascade,
+    constraints fk_req_rider foreign key(req_rider) references rider(r_id) on delete cascade,
+    constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
+    -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
+);
+ create sequence seq_req_no;
+ 
+ select * from request;
 
 select * from payment;
  select * from ticket;
@@ -85,9 +132,11 @@ create table board(
 
  create sequence seq_board_no;
  --drop table board;
+
  select * from board;
  
 insert into board values(select ROW_NUMBER() OVER (ORDER BY b_no) from board,'N','z','관리자','zz', default, default);
+
 
 
 insert into board values(
@@ -133,6 +182,7 @@ create table rider(
     constraints ck_rider_r_status check (r_status in ('0', '1'))
     -- 0 승인 대기중 1 승인완료
 );
+select *from location;
 
 --drop table rider;
 alter table rider modify r_status check (r_status in ('0', '1', '2'));
@@ -298,6 +348,7 @@ insert into location values(
 );
 
 
+
 --delete from member where id = 'eogh';
 
 select * from member;
@@ -368,7 +419,7 @@ update rider set r_status = '0', up_date = null where r_id='sukey';
 
 
 update member set email = 'admin@naver.com' where id = 'admin';
-
+select * from payment;
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
 
 select * from member;

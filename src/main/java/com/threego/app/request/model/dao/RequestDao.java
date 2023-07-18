@@ -59,16 +59,15 @@ public class RequestDao {
 	private Request handleRequestResultSet(ResultSet rset) throws SQLException {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
-		String reqLocationId = rset.getString("location_name");
+		String reqLocationId = rset.getString("req_location_id");
 		String reqPost = rset.getString("req_post");
 		String reqAddress = rset.getString("req_address");
 		String reqPhoto = rset.getString("req_photo");
 		String reqStatus = rset.getString("req_status");
-		Date reqDate = rset.getDate("req_Date");
+		Date reqData = rset.getDate("req_date");
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
-
-		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqPost, reqAddress, reqDate, reqRider, reqCpDate);
+		return new Request(reqNo, reqWriter, reqLocationId, reqPost, reqAddress, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
 
 	public int updateRequest(Connection conn, int reqNo, String rId, String reqStatus) {
@@ -182,49 +181,6 @@ public class RequestDao {
         return result;
      }
 
-	public Payment findPayment(Connection conn, String id) {
-        Payment payment = null;
-        String sql = "select * from payment where p_mem_id = ?";
-        
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-           pstmt.setString(1, id);
-           try(ResultSet rset = pstmt.executeQuery()){
-              while(rset.next()) {
-                 payment = handlePaymentResultSet(rset);
-              }
-           }
-
-        } catch (SQLException e) {
-           throw new RequestException(e);
-        }
-        return payment;
-        
-     }
-	private Payment handlePaymentResultSet(ResultSet rset) throws SQLException {
-        Payment payment = new Payment();
-        payment.setP_no(rset.getInt("p_no"));
-        payment.setP_mem_id(rset.getString("p_mem_id"));
-        payment.setP_tic_id(rset.getString("p_tic_id"));
-        payment.setP_date(rset.getDate("p_date"));
-        payment.setP_cnt(rset.getInt("p_cnt"));
-        payment.setP_use_cnt(rset.getInt("p_use_cnt"));
-
-        return payment;
-     }
-
-	public int deletePayment(Connection conn, String id) {
-        int result = 0;
-        String sql = "delete from payment where p_mem_id = ?";
-        
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-           pstmt.setString(1, id);
-           result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-           throw new RequestException(e);
-        }
-        return result;
-     }
-
 	public int insertRequest(Connection conn, String _writer, String msg) {
 		int result = 0; 
 		String sql = prop.getProperty("insertRequest");
@@ -243,7 +199,48 @@ public class RequestDao {
 		return result;
 	}
 
+		public Payment findPayment(Connection conn, String id) {
+			Payment payment = null;
+			String sql = "select * from payment where p_mem_id = ?";
+			
+			try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+				pstmt.setString(1, id);
+				try(ResultSet rset = pstmt.executeQuery()){
+					while(rset.next()) {
+						payment = handlePaymentResultSet(rset);
+					}
+				}
 
+			} catch (SQLException e) {
+				throw new RequestException(e);
+			}
+			return payment;
+			
+		}
 
+		private Payment handlePaymentResultSet(ResultSet rset) throws SQLException {
+			Payment payment = new Payment();
+			payment.setP_no(rset.getInt("p_no"));
+			payment.setP_mem_id(rset.getString("p_mem_id"));
+			payment.setP_tic_id(rset.getString("p_tic_id"));
+			payment.setP_date(rset.getDate("p_date"));
+			payment.setP_cnt(rset.getInt("p_cnt"));
+			payment.setP_use_cnt(rset.getInt("p_use_cnt"));
+
+			return payment;
+		}
+
+		public int deletePayment(Connection conn, String id) {
+			int result = 0;
+			String sql = "delete from payment where p_mem_id = ?";
+			
+			try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+				pstmt.setString(1, id);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new RequestException(e);
+			}
+			return result;
+		}
 
 }

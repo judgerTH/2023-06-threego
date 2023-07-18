@@ -20,7 +20,6 @@ public class Request {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public Request(int reqNo, String reqWriter, String reqLocationId, String reqPost, String reqAddress,
 			String reqPhoto, String reqStatus, Date reqDate, String reqRider, Date reqCpDate) {
 		super();
@@ -36,106 +35,85 @@ public class Request {
 		this.reqCpDate = reqCpDate;
 	}
 
-
 	public int getReqNo() {
 		return reqNo;
 	}
-
 
 	public void setReqNo(int reqNo) {
 		this.reqNo = reqNo;
 	}
 
-
 	public String getReqWriter() {
 		return reqWriter;
 	}
-
 
 	public void setReqWriter(String reqWriter) {
 		this.reqWriter = reqWriter;
 	}
 
-
 	public String getReqLocationId() {
 		return reqLocationId;
 	}
-
 
 	public void setReqLocationId(String reqLocationId) {
 		this.reqLocationId = reqLocationId;
 	}
 
-
 	public String getReqPost() {
 		return reqPost;
 	}
-
 
 	public void setReqPost(String reqPost) {
 		this.reqPost = reqPost;
 	}
 
-
 	public String getReqAddress() {
 		return reqAddress;
 	}
-
 
 	public void setReqAddress(String reqAddress) {
 		this.reqAddress = reqAddress;
 	}
 
-
 	public String getReqPhoto() {
 		return reqPhoto;
 	}
-
 
 	public void setReqPhoto(String reqPhoto) {
 		this.reqPhoto = reqPhoto;
 	}
 
-
 	public String getReqStatus() {
 		return reqStatus;
 	}
-
 
 	public void setReqStatus(String reqStatus) {
 		this.reqStatus = reqStatus;
 	}
 
-
 	public Date getReqDate() {
 		return reqDate;
 	}
-
 
 	public void setReqDate(Date reqDate) {
 		this.reqDate = reqDate;
 	}
 
-
 	public String getReqRider() {
 		return reqRider;
 	}
-
 
 	public void setReqRider(String reqRider) {
 		this.reqRider = reqRider;
 	}
 
-
 	public Date getReqCpDate() {
 		return reqCpDate;
 	}
 
-
 	public void setReqCpDate(Date reqCpDate) {
 		this.reqCpDate = reqCpDate;
 	}
-
 
 	@Override
 	public String toString() {
@@ -143,6 +121,5 @@ public class Request {
 				+ ", reqPost=" + reqPost + ", reqAddress=" + reqAddress + ", reqPhoto=" + reqPhoto + ", reqStatus="
 				+ reqStatus + ", reqDate=" + reqDate + ", reqRider=" + reqRider + ", reqCpDate=" + reqCpDate + "]";
 	}
-
 	
 }
