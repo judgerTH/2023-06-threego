@@ -137,7 +137,7 @@ input #writer {
 	font-weight: bold;
 }
 
-#btn-add,#btn-add2 {
+#btn-add,#btn-add2,#btn-add3 {
 	background-color: #4CAF50;
 	color: white;
 	border: none;
@@ -167,16 +167,20 @@ li {
 		</ul>
 	</div>
 	<section id="board-container">
-		<div id="inquiryTag">문의 사항</div>
+		<div id="inquiryTag">문의 사항 수정</div>
 		<div id="CreateFrmtag">
+		<form name= "useInquiryUpdateFrm"  >
+		<input type="hidden" name="no" id="no" value="<%=board.getBoardNo()%>">
 			<table id="tbl-board-view">
 				<tr>
 					<th>글 번호</th>
 					<td><%=board.getBoardNo()%></td>
+					
 				</tr>
 				<tr>
 					<th>제 목</th>
-					<td><%=board.getBoardTitle()%></td>
+					
+					<td><input type="text" name="title" id="title" value="<%=board.getBoardTitle()%>"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -184,23 +188,74 @@ li {
 				</tr>
 				<tr>
 					<th>내 용</th>
-					<td><textarea disabled readonly style="resize: none;"
+					<td><textarea name="boardContent" style="resize: none;"
 							rows="10"><%=board.getBoardContent()%></textarea></td>
 				</tr>
 			</table>
 			<div class="bottom-div">
 				<ul>
+					
 					<li><a class="active" id="btn-add" aria-current="page"
-						href="<%=request.getContextPath()%>/board/useInquiryList">목록</a>
+						href="#" onclick="history.go(-1);">취소</a></li>
+					<li><a class="active" id="btn-add3" aria-current="page"
+						href="#" onclick="useInquiryDelete();">삭제</a></li>	
 					<li><a class="active" id="btn-add2" aria-current="page"
-						href="<%=request.getContextPath()%>/board/useInquiryUpdate?no=<%=board.getBoardNo()%>">수정</a></li>
+						href="#" onclick="useInquiryUpdate();">수정</a></li>
 				</ul>
 
-			</div>
-
+		   </div>
+		</form>
 		</div>
 	</section>
 </body>
 <script>
-    </script>
+let xhr;
+const useInquiryUpdate=()=>{
+	 const form = document.useInquiryUpdateFrm;
+	 const xhr = new XMLHttpRequest();
+	  xhr.open("POST", "<%= request.getContextPath() %>/board/useInquiryUpdate");
+	  
+	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xhr.onload = function() {
+		  if (xhr.status === 200) {
+			  alert("성공적으로 수정되었습니다.") 
+		    const boardNo = xhr.responseText;// 서버로부터 받은 게시물 번호
+		    console.log(boardNo);
+		    window.location.href = "<%= request.getContextPath() %>/board/useInquiryDetail?no=" + boardNo;
+		  } else {
+		    // 에러 처리
+		  }
+		};
+
+	  const title = form.title.value;
+	  const no = form.no.value;
+	  const boardContent = form.boardContent.value;
+	  xhr.send(`title=\${title}&no=\${no}&boardContent=\${boardContent}`);
+	};
+	
+	const useInquiryDelete=()=>{
+		
+		if(confirm("정말 삭제하시겠습니까?")) {
+		
+		 const form = document.useInquiryUpdateFrm;
+		 const xhr = new XMLHttpRequest();
+		  xhr.open("POST", "<%= request.getContextPath() %>/board/useInquiryDelete");
+		  
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		  xhr.onload = function() {
+			  if (xhr.status === 200) {
+				alert("성공적으로 삭제되었습니다.")  
+			    window.location.href = "<%= request.getContextPath() %>/board/useInquiryList";
+			  } else {
+			    // 에러 처리
+			  }
+			};
+
+		  const title = form.title.value;
+		  const no = form.no.value;
+		  const boardContent = form.boardContent.value;
+		  xhr.send(`no=\${no}`);
+			}
+		};	
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

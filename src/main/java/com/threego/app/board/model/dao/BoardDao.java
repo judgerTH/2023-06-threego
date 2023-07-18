@@ -141,6 +141,39 @@ private Properties prop = new Properties();
 		return board;
 	}
 
+	public int updateBoard(Connection conn, Board board) {
+		int result = 0;
+		String query = prop.getProperty("updateBoard");
+		//update board set b_tittle = ?, b_content = ? where b_no = ?
+
+		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardContent());
+			pstmt.setInt(3, board.getBoardNo());
+			result = pstmt.executeUpdate();
+			System.out.println("dao"+result);
+		} catch (SQLException e) {
+			throw new BoardException(e);
+		} 
+		return result;
+	}
+
+	public int deleteBoard(Connection conn, int no) {
+		int result = 0;
+		String sql = prop.getProperty("deleteBoard");
+		//delete Board = delete board where b_no = ?
+
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1,no );
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new BoardException(e);
+		} 
+		return result;
+	}
+
 	
 	
 }
