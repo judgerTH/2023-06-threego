@@ -63,5 +63,24 @@ public class RequestService {
 		return requestList;
 	}
 
+	public int insertRequest(String _writer, String msg) {
+		// 접수취소 시 or 수거 완료 시 메세지함 전송
+		Connection conn = getConnection();
+		int result = 0; 
+		try {
+			result = requestDao.insertRequest(conn, _writer, msg);
+			commit(conn);
+			
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		
+		}finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 
 }

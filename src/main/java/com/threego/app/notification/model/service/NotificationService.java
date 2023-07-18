@@ -76,6 +76,102 @@ public class NotificationService {
 		}
 		return 0;
 	}
+
+	public int notifyWarningCatuionByRiderId(String requestRider) {
+		// 1. 저장
+//		int result = notificationDao.insertNotification(conn, notification);
+		// no, messageType, receiver, createdAt, message, checked
+		
+		// 2.실시간 알림
+		// WebSocket Session 가져오기
+		Session wsSession = HelloWebSocket.clientMap.get(requestRider);
+		if(wsSession != null) {
+			Basic basic = wsSession.getBasicRemote();
+			try {
+				Map<String, Object> payload = new HashMap<>();
+				payload.put("messageType", MessageType.WARNING_CAUTION_BY_RIDER);
+				payload.put("receiver", requestRider);
+				payload.put("createdAt", System.currentTimeMillis());
+				payload.put("message", "신고 접수가 확인되었습니다. 메세지함을 확인해주세요.");
+				basic.sendText(new Gson().toJson(payload));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	public int notifyWarningCatuionByrequestWriter(String requestWriter) {
+		// 1. 저장
+//		int result = notificationDao.insertNotification(conn, notification);
+		// no, messageType, receiver, createdAt, message, checked
+		
+		// 2.실시간 알림
+		// WebSocket Session 가져오기
+		Session wsSession = HelloWebSocket.clientMap.get(requestWriter);
+		if(wsSession != null) {
+			Basic basic = wsSession.getBasicRemote();
+			try {
+				Map<String, Object> payload = new HashMap<>();
+				payload.put("messageType", MessageType.WARNING_CAUTION_BY_WRITER);
+				payload.put("receiver", requestWriter);
+				payload.put("createdAt", System.currentTimeMillis());
+				payload.put("message", "신고 접수가 확인되었습니다. 메세지함을 확인해주세요.");
+				basic.sendText(new Gson().toJson(payload));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	public int notifyCancelRequest(String _writer) {
+		// 1. 저장
+//		int result = notificationDao.insertNotification(conn, notification);
+		// no, messageType, receiver, createdAt, message, checked
+		
+		// 2.실시간 알림
+		// WebSocket Session 가져오기
+		Session wsSession = HelloWebSocket.clientMap.get(_writer);
+		if(wsSession != null) {
+			Basic basic = wsSession.getBasicRemote();
+			try {
+				Map<String, Object> payload = new HashMap<>();
+				payload.put("messageType", MessageType.CANCELED_REQUEST);
+				payload.put("receiver", _writer);
+				payload.put("createdAt", System.currentTimeMillis());
+				payload.put("message", "수거요청이 취소되었습니다. 메세지함을 확인해주세요.");
+				basic.sendText(new Gson().toJson(payload));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	public int notifyCompleteRequest(String _writer) {
+		// 1. 저장
+//		int result = notificationDao.insertNotification(conn, notification);
+		// no, messageType, receiver, createdAt, message, checked
+		
+		// 2.실시간 알림
+		// WebSocket Session 가져오기
+		Session wsSession = HelloWebSocket.clientMap.get(_writer);
+		if(wsSession != null) {
+			Basic basic = wsSession.getBasicRemote();
+			try {
+				Map<String, Object> payload = new HashMap<>();
+				payload.put("messageType", MessageType.COMPLETE_REQUEST);
+				payload.put("receiver", _writer);
+				payload.put("createdAt", System.currentTimeMillis());
+				payload.put("message", "수거 완료 되었습니다. 메세지함을 확인해주세요.");
+				basic.sendText(new Gson().toJson(payload));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
 	
 }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.threego.app.member.model.dao.MemberDao;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.msgbox.model.vo.MsgBox;
 import com.threego.app.request.model.vo.Request;
 import com.threego.app.ticket.model.vo.TicketPayment;
 
@@ -113,6 +114,15 @@ public class MemberService {
 		List<Request> requestList = memberDao.findRequestList(conn, memberId);
 		close(conn);
 		return requestList;
+	}
+
+
+	public List<MsgBox> getMsgBoxList(String memberId) {
+		// 마이페이지 - 받은 메세지함
+		Connection conn = getConnection();
+		List<MsgBox> msgBoxes = memberDao.getMsgBoxList(conn, memberId);
+		close(conn);
+		return msgBoxes;
 	}
 
 }

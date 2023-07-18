@@ -23,3 +23,126 @@
 .my-container {float: left;}
 .my-container h2 {margin-left: 60px;}
 
+
+/*수거리스트 CSS*/
+#collection-tbl {border-top: 2px solid black; border-bottom: 2px solid black; border-collapse: collapse;}
+#collection-tbl th, td {border-left: 2px solid black;padding: 10px 40px;}
+#collection-tbl tr :first-of-type {
+	border-left: none;
+}
+
+.collection-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+
+#btn-accept {
+	border: none;
+	border-radius: 3px;
+	background-color: #49B466;
+	color: white;
+	padding: 5px 15px;
+	font-weight: bold;
+}
+
+/*수거 상세보기 CSS*/
+.requestDetail-container{display: flex; flex-direction: row;}
+#requestDetail{border-collapse: collapse; margin-top : 20px;}
+#requestDetail th, td{padding : 10px; border : 2px solid #d2d2d2}
+#requestDetail-wrap{border : none; width : 500px;}
+.btn-accept{margin : 10px 5px;border : none; padding : 5px 15px; color : white; background-color: #49B466; font-weight: bold; border-radius: 3px;}
+.map-btn {margin : 10px 5px; border : none; padding : 5px 15px; color : white; background-color: #49B466; font-weight: bold; border-radius: 3px;}
+.btn-wrapper{display : flex; flex-direction : row;}
+#map{margin-top : 20px;}
+.map-wrapper h3{margin-top : 23px;}
+
+
+
+/*수거목록 조회 및 신고 CSS*/
+#btn-warning {
+	border: none;
+	border-radius: 3px;
+	background-color: red;
+	color: white;
+	padding: 5px 15px;
+	font-weight: bold;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 60%;
+	max-width: 600px;
+	position: relative; /* 추가된 속성 */
+}
+
+.modal-close {
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+	position: absolute; /* 추가된 속성 */
+	top: 10px; /* 상단 여백 */
+	right: 10px; /* 우측 여백 */
+}
+
+.modal-close:hover, .modal-close:focus {
+	color: #000;
+	text-decoration: none;
+}
+
+/* 신고 폼 스타일 */
+#warningMadal form {
+	display: flex;
+	flex-direction: column;
+}
+
+#warningMadal form span {
+	margin-bottom: 10px;
+}
+
+#warningMadal form input, #warningMadal form textarea {
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+#warningMadal form button[type="submit"] {
+	padding: 10px;
+	background-color: #49B466;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+#warningMadal form button[type="submit"]:hover {
+	background-color: #24873a;
+}
+
+.close {
+	display: flex;
+	flex-direction: row-reverse;
+	font-size: 30px; /* 닫기 버튼의 크기 조절 */
+	font-weight: bold;
+}
+/* 받은 메세지 스타일*/
+.letterBox {width:1000px; padding-top:10px; display:flex; border-style:solid; border-color:grey; border-radius:10px;}
+.letterIcon {width:50px; justify-content: center; align-items: center; text-align: center; padding-top:10px;}
+.letterContent {padding-left:10px;}
