@@ -15,6 +15,7 @@ ws.addEventListener('message', (e) => {
 	const alarmBox = document.querySelector("#alarmBox");
 	
 	switch(messageType) {
+		
 		case 'RIDER_APPROVEMENT' : 
 			
 			alarmBox.style.display = "inline";
@@ -24,9 +25,9 @@ ws.addEventListener('message', (e) => {
 				alarmBox.style.display="none";
 			}
 			
-			break;
+		break;
 			
-		case 'RIDER_REFUSAL' : 
+		case 'WARNING_CAUTION_BY_RIDER' : 
 			
 			alarmBox.style.display = "inline";
 			
@@ -35,7 +36,40 @@ ws.addEventListener('message', (e) => {
 				alarmBox.style.display="none";
 			}
 			
-			break;
+		break;
+		
+		case 'WARNING_CAUTION_BY_WRITER' : 
+			
+			alarmBox.style.display = "inline";
+			
+			alarmBox.onclick = () => {
+				alert(message);
+				alarmBox.style.display="none";
+			}
+			
+		break;
+		
+		case 'CANCELED_REQUEST' : 
+			
+			alarmBox.style.display = "inline";
+			
+			alarmBox.onclick = () => {
+				alert(message);
+				alarmBox.style.display="none";
+			}
+			
+		break;
+		
+		case 'COMPLETE_REQUEST' : 
+			
+			alarmBox.style.display = "inline";
+			
+			alarmBox.onclick = () => {
+				alert(message);
+				alarmBox.style.display="none";
+			}
+			
+		break;
 	}
 	
 });

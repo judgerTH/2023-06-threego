@@ -21,6 +21,10 @@ import com.threego.app.member.model.vo.Member;
  * Servlet Filter implementation class LoginFilter
  */
 @WebFilter({ 
+	"/member/notebox",
+	"/member/myPage",
+	"/rider/requestCollectionList",
+	"/rider/riderCollectionListCheck",
 	"/member/memberDetail", 
 	"/member/memberUpdate", 
 	"/member/memberDelete",
