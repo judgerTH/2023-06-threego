@@ -160,7 +160,8 @@ div#pagebar {
 	<div class="left-div">
 		<h2>고객센터</h2>
 		<ul>
-			<li ><a class="active" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
+			<li><a class="active" aria-current="page"
+				href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" id="active1" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>
 		</ul>
@@ -188,8 +189,8 @@ div#pagebar {
 					<tr>
 						<td><%=board.getBoardNo()%></td>
 						<td><%=board.getBoardTitle()%><img
-								src="<%=request.getContextPath()%>/images/secret.png" alt=""
-								style="width: 16px;" /></td>
+							src="<%=request.getContextPath()%>/images/secret.png" alt=""
+							style="width: 16px;" /></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
@@ -200,25 +201,31 @@ div#pagebar {
 					if (board.getBoardWriter().equals(loginMember.getId()) || loginMember.getMemberRole() == MemberRole.A) {
 					%>
 					<tr>
-						<td><a href="<%=request.getContextPath()%>/board/useInquiryDetail?no=<%=board.getBoardNo()%>">
+						<td><%=board.getBoardNo()%></td>
+						<td><a
+							href="<%=request.getContextPath()%>/board/useInquiryDetail?no=<%=board.getBoardNo()%>">
 								<%=board.getBoardTitle()%> <img
 								src="<%=request.getContextPath()%>/images/secret.png" alt=""
 								style="width: 16px;" />
 						</a></td>
+						<td><%=board.getBoardWriter()%></td>
+						<td><%=board.getBoardRegDate()%></td>
+					</tr>
 					<%
 					} else {
 					%>
 					<tr>
-						<td><a href="#" onclick="notRead();">
-								<%=board.getBoardTitle()%></a>
-							<img src="<%=request.getContextPath()%>/images/secret.png"
-								alt="" style="width: 16px;" />
-						</td>
-					<%
-					}
-					%>
+						<td><%=board.getBoardNo()%></td>
+						<td><a href="#" onclick="notRead();"> <%=board.getBoardTitle()%></a>
+							<img src="<%=request.getContextPath()%>/images/secret.png" alt=""
+							style="width: 16px;" /></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
+
+						<%
+						}
+						%>
+
 					</tr>
 
 					<%
@@ -235,8 +242,8 @@ div#pagebar {
 				</tbody>
 			</table>
 		</div>
-		<input type="button" id="btnadd" value="문의하기"/>
-			
+		<input type="button" id="btnadd" value="문의하기" />
+
 	</section>
 	<div id="pagebar">
 		<%=request.getAttribute("pagebar")%>
@@ -248,7 +255,7 @@ const notRead =()=>{
 }
 
 btnadd.onclick=()=>{
-	<% if(loginMember ==null){ %>
+	<%if (loginMember == null) {%>
 	alert('로그인 후 이용가능합니다.'); return false ; <%}%>
 	location.href = '<%=request.getContextPath()%>/board/useInquiryCreate';
 }
