@@ -187,7 +187,9 @@ div#pagebar {
 					%>
 					<tr>
 						<td><%=board.getBoardNo()%></td>
-						<td><%=board.getBoardTitle()%></td>
+						<td><%=board.getBoardTitle()%><img
+								src="<%=request.getContextPath()%>/images/secret.png" alt=""
+								style="width: 16px;" /></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
