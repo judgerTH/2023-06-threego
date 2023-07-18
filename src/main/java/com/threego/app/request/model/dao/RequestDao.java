@@ -139,6 +139,24 @@ public class RequestDao {
 		return requestList;
 	}
 
+	public int insertRequest(Connection conn, String _writer, String msg) {
+		int result = 0; 
+		String sql = prop.getProperty("insertRequest");
+		// insert into msgbox values(seq_msg_no.nextval, 'P', 'admin', ?, ?, default)
+
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, _writer);
+			pstmt.setString(2, msg);
+
+			result = pstmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			throw new RequestException(e);
+		}
+		return result;
+	}
+
 
 
 

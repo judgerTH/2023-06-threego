@@ -43,6 +43,12 @@ public class AdminReportListServlet extends HttpServlet {
 		List<Warning> warnings = adminService.findAllReports();
 		request.setAttribute("warnings", warnings);
 		
+		for(Warning warning : warnings) {
+			if(warning.getWarningCaution() != null) {
+				warning.setWarningConfirm(1);
+			}
+		}
+		
 		// 페이지바영역 처리
 		int totalMember = adminService.getTotalMember();
 		String url = request.getRequestURI();
