@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<% String msg = (String) session.getAttribute("msg"); %>
+<% session.removeAttribute("msg"); %>
+
+<script>
+    // msg 값이 있을 경우 alert 창으로 출력
+    <% if (msg != null) { %>
+        alert("<%= msg %>");
+    <% } %>
+</script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -263,10 +272,15 @@ width: 400px;
 
 application.onclick=(e)=>{
 	<%if(loginMember == null) {%>
-	alert("로그인 후 이용 가능합니다."); <%}else{%>
+	alert("로그인 후 이용 가능합니다.");<%}else{%>
+	<%if(loginMember.getMemberRole() == MemberRole.R){%>
+	alert("라이더 지원 상태이거나, 이미 라이더인 회원은 지원 불가 합니다."); <%}else{%>
+	
 	document.querySelector("#beforeContent").style.display="none";
 	document.querySelector("#afterContent").style.display="block";
-	<%}%>
+	<%}}%>
+	
+	
 }
 document.memberUpdateFrm.onsubmit=(e)=>{
 	
@@ -283,20 +297,23 @@ document.memberUpdateFrm.onsubmit=(e)=>{
 			contentType : false,
 			success(responseData) {
 				console.log(responseData);
-				//const {result, message} = responseData;
-				//alert(message);
+				const {result, message} =  responseData;
+				if(result =="실패"){
+					alert(message);
+				}else{
+				document.querySelector("#afterContent").style.display="none";
+				document.querySelector("#riderComplete").style.display="block";
+					
+				}
+				
 				
 				
 			},
-		//	complete() {
-			//	e.target.reset(); // 폼 초기화
-			//}
 			
 			
 		});
 		e.preventDefault(); 
-		document.querySelector("#afterContent").style.display="none";
-		document.querySelector("#riderComplete").style.display="block";
+		
 	}
 }
 </script>
