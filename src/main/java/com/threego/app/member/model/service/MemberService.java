@@ -1,14 +1,18 @@
 package com.threego.app.member.model.service;
 
+import static com.threego.app.common.util.JdbcTemplate.close;
+import static com.threego.app.common.util.JdbcTemplate.commit;
+import static com.threego.app.common.util.JdbcTemplate.getConnection;
+import static com.threego.app.common.util.JdbcTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
 
 import com.threego.app.member.model.dao.MemberDao;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.msgbox.model.vo.MsgBox;
+import com.threego.app.payment.model.vo.PaymentDetail;
 import com.threego.app.request.model.vo.Request;
-import com.threego.app.ticket.model.vo.TicketPayment;
-
-import static  com.threego.app.common.util.JdbcTemplate.*;
 
 public class MemberService {
 	
@@ -86,20 +90,28 @@ public class MemberService {
 
 
 	public int findByPhone(String phone) {
-		int result =0;
 		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = memberDao.findByPhone(conn, phone);
+			commit(conn);
+			
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
 		
-		result=memberDao.findByPhone(conn,phone);
-		close(conn);	
+		}finally {
+			close(conn);
+		}
 		
 		
 		return result;
 	}
 	
-	public List<TicketPayment> findPaymentList(String memberId) {
+	public List<PaymentDetail> findPaymentList(String memberId) {
 		// 마이페이지 - 결제정보
 		Connection conn = getConnection();
-		List<TicketPayment> requestList = memberDao.findPaymentList(conn, memberId);
+		List<PaymentDetail> requestList = memberDao.findPaymentList(conn, memberId);
 		close(conn);
 	
 		return requestList;
@@ -113,6 +125,15 @@ public class MemberService {
 		List<Request> requestList = memberDao.findRequestList(conn, memberId);
 		close(conn);
 		return requestList;
+	}
+
+
+	public List<MsgBox> getMsgBoxList(String memberId) {
+		// 마이페이지 - 받은 메세지함
+		Connection conn = getConnection();
+		List<MsgBox> msgBoxes = memberDao.getMsgBoxList(conn, memberId);
+		close(conn);
+		return msgBoxes;
 	}
 
 }

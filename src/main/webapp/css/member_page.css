@@ -14,12 +14,8 @@
 /*수거접수 리스트*/
 .btn-accept {border: none; border-radius: 3px; background-color: #49B466; color: white; padding: 5px 15px; font-weight: bold;}
 		 
-/*회원결제정보 css*/
-.mypage-wrap .mypage-table tr:first-child {background: #f0f0f0; font-weight: 500;}
-.mypage-wrap .mypage-table td:not(.mypage-wrap .mypage-table .content td) {
-    height: 61px; border-bottom: 1px solid #c2c2c2; font-size: 16px; text-align: center;}
-.mypage-wrap .mypage-table:not(.service-center) td:first-child {width: 18%;}
-.empty_table {padding: 50px 0 !important; text-align: center;}
-.my-container {float: left;}
-.my-container h2 {margin-left: 60px;}
 
+/* 받은 메세지 스타일*/
+.letterBox {width:950px; padding:10px; display:flex; border-style:solid; border-color:grey; border-radius:10px;}
+.letterIcon {width:50px; justify-content: center; align-items: center; text-align: center; padding-top:10px;}
+.letterContent {padding-left:10px;}

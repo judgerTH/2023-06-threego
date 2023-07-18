@@ -43,7 +43,7 @@
 						수거 목록 조회</a></li>
 				<% } %>
 				<li><a class="" aria-current="page"
-					href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 			</ul>
 
 		</div>
@@ -75,7 +75,8 @@
 				                    (reqList.getReqStatus().equals("3")) ? "수거취소" : "" %>
 						</td>
 						<td><%= reqList.getReqDate() %></td>
-						<td><%= reqList.getReqRider() %> <% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
+						<td><%= reqList.getReqRider() == null ? "수락 대기중" : reqList.getReqRider() %> 
+						<% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
 							<form name="requestwarningForm" style="display: inline;">
 								<input type="hidden" name="reqNo"
 									value="<%= reqList.getReqNo()%>"> <input type="hidden"

@@ -27,11 +27,14 @@
             <div><a href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="threego-Logo" style = "width : 120px; height: 120px;"></a></div>
 
             <div id="menu-container">
+
                 <ul id = "menubar" style = "font-family: 'GmarketSansMedium'; color:black;">
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceIntroduction" style = "color : black;">서비스소개</a></li>
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/information" style = "color : black;">이용안내</a></li>
+                     <%if(loginMember!=null && loginMember.getMemberRole()== MemberRole.R ){ %>
+                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/rider/requestCollectionList">수거 리스트 조회</a></li><%}else{ %>
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/buyTicket" style = "color : black;">수거신청</a></li>
-                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/riderApplication" style = "color : black;">수고미 지원</a></li>
+                    <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/riderApplication" style = "color : black;">수고미 지원</a></li><%} %>
                     <li class="nav-item"><a href = "<%= request.getContextPath() %>/menu/serviceCenter" style = "color : black;">고객센터</a></li>
                 </ul>
             </div>

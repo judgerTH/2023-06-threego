@@ -28,6 +28,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 
 </head>
 <body>
+
 	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 	<div class="mypage-container">
 		<div class="left-div">
@@ -46,7 +47,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 				} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
 				%>
 				<li><a class="" aria-current="page"
-					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거 접수
 						리스트</a></li>
 				<li><a class="" aria-current="page"
 					href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
@@ -55,7 +56,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 				}
 				%>
 				<li><a class="" aria-current="page"
-					href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
+					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 			</ul>
 		</div>
 		<div class="right-div">
@@ -131,6 +132,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 			</div>
 		</div>
 	</div>
+
 </body>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

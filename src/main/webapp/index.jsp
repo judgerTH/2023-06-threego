@@ -19,8 +19,9 @@
 <body>
 
 <main>
+
     <div id="main-info-container">
-        <img src="<%=request.getContextPath()%>/images/mainbanner.png" alt="메인배너" class="main-img">
+        <img src="<%=request.getContextPath()%>/img/메인 이미지.jpg" alt="메인배너" class="main-img">
         <div id = "main-info">
         	<h2 style = "color : #468B97; font-size : 40px; font-style :italic; font-family: 'TTWanjudaedunsancheB';">Three Go는요!</h2>
         	<div id = "main-info-card">
@@ -40,9 +41,12 @@
         	
         	</div>
         </div>
+
         <div id = "btn-container">
             <div><a href = "<%= request.getContextPath() %>/menu/buyTicket"><button class="btn-main">수거 신청</button></a></div>
             <div><a href = "<%= request.getContextPath() %>/menu/riderApplication"><button class="btn-main">라이더 지원</button></a></div>
+            
+            
         </div>
     </div>
 </main>

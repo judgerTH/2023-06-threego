@@ -36,7 +36,7 @@
 							수거 목록 조회</a></li>
 					<% } %>
 					<li><a class="" aria-current="page"
-						href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+						href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 
 				</ul>
 			</div>

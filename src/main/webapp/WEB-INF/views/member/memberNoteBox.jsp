@@ -1,8 +1,11 @@
+<%@page import="com.threego.app.msgbox.model.vo.MsgBox"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file = "/WEB-INF/views/common/header.jsp" %>
     <%
     	String memberId = loginMember.getId();
+    	List<MsgBox> msgBoxes = (List<MsgBox>) request.getAttribute("msgBoxes");
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,29 +37,31 @@
 									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
 										수거 목록 조회</a></li>
 								<% } %>
-                        		<li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+                        		<li class="active"><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="right-div">
+         
+            <div class="right-div" >
                 <h3>받은 메시지</h3>
-                <div class="mypage-content-box">
-                <table id="mypage-table">
-                    <tbody>
-                        <tr>
-                            <td>NO</td>
-                            <td>제목</td>
-                            <td>등록일</td>
-                            <td>상태</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="7" class="empty_table">받은 메시지가 없습니다.</td>
-                        </tr>           
-                     </tbody>
-                </table>
+                <% if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
+                	<% for(MsgBox msgBox : msgBoxes) { %>
+		                <div class="letterBox">
+		                	<div >
+		                		<p class="letterIcon" style="">✉️</p>
+		                	</div>
+		                	<div class="letterContent">
+		                		<p style="font-size:13px;">보낸사람 : 관리자 &nbsp;&nbsp;&nbsp; 전송일자 : <%= msgBox.getMsgSendingDate() %></p>
+		                		<p><%= msgBox.getMsgContent() %></p>
+		                	</div>
+		                </div>
+		                <br>
+               		<% } %>
+                <% } else { %>
+                	<div class="letterBox">받은 메시지가 없습니다</div>
+                <% } %>
             </div>
-        </div>
-    </div>
+    
+       </div>
 </body>
 </html>
     <%@ include file = "/WEB-INF/views/common/footer.jsp" %>
