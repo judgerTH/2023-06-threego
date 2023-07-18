@@ -3,7 +3,6 @@ alter session set "_oracle_script" = true;
 create user threego
 identified by threego
 default tablespace users;
-
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
 --select * from request where req_rider = 'xogus';
@@ -56,9 +55,11 @@ create table payment(
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
+-- drop table payment;
  create sequence seq_payment_no;  
 
 -- drop sequence seq_payment_no;
+
 
 select * from payment;
  select * from ticket;
@@ -106,6 +107,7 @@ create table board_comment(
     constraints fk_board_comment_c_writer foreign key(c_writer) references member(id) on delete cascade,
     constraints fk_board_comment_c_ref foreign key(c_board_no) references board(b_no) on delete cascade
 );
+-- drop table board_comment;
  create sequence seq_c_no;
 
 select * from board_comment;
@@ -128,8 +130,8 @@ create table rider(
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
-    constraints ck_rider_r_status check (r_status in ('0', '1', '2'))
-    -- 0 승인 대기중 1 승인완료 2 승인거부
+    constraints ck_rider_r_status check (r_status in ('0', '1'))
+    -- 0 승인 대기중 1 승인완료
 );
 
 --drop table rider;
@@ -139,14 +141,17 @@ update rider set r_status = '2' where r_id ='sukey0331';
 SELECT * FROM user_constraints WHERE table_name = 'rider' ;
 
 create table request(
-    req_no	number,
+    req_no   number,
     req_writer varchar2(30) not null,
+    req_location_id   varchar2(30) not null,
+    req_post char(5) not null,
+    req_address   varchar2(400) not null,
     req_location_id	varchar2(30) not null,
     req_post char(5) not null,
     req_address	varchar2(400) not null,
     req_photo varchar2(200) not null,
-    req_status	char(1) default 0,
-    req_date	date default sysdate,
+    req_status   char(1) default 0,
+    req_date   date default sysdate,
     req_rider varchar2(30) , 
     req_cp_date date default null,
     constraints pk_request_req_no primary key(req_no),
@@ -156,8 +161,15 @@ create table request(
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
+-- drop table request;
  create sequence seq_req_no;
+  insert into request values(
+    seq_req_no.nextval, 'tlfprl', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
+    );
+    
 
+ -- drop table request;
+ SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = request;
 select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
 
 create table del_member(
@@ -171,7 +183,7 @@ del_address 	varchar2(400)	not null,
 del_reg_date date,	
 del_date date
 );
-
+-- drop table del_member;
 create table warning(
 w_no	 number,		
 w_req_no	number not null,	
@@ -189,11 +201,18 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 
 select * from warning;
 --drop table warning;
-
+ insert into member values (
+    'xogus10', 'xogus','이태현','xogus10@naver.com','01021111121','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
+);
+ insert into payment values (
+     seq_payment_no.nextval, 'eogh','tic3',sysdate,3,0
+ );
 create sequence seq_w_no;
 
+select * from payment;
+delete from payment where p_no = 1;
+select * from payment where (p_no between ? and ?) and(p_date >= TO_DATE(?, 'YYYY/MM/DD') AND p_date <= TO_DATE(?, 'YYYY/MM/DD'))
 
- 
 CREATE OR REPLACE TRIGGER  trig_member_delete
 before DELETE ON member
 FOR EACH ROW
@@ -209,14 +228,33 @@ create table msgbox(
     msg_sender varchar2(30) not null, 
     msg_receiver varchar2(30) not null, 
     msg_content varchar2(4000), 
+    msg_sending_date date default sysdate,
     constraints pk_msgbox_msg_no primary key(msg_no),
     constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
     constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
 
+-- drop table msgbox;
+
+
+
 create sequence seq_msg_no;
+
+-- drop sequence seq_msg_no;
+
+create table paymentDetail(
+    pd_no   number,
+    pd_mem_id varchar2(30),
+    pd_tic_id   varchar2(30),
+    pd_tic_price number,
+    pd_date date default sysdate,
+    constraint  pk_payment_pd_no primary key(pd_no),
+    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
+);
+
 select * from msgbox;
+
 
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
@@ -227,6 +265,7 @@ select * from msgbox;
  insert into member values (
     'xogus', 'xogus','이태현','xogus@naver.com','01021111111','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
 );
+
  insert into ticket values (
     'tic1', '1회권',1,5000 
  );
@@ -258,15 +297,6 @@ insert into location values(
     'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
- );
-  insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 0, default, null,default
- );
-   insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
- );
 
 --delete from member where id = 'eogh';
 
@@ -278,6 +308,7 @@ select * from request;
 select * from payment;
 select * from del_member;
 select * from msgbox;
+select * from warning;
     -- commit;
 delete from rider where r_id='sukey0331';
 update member set member_role='A' where id = 'admin2';
@@ -310,6 +341,7 @@ create table paymentDetail(
     constraint  pk_payment_pd_no primary key(pd_no),
     constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
 );
+
 create sequence seq_pd_no;
 insert into paymentDetail 
 select * from payment;
@@ -329,6 +361,7 @@ select * from payment;
 INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
 -- drop table msgbox;
 
+
 alter table rider modify r_status check (r_status in ('0', '1', '2'));
 
 update rider set r_status = '0', up_date = null where r_id='sukey';
@@ -337,6 +370,10 @@ update rider set r_status = '0', up_date = null where r_id='sukey';
 update member set email = 'admin@naver.com' where id = 'admin';
 
 -- update request set req_status = '1' ,  req_rider = ? where req_no = ?
+
+select * from member;
+
+
 
 select * from request;
 insert into request values(
@@ -349,3 +386,7 @@ insert into request values(
  seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
  );
 
+select * from request;
+select * from warning;
+insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
+insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);

@@ -34,8 +34,6 @@ public class PaymentService {
 		return payments;
 	}
 
-
-
 	public int insertPayment(String id, String ticketId) {
 		Connection conn = getConnection();
 		int result = 0;

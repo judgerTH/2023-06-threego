@@ -380,5 +380,12 @@ public class AdminService {
 		return result;
 	}
 
+	public Warning getInfoFromRequestAndMember(int warningNo) {
+		Connection conn = getConnection();
+		Warning warning = adminDao.getInfoFromRequestAndMember(conn, warningNo);
+		close(conn);
+		return warning;
+	}
+
 	
 }

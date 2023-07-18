@@ -49,7 +49,7 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 				}
 				%>
 				<li><a class="" aria-current="page"
-					href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
+					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 			</ul>
 		</div>
 
@@ -93,6 +93,7 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 			</div>
 		</div>
 	</div>
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 </body>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

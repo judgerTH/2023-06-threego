@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 import com.threego.app.member.model.service.MemberService;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.notification.model.service.NotificationService;
 import com.threego.app.request.model.service.RequestService;
 import com.threego.app.request.model.vo.Request;
 
@@ -24,6 +25,7 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final RequestService requestService = new RequestService();
 	private final MemberService memberService = new MemberService();
+	private final NotificationService notificationService = new NotificationService();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -66,9 +68,27 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 		
 		
 		int result = requestService.updateRequest(reqNo, rId, reqStatus);
+		
 		Request acceptedRequest = requestService.findByReqno(reqNo);
+		
 		Member writer = memberService.findById(_writer);
 		System.out.println(_writer);
+		
+		// 접수 현황에 따른 실시간 알림
+		if(acceptedRequest.getReqStatus().equals("3")) { // 접수 취소일 경우
+			result = notificationService.notifyCancelRequest(_writer);
+			// 메세지 전송
+			String msg = "접수가 취소 되었습니다. 다시 신청해주세요.";
+			result = requestService.insertRequest(_writer, msg);
+		} else if (acceptedRequest.getReqStatus().equals("2")) { // 처리완료일 경우
+			result = notificationService.notifyCompleteRequest(_writer);
+			// 메세지 전송
+			String msg = "수거 완료되었습니다. 다음에 또 이용해주세요~!";
+			result = requestService.insertRequest(_writer, msg);
+		}
+		
+		// 메세지 전송
+		
 		
 		request.setAttribute("writer", writer);
 		request.setAttribute("acceptedRequest", acceptedRequest);

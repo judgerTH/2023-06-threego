@@ -33,6 +33,7 @@ session.removeAttribute("msg");
 	href="<%=request.getContextPath() %>/css/warning.css" />
 </head>
 <body>
+
 	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 	<div class="mypage-container">
 			<div class="left-div">
@@ -60,7 +61,7 @@ session.removeAttribute("msg");
 					}
 					%>
 					<li><a class="" aria-current="page"
-						href="<%=request.getContextPath()%>/member/notebox">📑받은 메시지</a></li>
+						href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 				</ul>
 			</div>
 			<div class="right-div">
