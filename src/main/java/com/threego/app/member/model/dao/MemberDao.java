@@ -211,7 +211,7 @@ public class MemberDao {
 
 	public List<Request> findRequestList(Connection conn, String memberId) {
 		List<Request> reqList = new ArrayList<>();
-		  String sql = "SELECT req_no, req_writer, req_location_id, req_photo, req_status, req_date, req_rider, req_cp_date " +
+		  String sql = "SELECT req_no, req_writer, req_location_id, req_post, req_address, req_photo, req_status, req_date, req_rider, req_cp_date " +
 	                 "FROM request " +
 	                 "WHERE req_writer = ?";
 		
@@ -236,13 +236,16 @@ public class MemberDao {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
 		String reqLocationId = rset.getString("req_location_id");
+		String reqPost = rset.getString("req_post");
+		String reqAddress = rset.getString("req_address");
 		String reqPhoto = rset.getString("req_photo");
 		String reqStatus = rset.getString("req_status");
-		Date reqData = rset.getDate("req_Date");
+		Date reqData = rset.getDate("req_date");
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
 
-		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
+		return new Request(reqNo, reqWriter, reqLocationId, reqPost, reqAddress, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
+
 
 }

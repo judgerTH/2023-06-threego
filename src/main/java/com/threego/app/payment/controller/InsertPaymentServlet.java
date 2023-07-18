@@ -33,15 +33,15 @@ public class InsertPaymentServlet extends HttpServlet {
         int purchaseCount = Integer.parseInt(request.getParameter("purchaseCount"));
         
         
-        
         int result = paymentService.insertPayment(memberId, ticketId, purchaseCount);
         // 수거신청 등 다른 동작 수행
-
+        
+        
         // 응답 처리 등
         response.setContentType("application/json; charset=utf-8");
         
         Map<String, Object> map = new HashMap<>();
-        map.put("result","성공적으로 구매가 완료되었습니");
+        map.put("result","성공적으로 구매가 완료되었습니다.");
 
         // Gson 객체 생성
         Gson gson = new Gson();
