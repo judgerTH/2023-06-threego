@@ -46,38 +46,22 @@
             </div>
             <div class="right-div">
                 <h3>받은 메시지</h3>
-                <div class="letterBox">
-                	<div >
-                		<p class="letterIcon" style="">✉️</p>
-                	</div>
-                	<div class="letterContent">
-                		<p style="font-size:13px;">보낸사람 : 관리자 &nbsp;&nbsp;&nbsp; 전송일자 : 2023-07-18</p>
-                		<p>수고미 반려되었습니다.</p>
-                	</div>
-                </div>
-                <!-- <table class="mypage-table" style="width:1200px;">
-                    <tbody>
-                        <tr>
-                            <td style="width:50px;">NO</td>
-                            <td style="width:100px;">보낸사람</td>
-                            <td style="width:100px;">보낸시간</td>
-                            <td>내용</td>
-                        </tr>
-                        <tr>
-                        	<% if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
-                        		<% for(MsgBox msgBox : msgBoxes) { %>
-                        			<% int i = 1; %>
-                        			<td><%= i++ %></td>
-                        			<td>관리자</td>
-                        			<td><%= msgBox.getMsgSendingDate() %></td>
-                        			<td><%= msgBox.getMsgContent() %></td>
-                        		<% } %>
-                        	<% } else { %>
-                        		<td colspan="4" class="empty_table">받은 메시지가 없습니다.</td>
-                        	<% } %>
-                        </tr>           
-                     </tbody>
-                </table> -->
+                <% if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
+                	<% for(MsgBox msgBox : msgBoxes) { %>
+		                <div class="letterBox">
+		                	<div >
+		                		<p class="letterIcon" style="">✉️</p>
+		                	</div>
+		                	<div class="letterContent">
+		                		<p style="font-size:13px;">보낸사람 : 관리자 &nbsp;&nbsp;&nbsp; 전송일자 : <%= msgBox.getMsgSendingDate() %></p>
+		                		<p><%= msgBox.getMsgContent() %></p>
+		                	</div>
+		                </div>
+		                <br>
+               		<% } %>
+                <% } else { %>
+                	<div class="letterBox">받은 메시지가 없습니다</div>
+                <% } %>
             </div>
         </div>
     </div>

@@ -56,7 +56,7 @@ alert("<%= msg %>");
 									href="<%= request.getContextPath() %>/rider/riderCollectionListCheck">나의
 										수거 목록 조회</a></li>
 								<% } %>
-                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox">📑받은 메시지</a></li>
+                        		<li><a class="" aria-current="page" href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
                     </ul>
                 </div>
             

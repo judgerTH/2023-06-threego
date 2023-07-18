@@ -150,5 +150,6 @@
 	font-weight: bold;
 }
 /* 받은 메세지 스타일*/
-.letterBox {width:1200px; display:flex; border-style:solid; border-color:grey; border-radius:10px;}
-.letterIcon {width:50px; justify-content: center; align-items: center; text-align: center;}
+.letterBox {width:1000px; padding-top:10px; display:flex; border-style:solid; border-color:grey; border-radius:10px;}
+.letterIcon {width:50px; justify-content: center; align-items: center; text-align: center; padding-top:10px;}
+.letterContent {padding-left:10px;}

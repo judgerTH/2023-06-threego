@@ -133,6 +133,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
             <a href="">매출조회</a>
           </div>
         </div>
+        </section>
         <section style="width: 1630px">
           <nav class="navbar bg-light" style="margin-left: 330px">
             <div class="container-fluid">
@@ -141,11 +142,11 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 150px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: fit-content;">
                 <div class="card-header" id="todayIssueHeader">
                 신고관리
                 </div>
-                <div class="card-body" id="todayIssueBody">
+                <div class="card-body" id="todayIssueBody" >
                     <table>
                     	<thead>
                     		<tr>
@@ -185,6 +186,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 							<% } %>
                     	</tbody>
                     </table>
+                    <br>
                     <div id='pagebar'>
 						<%= request.getAttribute("pagebar") %>
 					</div>

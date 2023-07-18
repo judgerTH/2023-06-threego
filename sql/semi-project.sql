@@ -56,12 +56,12 @@ create table payment(
     constraints fk_payment_mem_id foreign key(p_mem_id) references member (id) on delete set null,
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
+-- drop table payment;
  create sequence seq_payment_no;  
-<<<<<<< HEAD
+
 -- drop sequence seq_payment_no;
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 select * from payment;
  select * from ticket;
  
@@ -105,6 +105,7 @@ create table board_comment(
     constraints fk_board_comment_c_writer foreign key(c_writer) references member(id) on delete cascade,
     constraints fk_board_comment_c_ref foreign key(c_board_no) references board(b_no) on delete cascade
 );
+-- drop table board_comment;
  create sequence seq_c_no;
 
 create table location(
@@ -124,8 +125,8 @@ create table rider(
     constraints pk_r_id primary key(r_id),
     constraints fk_rider_r_id  foreign key(r_id) references member(id) on delete cascade,
     constraints fk_rider_location_id foreign key(r_location_id) references location(l_id) on delete set null,
-    constraints ck_rider_r_status check (r_status in ('0', '1', '2'))
-    -- 0 승인 대기중 1 승인완료 2 승인거부
+    constraints ck_rider_r_status check (r_status in ('0', '1'))
+    -- 0 승인 대기중 1 승인완료
 );
 
 --drop table rider;
@@ -152,6 +153,7 @@ create table request(
     constraints ck_request_status check( req_status in ('0', '1', '2', '3'))
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
+-- drop table request;
  create sequence seq_req_no;
 
 select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
@@ -167,7 +169,7 @@ del_address 	varchar2(400)	not null,
 del_reg_date date,	
 del_date date
 );
-
+-- drop table del_member;
 create table warning(
 w_no	 number,		
 w_req_no	number not null,	
@@ -217,6 +219,17 @@ create table msgbox(
 -- drop table msgbox;
 create sequence seq_msg_no;
 -- drop sequence seq_msg_no;
+
+create table paymentDetail(
+    pd_no   number,
+    pd_mem_id varchar2(30),
+    pd_tic_id   varchar2(30),
+    pd_tic_price number,
+    pd_date date default sysdate,
+    constraint  pk_payment_pd_no primary key(pd_no),
+    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
+);
+
  insert into member values (
     'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
 );   
@@ -257,16 +270,6 @@ insert into location values(
     'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
- );
-  insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 0, default, null,default
- );
-   insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
- );
-
 --delete from member where id = 'eogh';
 
 select * from member;
@@ -277,6 +280,7 @@ select * from request;
 select * from payment;
 select * from del_member;
 select * from msgbox;
+select * from warning;
     -- commit;
 delete from rider where r_id='sukey0331';
 update member set member_role='A' where id = 'admin2';
@@ -307,3 +311,7 @@ insert into request values(
  insert into request values(
  seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
  );
+select * from request;
+select * from warning;
+insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
+insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
