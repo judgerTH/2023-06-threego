@@ -3,7 +3,6 @@ alter session set "_oracle_script" = true;
 create user threego
 identified by threego
 default tablespace users;
-
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
 --select * from request where req_rider = 'xogus';
@@ -61,27 +60,7 @@ create table payment(
 
 -- drop sequence seq_payment_no;
 
-<<<<<<< HEAD
 
-CREATE OR REPLACE TRIGGER trg_request_insert
-AFTER INSERT ON request
-FOR EACH ROW
-BEGIN
-  UPDATE payment
-  SET p_cnt = p_cnt - 1,
-      p_use_cnt = p_use_cnt + 1
-  WHERE p_no = :new.req_no;
-END;
-/
-
-
-
-
-
-
-
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 select * from payment;
  select * from ticket;
  
@@ -318,20 +297,7 @@ insert into location values(
     'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
-<<<<<<< HEAD
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
- );
-  insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 0, default, null,default
- );
-   insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
- );
-   
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 --delete from member where id = 'eogh';
 
 select * from member;
@@ -353,16 +319,7 @@ WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
 
-<<<<<<< HEAD
-select count(*) from request where req_writer = 'tlfprl' and req_staus=2;
 
-  
-  select 
-  sum(p_cnt)
-  from payment 
-  where
-  p_mem_id = 'tlfprl' ;
-  
   
 create table msgbox(
     msg_no number, 
@@ -384,9 +341,7 @@ create table paymentDetail(
     constraint  pk_payment_pd_no primary key(pd_no),
     constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
 );
-=======
 
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 create sequence seq_pd_no;
 insert into paymentDetail 
 select * from payment;
