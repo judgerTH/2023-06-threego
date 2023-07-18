@@ -109,6 +109,9 @@ create table board_comment(
 );
  create sequence seq_c_no;
 
+select * from board_comment;
+
+
 create table location(
     l_id varchar2(30),	
     l_name	varchar2(20) not null,

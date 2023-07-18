@@ -151,7 +151,7 @@ tbody, td, tfoot, th, thead, tr {
 	<div class="left-div">
 		<h2>고객센터</h2>
 		<ul>
-			<li ><a class="active" id="active1" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
+			<li><a class="active" id="active1" aria-current="page" href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>
 		</ul>
@@ -172,7 +172,7 @@ tbody, td, tfoot, th, thead, tr {
                 for (Board board : boards) { %>
 				<tr>
 					<td><%=board.getBoardNo() %></td>
-					<td><a href="<%= request.getContextPath() %>/board/useInquiryDetail?no=<%= board.getBoardNo()%>">
+					<td><a href="<%= request.getContextPath() %>/board/noticeDetail?no=<%= board.getBoardNo()%>">
 					<%=board.getBoardTitle() %></a></td>
 					<td>관리자</td>
 					<td><%=board.getBoardRegDate() %></td>
