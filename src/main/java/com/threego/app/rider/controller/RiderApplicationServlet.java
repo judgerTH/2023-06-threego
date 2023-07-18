@@ -3,6 +3,8 @@ package com.threego.app.rider.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -10,7 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 import com.threego.app.common.HelloMvcFileRenamePolicy;
@@ -48,13 +52,27 @@ public class RiderApplicationServlet extends HttpServlet {
 				// 1. 사용자 입력값 처리
 				String id = multiReq.getParameter("id");
 				
-				String location = multiReq.getParameter("location");
-
+				Rider rider = new Rider();
+				rider.setRiderId(id);
 				
-				String filename = multiReq.getFilesystemName("upFile");
-				// 2. 업무로직
-				Rider rider = new Rider(id, location, null, null, null, null, null, filename);
-				int result = riderService.insertRider(rider);
+				rider = riderService.findRiderById(id);
+				if(rider ==null) {
+					
+					String location = multiReq.getParameter("location");
+					String filename = multiReq.getFilesystemName("upFile");
+					Rider newRider = new Rider(id, location, null, null, null, null, null, filename);
+					int result = riderService.insertRider(newRider);
+				}else {
+						
+					response.setContentType("application/json; charset=utf-8");
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("result", "실패");
+					map.put("message", "이미 지원 후 승인 대기중 입니다.");
+					new Gson().toJson(map, response.getWriter()); // 응답메세지에 src를 json문자열로 변환해 출력
+					
+				}
+				
 				
 				
 			}

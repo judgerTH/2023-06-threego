@@ -36,11 +36,11 @@ public class PaymentService {
 
 
 
-	public int insertPayment(String memberId, String ticketId, int purchaseCount) {
+	public int insertPayment(String id, String ticketId) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = paymentDao.insertPayment(conn, memberId, ticketId, purchaseCount);
+			result = paymentDao.insertPayment(conn, id, ticketId);
 			commit(conn);
 		} catch(Exception e) {
 			rollback(conn);
