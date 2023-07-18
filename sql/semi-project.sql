@@ -57,11 +57,10 @@ create table payment(
     constraints fk_paymente_tic_no foreign key(p_tic_id) references ticket(tic_id) on delete set null
    );  
  create sequence seq_payment_no;  
-<<<<<<< HEAD
+
 -- drop sequence seq_payment_no;
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
 select * from payment;
  select * from ticket;
  
@@ -89,6 +88,13 @@ create table board(
  select * from board;
  
 insert into board values(select ROW_NUMBER() OVER (ORDER BY b_no) from board,'N','z','관리자','zz', default, default);
+
+
+insert into board values(
+   seq_board_no.nextval ,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
+);
+ 
+ update board set b_tittle = 'sdsdsd', b_content = 'sdsdsdsd' where b_no = 1;
 
 create table board_comment(
     c_no number,

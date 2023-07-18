@@ -95,6 +95,7 @@ tbody, td, tfoot, th, thead, tr {
 	border-width: 0;
 }
 
+
 #active1 {
 	background-color: #49B466;
 }
@@ -144,6 +145,9 @@ tbody, td, tfoot, th, thead, tr {
 	display: inline-block;
 	margin-right: 10px;
 }
+div#pagebar{margin-top:10px; text-align:center;  }
+div#pagebar {color: #0066ff; margin-right: 5px;}
+div#pagebar {margin-right: 5px;}
 
 </style>
 </head>
@@ -172,8 +176,15 @@ tbody, td, tfoot, th, thead, tr {
                 for (Board board : boards) { %>
 				<tr>
 					<td><%=board.getBoardNo() %></td>
-					<td><a href="<%= request.getContextPath() %>/board/useInquiryDetail?no=<%= board.getBoardNo()%>">
-					<%=board.getBoardTitle() %></a></td>
+					<%if(board.getBoardWriter().equals(loginMember.getId()) || loginMember.getMemberRole() == MemberRole.A ) {%>
+					<td><a href="<%= request.getContextPath() %>/board/useInquiryDetail?no=<%= board.getBoardNo()%>"> 
+					<%=board.getBoardTitle() %>
+					<img src="<%= request.getContextPath() %>/images/secret.png" alt="" style="width:16px;" />
+					</a></td><%}else{ %>
+					<td><a href="#" onclick="notRead();"> 
+					<%=board.getBoardTitle() %></a>
+					<img src="<%= request.getContextPath() %>/images/secret.png" alt="" style="width:16px;" />
+					</td><%}%>
 					<td><%=board.getBoardWriter() %></td>
 					<td><%=board.getBoardRegDate() %></td>
 				</tr>
@@ -191,5 +202,10 @@ tbody, td, tfoot, th, thead, tr {
 		<%= request.getAttribute("pagebar") %>
 	</div>
 </body>
+<script>
+const notRead =()=>{
+	alert("본인글만 조회가 가능합니다.");
+}
+</script>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
