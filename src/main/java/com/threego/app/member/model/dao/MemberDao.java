@@ -244,7 +244,7 @@ public class MemberDao {
 		String reqRider = rset.getString("req_rider");
 		Date reqCpDate = rset.getDate("req_cp_date");
 
-		return new Request(reqNo, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
+		return new Request(reqNo, reqWriter, reqLocationId, reqWriter, reqLocationId, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
 
 	public List<MsgBox> getMsgBoxList(Connection conn, String memberId) {
