@@ -49,5 +49,21 @@ public class PaymentService {
 		return result;
 	}
 
+	public Payment findPayment(String id) {
+		 Payment payment = new Payment();
+	      Connection conn = getConnection();
+	      try {
+	         payment = paymentDao.findPayment(conn, id);
+	         commit(conn);
+	      } catch (Exception e) {
+	         rollback(conn);
+	         throw e;
+	      }finally {
+	         close(conn);
+	      }
+	      
+	      return payment;
+	}
+
 
 }

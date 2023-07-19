@@ -66,6 +66,10 @@ create table paymentDetail(
 create sequence seq_pd_no;
 
 
+
+
+CREATE OR REPLACE TRIGGER trg_request_insert
+AFTER INSERT ON request
 -- 구매내역  trigger
 CREATE OR REPLACE TRIGGER trg_insert_payment_detail
 AFTER INSERT ON payment
@@ -99,6 +103,23 @@ create table request(
 insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
  
 
+<<<<<<< HEAD
+
+
+
+
+
+
+
+select * from payment;
+ select * from ticket;
+ 
+SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
+FROM ticket t
+JOIN payment p ON t.tic_id = p.p_tic_id;
+ 
+=======
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 -- 게시판 테이블  
 create table board(
     b_no number,
@@ -265,6 +286,22 @@ insert into location values(
     'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
+
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
+ );
+  insert into request values(
+ seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 0, default, null,default
+ );
+   insert into request values(
+ seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
+ );
+   
+
+
+
+--delete from member where id = 'eogh';
+
 -- commit;
 -------------------------------------------------------------------------------------------------------------------------------------
 --전체 테이블 조회
@@ -357,3 +394,93 @@ select * from payment;
 -- 라이더 쿼리 
 
 
+<<<<<<< HEAD
+
+select count(*) from request where req_writer = 'tlfprl' and req_staus=2;
+
+  
+  select 
+  sum(p_cnt)
+  from payment 
+  where
+  p_mem_id = 'tlfprl' ;
+  
+  
+create table msgbox(
+    msg_no number, 
+    msg_type varchar2(50) not null, 
+    msg_sender varchar2(30) not null, 
+    msg_receiver varchar2(30) not null, 
+    msg_content varchar2(4000), 
+    msg_sending_date date default sysdate,
+    msg_confirm char(1) default 'X',
+    constraints pk_msgbox_msg_no primary key(msg_no),
+    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P')),
+    constraints ck_msgbox_msg_confirm check(msg_confirm in ('O', 'X'))
+    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
+);
+
+create table paymentDetail(
+    pd_no   number,
+    pd_mem_id varchar2(30),
+    pd_tic_id   varchar2(30),
+    pd_tic_price number,
+    pd_date date default sysdate,
+    constraint  pk_payment_pd_no primary key(pd_no),
+    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
+);
+
+
+
+create sequence seq_pd_no;
+insert into paymentDetail 
+select * from payment;
+
+
+
+CREATE OR REPLACE TRIGGER trg_insert_payment_detail
+AFTER INSERT ON payment
+FOR EACH ROW
+BEGIN
+  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
+  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
+END;
+/
+select * from payment;
+
+INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
+-- drop table msgbox;
+
+
+alter table rider modify r_status check (r_status in ('0', '1', '2'));
+
+update rider set r_status = '0', up_date = null where r_id='sukey';
+
+
+update member set email = 'admin@naver.com' where id = 'admin';
+
+-- update request set req_status = '1' ,  req_rider = ? where req_no = ?
+
+select * from member;
+
+
+
+select * from request;
+insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+ insert into request values(
+ seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
+ );
+
+select * from request;
+select * from warning;
+insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
+insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
+update member set member_role = 'R' where id = 'dbsdk1';
+=======
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
