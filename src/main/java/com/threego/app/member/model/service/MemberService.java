@@ -128,12 +128,62 @@ public class MemberService {
 	}
 
 
-	public List<MsgBox> getMsgBoxList(String memberId) {
+	public List<MsgBox> getMsgBoxListPaging(String memberId, int start, int end) {
 		// 마이페이지 - 받은 메세지함
 		Connection conn = getConnection();
-		List<MsgBox> msgBoxes = memberDao.getMsgBoxList(conn, memberId);
+		List<MsgBox> msgBoxes = memberDao.getMsgBoxListPaging(conn, memberId, start, end);
 		close(conn);
 		return msgBoxes;
 	}
+
+
+	public int updateMsgBoxConfirm(int msgNo) {
+		// 받은 메세지 - 확인 O로 업데이트
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = memberDao.updateMsgBoxConfirm(conn, msgNo);
+			commit(conn);
+			
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		
+		}finally {
+			close(conn);
+		}
+		
+		
+		return result;
+	}
+
+
+	public int getTotalMsg(String memberId) {
+		// 총 메세지 개수
+		Connection conn = getConnection();
+		int totalMsg = memberDao.getTotalMsg(conn, memberId);
+		close(conn);
+		return totalMsg;
+	}
+
+
+	public List<MsgBox> getMsgBoxList(String id) {
+		// 마이페이지 - 받은 메세지함
+		Connection conn = getConnection();
+		List<MsgBox> msgBoxes = memberDao.getMsgBoxList(conn, id);
+		close(conn);
+		return msgBoxes;
+	}
+
+
+	public PaymentDetail findTotalPrice(String memberId) {
+		// 마이페이지 - 결제정보 - 누적금액 조회
+		Connection conn = getConnection();
+		PaymentDetail paymentDetail = memberDao.findTotalPrice(conn, memberId);
+		close(conn);
+		
+		return paymentDetail;
+	}
+
 
 }
