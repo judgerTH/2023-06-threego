@@ -32,12 +32,12 @@
 	background-color: #49B466;
 	color: white;
 }
-
+/*
 .left-div ul .active a {
 	background-color: #00000;
 	color: #000000;
 }
-
+*/
 .left-div {
 	display: flex;
 	flex-direction: column;
@@ -51,7 +51,7 @@
 	display: inline-block;
 	margin-right: 10px;
 }
-
+/*
 .rider-info-boxes { -
 	-bs-gutter-x: 1.5rem; -
 	-bs-gutter-y: 0 display: flex;
@@ -60,7 +60,7 @@
 	margin-right: 20%;
 	margin-left: 20%;
 	justify-content: space-between !important;
-}
+}*/
 
 .rider-info-box {
 	display: flex;
