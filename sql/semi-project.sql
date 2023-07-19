@@ -332,7 +332,7 @@ SELECT * FROM user_constraints WHERE table_name = 'rider' ;
 
 
  -- request 쿼리 
-insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
+select * from request;
 
   insert into request values(
     seq_req_no.nextval, 'eogh', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
