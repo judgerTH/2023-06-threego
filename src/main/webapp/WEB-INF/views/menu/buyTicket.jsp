@@ -1,11 +1,20 @@
+<%@page import="com.threego.app.payment.model.vo.Payment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <%
-	/* String memberId = loginMember.getId(); */
+	Payment payment = (Payment)request.getAttribute("payment");
+	
+	/* System.out.println("jsp ---"  + payment);  */
+	
 %>
+<%
+		 	String msg = (String) session.getAttribute("msg");
+/* 		  	System.out.println(msg); */
+%>
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -174,16 +183,16 @@
           <td><input type="text" name="detailAddress" id="detailAddress"></td>
         </tr>
         <tr>
-          <th>남은 이용권</th>
+          <th>잔여 이용권</th>
           <% if (loginMember != null) { %>
-          <td><input type="text" name="remainingTicket" id="remainingTicket" value="" required readonly></td>
+          <td><input type="text" name="pCnt" id="remainingTicket" value="<%= payment.getP_cnt() %>" required readonly></td>
           <% } %>
-        </tr>
+        </tr> 
         <tr>
           <th>사진 첨부 파일</th>
           <td>
-            <input type="file" name="photo" id="photoInput" accept="image/jpeg, image/png" required>
-            <div id="photoPreviewContainer" style="width: 150px; height: 150px; margin-top: 10px;"></div>
+            <input type="file" name="photo" id="photoInput" accept="image/jpeg, image/png" onchange="displayPhotoPreview(this)" required>
+<div id="photoPreviewContainer" style="width: 200px; height: 200px; margin-top: 10px;"></div>
           </td>
         </tr>
       </tbody>
@@ -193,6 +202,7 @@
     </div>
   </form>
 </div>
+	
 	
 
 	<script>
@@ -206,10 +216,16 @@
 	buyTicket.onclick = () => {
 		document.getElementById('memberUpdateFrm').style.display="block";
 		document.getElementById('reqGarbagePickupFrm').style.display="none";
+		console.log('<%= payment.getP_cnt() %>');
 	}
 	
 	
 	paysubmit.onclick =()=>{
+		if('<%= payment.getP_cnt() %>' > 0 ){
+			alert("이용권이 이미 있습니다.");
+			return;
+		}
+		
 	 const selectElement = document.getElementById('ticketSelect');
 	 const selectedOption = selectElement.options[selectElement.selectedIndex];
 		  // 상품권 종류 선택 여부 확인
@@ -217,9 +233,11 @@
 		    alert('상품권 종류를 선택해주세요.');
 		    return; // 선택되지 않았을 경우 함수 종료
 		  }
-		alert("구매 완료 되었습니다.");
+		alert("구매가 완료되었습니다.")
 		const frm = document.memberUpdateFrm;
 		frm.submit();
+		  
+		  
 	}
 	
 function updatePrice() {
@@ -245,13 +263,18 @@ function updatePrice() {
 	}
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
-		
+		<% if (payment.getP_cnt() == 0 || payment == null){ %>
+			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
+			return;
+		<%}%>
 		
 		
 		
 		const frmData = new FormData(e.target);
 		  for(const name of frmData.keys())
 	            console.log(`\${name}=\${frmData.get(name)}`);
+		  
+		  
 		$.ajax({
 			url : "<%=request.getContextPath()%>/request/reqGarbagePickup",
 			data : frmData,
@@ -260,11 +283,18 @@ function updatePrice() {
 			processData : false,
 			contentType : false,
 			success(responseText) {
-	            const {result, payment} = responseText;
+	            const {result, uesPayment} = responseText;
+	            console.log(uesPayment);
+	            if(result == "실패"){
+	            	alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
+	            }
+	            document.querySelector("#remainingTicket").value = uesPayment.p_cnt; 
 	            alert("신청이 성공적으로 처리되었습니다.");
+	            
 	         },
 	          error() {
 	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
+	            
 	           },
 		});
 		e.preventDefault();
@@ -280,10 +310,11 @@ function updatePrice() {
 	</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	
+	
     function addressSearch() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
@@ -327,6 +358,19 @@ function updatePrice() {
             }
         }).open();
     }
+    function displayPhotoPreview(input) {
+    	  if (input.files && input.files[0]) {
+    	    var reader = new FileReader();
+
+    	    reader.onload = function(e) {
+    	      var photoPreviewContainer = document.getElementById('photoPreviewContainer');
+    	      photoPreviewContainer.innerHTML = "<img src='" + e.target.result + "' style='width: 100%; height: 100%;'>";
+    	    };
+
+    	    reader.readAsDataURL(input.files[0]);
+    	  }
+    	}
+    
 </script>
 	<br>
 	<br>
