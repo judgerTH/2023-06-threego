@@ -61,7 +61,7 @@ create table payment(
 
 -- drop sequence seq_payment_no;
 
-<<<<<<< HEAD
+
 
 CREATE OR REPLACE TRIGGER trg_request_insert
 AFTER INSERT ON request
@@ -80,8 +80,8 @@ END;
 
 
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
+
 select * from payment;
  select * from ticket;
  
@@ -311,7 +311,7 @@ insert into location values(
     'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
 );
 
-<<<<<<< HEAD
+
  insert into request values(
  seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
  );
@@ -323,8 +323,8 @@ insert into location values(
  );
    
 
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
+
 --delete from member where id = 'eogh';
 
 select * from member;
@@ -346,7 +346,7 @@ WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
   AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
   
 
-<<<<<<< HEAD
+
 select count(*) from request where req_writer = 'tlfprl' and req_staus=2;
 
   
@@ -377,9 +377,9 @@ create table paymentDetail(
     constraint  pk_payment_pd_no primary key(pd_no),
     constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
 );
-=======
 
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
+
+
 create sequence seq_pd_no;
 insert into paymentDetail 
 select * from payment;
