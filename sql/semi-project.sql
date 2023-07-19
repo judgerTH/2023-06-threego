@@ -293,7 +293,7 @@ select * from msgbox;
 select * from warning;
     -- commit;
 delete from rider where r_id='sukey0331';
-update member set member_role='A' where id = 'admin2';
+update member set member_role='U' where id = 'sukey0331';
 
 SELECT sum(p_cnt)
 FROM payment
@@ -344,5 +344,16 @@ insert into request values(
 
 select * from request;
 select * from warning;
+select * from msgbox;
 insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
-insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
+insert into warning values(seq_w_no.nextval,9,'sukey2','신고합니다',default, default, null);
+
+select 
+    w.*, 
+    (select r.req_writer from request r where req_no = w_req_no) req_writer,
+    (select r.req_rider from request r where req_no = w_req_no) req_rider,
+    (select m.member_role from member m where w_writer = m.id) member_role
+from 
+    warning w
+where 
+    w_no = 7;
