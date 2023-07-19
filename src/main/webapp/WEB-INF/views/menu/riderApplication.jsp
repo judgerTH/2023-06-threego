@@ -50,10 +50,11 @@
 .mypage-table th, td {border-top: 2px solid black; border-bottom : 2px solid black; width : 250px; height : 70px;}
 .mypage-table th {font-size : 20px;}
 .mypage-table td{text-align : left; padding : 5px; }
-.mypage-table input{padding : 30px 40px; width : 300px; height : 40px; font-size : 15px; font-family: 'GmarketSansMedium';}
+.mypage-table input{padding : 30px 40px; width : 300px; height : 30px; border : 1px solid #d2d2d2; border-radius : 10px; font-size : 15px; font-family: 'GmarketSansMedium';}
 .btn-save-box {display: flex; justify-content: center; align-items: center;}
 #ridersubmit{border: none; border-radius: 4px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
-		 font-size: 15px; font-weight: bold; }
+		 font-size: 20px; font-family: 'GmarketSansMedium'; }
+#celeb-enroll-type{font-size : 20px; width :200px; height: 40px; border: 1px solid #d2d2d2; border-radius:10px; font-family: 'GmarketSansMedium';}
 </style>
 </head>
 <body>
@@ -118,7 +119,7 @@
 					<tr>
 						<th>수거지역 <span>*</span>
 						</th>
-						<td><select name="location" id="celeb-enroll-type" required="required" style="font-size : 20px;">
+						<td><select name="location" id="celeb-enroll-type" required="required" >
 								<option value="">선택하세요</option>
 								<option value="S1">강남구,서초구</option>
 								<option value="S2">송파구, 강동구</option>
@@ -137,7 +138,7 @@
 						<th>첨부파일
 						</th>
 						<td>
-						<input type="file" name="upFile" required="required">
+						<input type="file" name="upFile" required="required" style ="border:none;">
 						</td>
 					</tr>
 				</tbody>

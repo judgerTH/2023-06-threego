@@ -43,21 +43,22 @@
 	font-size: 20px;}
 #reqGarbage:hover, #buyTicket:hover {background-color: #49B466; color: white;}
 .btn-submit{border: none; border-radius: 4px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
-		 font-size: 15px; font-weight: bold; }
+		 font-size: 20px; font-weight: bold; font-family: 'GmarketSansMedium';}
 #afterContent {display :flex; flex-direction : column; justify-content:center; text-align : center; align-items :center; margin-bottom : 100px;} 
 
 
 
 
 
-#mypage-table {border-collapse : collapse;  width : 800px; margin-top : 30px; font-size : 15px;}
+#mypage-table {border-collapse : collapse;  width : 800px; margin-top : 30px; font-size : 20px;}
 #mypage-table th,td{border-top: 2px solid black; border-bottom : 2px solid black; width : 150px; height : 40px;}
 #mypage-table td{text-align : left; padding : 5px; height : 60px;}
-#mypage-table input{padding : 10px 40px; width : 300px; font-size : 15px; font-family: 'GmarketSansMedium';}
+#mypage-table input{padding : 10px 40px; width : 500px; font-size : 20px; font-family: 'GmarketSansMedium'; border: none;}
 .btn-save-box {display: flex; justify-content: center; align-items: center;}
 #btn-save{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 20px; background-color :#468B97; color: white;
 		 font-size: 20px; font-weight: bold; }
-.riderbtn{display : flex; justify-content: center; align-items: center; }		 
+.riderbtn{display : flex; justify-content: center; align-items: center;  }	
+#changeAddressBtn{margin : 10px 20px; widht: 100px; height: 30px; border: none; border-radius : 10px; background-color : #9EA1D4; color: white; font-family: 'GmarketSansMedium';}	 
 </style>
 </head>
 
@@ -154,8 +155,8 @@
 				</tbody>
 			</table>
 			<div class="riderbtn">
-				<button type="button"  class = "btn-submit" id="paysubmit" onclick="showPaymentPopup()">입금
-					완료</button>
+				<button type="button"  class = "btn-submit" id="paysubmit" onclick="showPaymentPopup()">구매
+					신청</button>
 			</div>
 		</form>
 	</div>
@@ -210,7 +211,7 @@
       </tbody>
     </table>
     <div class="riderbtn">
-      <button type="submit" class = "btn-submit" id="reqsubmit" >신청 완료</button>
+      <button type="submit" class = "btn-submit" id="reqsubmit" >수거 신청</button>
     </div>
   </form>
 </div>

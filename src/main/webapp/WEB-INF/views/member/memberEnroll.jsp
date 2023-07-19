@@ -65,6 +65,8 @@ border-collapse: collapse;
 #enroll td input{
 	margin : 10px 0;
 	padding : 5px;
+	border: 1px solid #D2D2D2;
+	border-radius : 5px;
 }
 .btn-wrapper{
 	 text-align: center; 
@@ -88,6 +90,8 @@ width:300px;
 padding-bottom: 6rem;
 font-family: 'GmarketSansMedium';
 }
+#nextPage, .btn-enr{border: none; border-radius: 10px; width: 80px;  text-align: center; padding: 10px; margin-top: 3px 10px; background-color :#468B97; color: white;
+		 font-size: 15px; font-family: 'GmarketSansMedium';}
 </style>
 
 <!-- 콘텐츠 시작 { -->
@@ -112,7 +116,7 @@ font-family: 'GmarketSansMedium';
 						</div>
 					</div>
 					<form name="fregisterFrm">
-						<section id="fregister_term" style="padding-top: 20px;">
+						<section id="fregister_term" style="padding-top: 20px; margin-bottom:20px;">
 							<h2>
 								약관동의(필수) <span class="float-end"> <input type="checkbox"
 									name="agree" value="1" id="agree11"> <label
@@ -574,9 +578,9 @@ NICEPAYMENTS(전자결제 수단 제공, 본인확인)
 								</tr>
 								<tr>
 									<td colspan="2" class="btn-wrapper">
-										<button style="width : 80px; height : 40px;">제출</button>
+										<button class="btn-enr" style="width : 80px; height : 40px;">제출</button>
 									&nbsp; <input
-										type="reset" value="초기화" style="width : 80px; height : 40px;"></td>
+										type="reset" class="btn-enr" value="초기화" style="width : 80px; height : 40px;"></td>
 								</tr>
 							</table>
 							<br><br>
