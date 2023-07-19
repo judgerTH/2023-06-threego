@@ -9,7 +9,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '869,19192';
+-- alter system kill SESSION '873,57050';
  
 ---------------------------------------------------------------
 
@@ -96,8 +96,8 @@ create table request(
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
  create sequence seq_req_no;
+insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
  
-
 
 -- 게시판 테이블  
 create table board(
@@ -352,7 +352,7 @@ select * from payment where (p_no between ? and ?) and(p_date >= TO_DATE(?, 'YYY
 -- 경고 쿼리
 insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
 
-
+select * from payment;
 -- 라이더 쿼리 
 
 
