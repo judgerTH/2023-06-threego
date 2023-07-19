@@ -35,9 +35,9 @@ public class MemberNoteboxServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			// 예외처리외에 아무것도 하지 않음.
 		}
-			// cpage = 1 -> start = 1, end = 5
-			// cpage = 2 -> start = 6, end = 10
-			// cpage = 3 -> start = 11, end = 15
+			// cpage = 1 -> start = 1, end = 10
+			// cpage = 2 -> start = 11, end = 15
+			// cpage = 3 -> start = 16, end = 20
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
@@ -52,8 +52,11 @@ public class MemberNoteboxServlet extends HttpServlet {
 		
 		// 페이지바영역 처리
 		int totalMsg = memberService.getTotalMsg(memberId);
-		String url = request.getRequestURI();
+		System.out.println(totalMsg);
+//		String url = request.getRequestURI();
+		String url = "/threego/member/notebox?"+memberId;
 		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalMsg, url);
+		System.out.println(pagebar);
 		request.setAttribute("pagebar", pagebar);
 		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberNoteBox.jsp");

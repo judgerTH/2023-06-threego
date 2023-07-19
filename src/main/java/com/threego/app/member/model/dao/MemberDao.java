@@ -310,7 +310,7 @@ public class MemberDao {
 		// select count(*) from msgbox where msg_receiver = ?
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, "memberId");
+			pstmt.setString(1, memberId);
 			try(ResultSet rset = pstmt.executeQuery()) {
 				while(rset.next())
 					totalMsg = rset.getInt(1);

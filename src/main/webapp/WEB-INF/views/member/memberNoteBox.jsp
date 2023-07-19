@@ -18,10 +18,14 @@
     <title>쓰리고 | 회원정보수정</title>
     <script src="<%= request.getContextPath() %>/js/jquery-3.7.0.js"></script>
      <link rel="stylesheet" href="<%=request.getContextPath() %>/css/member_page.css" />
+     <style>
+    	div#pagebar{margin-top:5px; text-align:center; background-color:rgba(0, 0, 0, 0.03); width: 1250px;}
+		div#pagebar a{margin-right: 5px; color: green; font-size: 20px}
+    </style>
 </head>
 <body>
       
-    <div class="mypage-container">
+    <div class="mypage-container" style="height:fit-content">
                 <div class="left-div">
                 <h2>마이페이지</h2>
                     <ul>
@@ -84,10 +88,11 @@
                 	<div class="letterBox">받은 메시지가 없습니다</div>
                 <% } %>
             </div>
-    		<div id='pagebar'>
-				<%= request.getAttribute("pagebar") %>
-			</div>
        </div>
+    	<div id='pagebar' style="margin-left: 330px">
+			<%= request.getAttribute("pagebar") %>
+		</div>
+     </div>
 <script>
 	document.querySelectorAll("#noteBoxCheck").forEach((item) => {
 		item.onclick = (e) => {
