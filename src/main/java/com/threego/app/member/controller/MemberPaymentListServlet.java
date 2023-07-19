@@ -33,8 +33,6 @@ public class MemberPaymentListServlet extends HttpServlet {
 		
 		 PaymentDetail totalPrice = memberService.findTotalPrice(memberId);
 		 // 누적 금액 조회
-		 
-		 System.out.println(paymentList);
 		
 		 request.setAttribute("paymentList", paymentList);
 		 request.setAttribute("totalPrice", totalPrice);
