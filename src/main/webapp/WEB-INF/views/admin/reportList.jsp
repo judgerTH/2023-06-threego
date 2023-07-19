@@ -151,11 +151,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           </nav>
         </section>
         <section>
-<<<<<<< HEAD
             <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px">
-=======
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: fit-content;">
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
                 <div class="card-header" id="todayIssueHeader">
                 신고관리
                 </div>
