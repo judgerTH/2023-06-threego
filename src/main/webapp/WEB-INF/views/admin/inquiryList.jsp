@@ -149,7 +149,7 @@
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: fit-content">
                 <div class="card-header" id="todayIssueHeader">
                 문의사항
                 </div>

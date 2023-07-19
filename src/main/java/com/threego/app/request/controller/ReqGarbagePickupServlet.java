@@ -66,9 +66,8 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 			// 기본값이나 처리할 수 없는 경우의 지역 설정
 			location = "Unknown";
 		}
-
+		
 		// 요청 테이블에 데이터 추가
-		boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
 		int cntResult = requestService.countUpdate(id); // 카운트 업데이트 
 		Payment uesPayment = requestService.findPayment(id); // 업데이트된 payment 조회
 
@@ -79,7 +78,10 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 			map.put("result", "실패");
 			
 			new Gson().toJson(map, response.getWriter());
+			
 		}else {
+			
+			boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
 			
 			if(uesPayment.getP_cnt() == 0) {
 			int deletePayment = requestService.deletePayment(id); // 이용권을 다쓰면 delete

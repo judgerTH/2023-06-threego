@@ -14,6 +14,12 @@
 .main-info-num {font-weight : bold; color :  #49B466;}
 .main-info-content{ font-size : 20px;}
 .main-info-img{border :none; margin-left : 30px; border-radius : 10px; box-shadow: 5px 7px 10px 5px #d2d2d2 }
+
+.service-img {width: 600px; height : 450px; border :none; border-radius : 10px; box-shadow: 5px 7px 10px 5px #d2d2d2}
+#service-section{width: 1090px; margin : 50px 10px; }
+#servie-img-wrapper{display : flex; justify-content : center; text-align:center;}
+
+#btn-container{margin-bottom : 50px;}
 </style>
 </head>
 <body>
@@ -41,11 +47,15 @@
         	
         	</div>
         </div>
-
+		<div id="service-section">
+		<h2 style = "color : #468B97; font-size : 40px; font-style :italic; font-family: 'TTWanjudaedunsancheB';">서비스 이용 가능 지역</h2>
+		<div id="servie-img-wrapper">
+			<img src="<%=request.getContextPath()%>/images/service_section.png" alt="서비스이용가능지역" class="service-img">
+		</div>
+		</div>
         <div id = "btn-container">
             <div><a href = "<%= request.getContextPath() %>/menu/buyTicket"><button class="btn-main">수거 신청</button></a></div>
             <div><a href = "<%= request.getContextPath() %>/menu/riderApplication"><button class="btn-main">라이더 지원</button></a></div>
-            
             
         </div>
     </div>

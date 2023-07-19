@@ -31,7 +31,12 @@ public class MemberPaymentListServlet extends HttpServlet {
 		List<PaymentDetail> paymentList = memberService.findPaymentList(memberId);
 		// 이용권이름, 결제금액, 결제일, 잔여횟수 조회
 		
-		request.setAttribute("paymentList", paymentList);
+		 PaymentDetail totalPrice = memberService.findTotalPrice(memberId);
+		 // 누적 금액 조회
+		 
+		 request.setAttribute("paymentList", paymentList);
+		 request.setAttribute("totalPrice", totalPrice);
+		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberPaymentList.jsp");
 		reqDispatcher.forward(request, response);
 	}

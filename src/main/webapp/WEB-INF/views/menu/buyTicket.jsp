@@ -22,14 +22,15 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 
 <style>
-.rider-info-boxes{width : 100vw; height : 600px; display : flex; flex-direction : column; justify-content :center; align-items:center;}
+.rider-info-boxes{width : 100vw; height : 600px; display : flex; flex-direction : column; justify-content :center; align-items:center; margin-bottom : 100px;}
 .rider-info-box{display : flex; flex-direction : row; justify-content : center; align-items:center;}
 #riderimg{width: 600px; border-radius : 10px; box-shadow : 5px 5px 10px 5px #d2d2d2; margin : 40px;}
 #application{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
 		 font-size: 20px; font-weight: bold; }
 .rider-text-box{margin : 30px 10px;}
 
-.left-div ul{display : flex; flex-direction : row;  align-items : left; list-style : none;}
+.left-div{display : flex; align-items :center;}
+.left-div ul{display : flex; flex-direction : row;  align-items : center; list-style : none;}
 .left-div ul li{margin-left : 10px; }
 #reqGarbage, #buyTicket {display: inline-block;
 	width: 200px;
@@ -41,12 +42,23 @@
 	color: #000000;
 	font-size: 20px;}
 #reqGarbage:hover, #buyTicket:hover {background-color: #49B466; color: white;}
-.left-div ul .active a {
-	background-color: #00000;
-	color: #000000;
-}
-.btn-submit{border: none; border-radius: 4px; width: 100px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
-		 font-size: 15px; font-weight: bold; }
+.btn-submit{border: none; border-radius: 4px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
+		 font-size: 20px; font-weight: bold; font-family: 'GmarketSansMedium';}
+#afterContent {display :flex; flex-direction : column; justify-content:center; text-align : center; align-items :center; margin-bottom : 100px;} 
+
+
+
+
+
+#mypage-table {border-collapse : collapse;  width : 800px; margin-top : 30px; font-size : 20px;}
+#mypage-table th,td{border-top: 2px solid black; border-bottom : 2px solid black; width : 150px; height : 40px;}
+#mypage-table td{text-align : left; padding : 5px; height : 60px;}
+#mypage-table input{padding : 10px 40px; width : 500px; font-size : 20px; font-family: 'GmarketSansMedium'; border: none;}
+.btn-save-box {display: flex; justify-content: center; align-items: center;}
+#btn-save{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 20px; background-color :#468B97; color: white;
+		 font-size: 20px; font-weight: bold; }
+.riderbtn{display : flex; justify-content: center; align-items: center;  }	
+#changeAddressBtn{margin : 10px 20px; widht: 100px; height: 30px; border: none; border-radius : 10px; background-color : #9EA1D4; color: white; font-family: 'GmarketSansMedium';}	 
 </style>
 </head>
 
@@ -92,8 +104,8 @@
 		</div>
 	</div>
 
-	<div class="left-div" style="display: none">
-		<h2>신청하기</h2>
+	<div class="left-div" style="display: none; margin-left : 200px;">
+		<h2 style="margin-left : 50px;">신청하기</h2>
 		<ul>
 			<li><a class="active"  id="reqGarbage" aria-current="page"  id="reqGarbage">수거 신청</a></li>
 			<li><a class="active" id="buyTicket" aria-current="page">이용권 구매</a></li>
@@ -104,8 +116,8 @@
 		<form name="memberUpdateFrm" style="display: none;" id="memberUpdateFrm"
 			action="<%= request.getContextPath() %>/payment/insertpayment"
 			method="post">
-			<table class="mypage-table"
-				style="width: 800px; height: 400px; margin: 0 auto;">
+			<table id="mypage-table">
+				
 				<tbody>
 					<tr>
 						<th>아이디</th>
@@ -117,7 +129,7 @@
 					<tr>
 						<th>상품권 종류 <span>*</span></th>
 						<td><select name="ticketSelect" id="ticketSelect"
-							required="required" onchange="updatePrice()">
+							required="required" onchange="updatePrice()" style ="height : 40px">
 								<option value="">선택하세요</option>
 								<option value="tic1">1회권 &#8361;5,000원</option>
 								<option value="tic3">3회권 &#8361;15,000원</option>
@@ -143,15 +155,16 @@
 				</tbody>
 			</table>
 			<div class="riderbtn">
-				<button type="button"  class = "btn-submit" id="paysubmit" onclick="showPaymentPopup()">입금
-					완료</button>
+				<button type="button"  class = "btn-submit" id="paysubmit" onclick="showPaymentPopup()">구매
+					신청</button>
 			</div>
 		</form>
 	</div>
 	
 	<div id="afterContent">
   <form name="reqGarbagePickupFrm" style="display: none;" id="reqGarbagePickupFrm">
-    <table class="mypage-table" style="width: 800px; height: 400px; margin: 0 auto;">
+    <table id="mypage-table">
+      
       <tbody>
         <tr>
           <th>아이디</th>
@@ -198,7 +211,7 @@
       </tbody>
     </table>
     <div class="riderbtn">
-      <button type="submit" class = "btn-submit" id="reqsubmit" >신청 완료</button>
+      <button type="submit" class = "btn-submit" id="reqsubmit" >수거 신청</button>
     </div>
   </form>
 </div>
@@ -223,6 +236,7 @@
 	paysubmit.onclick =()=>{
 		if('<%= payment.getP_cnt() %>' > 0 ){
 			alert("이용권이 이미 있습니다.");
+			  window.location.reload();
 			return;
 		}
 		
@@ -233,9 +247,10 @@
 		    alert('상품권 종류를 선택해주세요.');
 		    return; // 선택되지 않았을 경우 함수 종료
 		  }
-		alert("구매가 완료되었습니다.")
 		const frm = document.memberUpdateFrm;
+		alert("구매가 완료되었습니다.");
 		frm.submit();
+		 // 폼 제출 후 새로고침
 		  
 		  
 	}
@@ -266,8 +281,8 @@ function updatePrice() {
 		<% if (payment.getP_cnt() == 0 || payment == null){ %>
 			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
 			return;
+			  window.location.reload();
 		<%}%>
-		
 		
 		
 		const frmData = new FormData(e.target);
@@ -275,28 +290,31 @@ function updatePrice() {
 	            console.log(`\${name}=\${frmData.get(name)}`);
 		  
 		  
-		$.ajax({
-			url : "<%=request.getContextPath()%>/request/reqGarbagePickup",
-			data : frmData,
-			method : "POST",
-			dataType : "json",
-			processData : false,
-			contentType : false,
-			success(responseText) {
-	            const {result, uesPayment} = responseText;
-	            console.log(uesPayment);
-	            if(result == "실패"){
-	            	alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
-	            }
-	            document.querySelector("#remainingTicket").value = uesPayment.p_cnt; 
-	            alert("신청이 성공적으로 처리되었습니다.");
-	            
-	         },
-	          error() {
-	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
-	            
-	           },
-		});
+		  $.ajax({
+			  url: "<%=request.getContextPath()%>/request/reqGarbagePickup",
+			  data: frmData,
+			  method: "POST",
+			  dataType: "json",
+			  processData: false,
+			  contentType: false,
+			  success: function(response) {
+			    if (response.result === "성공") {
+			      const uesPayment = response.uesPayment;
+			      document.querySelector("#remainingTicket").value = uesPayment.p_cnt;
+			      alert("신청이 성공적으로 처리되었습니다.");
+			      window.location.href = "<%=request.getContextPath()%>/member/requestList?memberId=<%=loginMember.getId()%>";
+			    } else if (response.result === "실패") {
+			      alert("이용권이 모두 소진되었습니다. 이용권 구매 후 신청해주세요.");
+			      window.location.reload();
+			    } else {
+			      alert("알 수 없는 오류가 발생했습니다.");
+			      window.location.reload();
+			    }
+			  },
+			  error: function() {
+			    alert("신청을 처리하는 동안 오류가 발생했습니다.");
+			  },
+			});
 		e.preventDefault();
 		};
 		
@@ -372,13 +390,7 @@ function updatePrice() {
     	}
     
 </script>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	
 
 </body>
 

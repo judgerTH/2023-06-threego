@@ -45,10 +45,12 @@ public class MemberUpdateServlet extends HttpServlet {
 		
 		System.out.println(member);
 		int result = memberService.updateMember(member);
-		
+		System.out.println(member);
 		HttpSession session = request.getSession();
+
 		session.setAttribute("loginMember", memberService.findById(memberId));
 		
+
 		response.sendRedirect(request.getContextPath() + "/member/myPage");
 		
 	}

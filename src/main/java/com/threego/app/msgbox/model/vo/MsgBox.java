@@ -10,6 +10,7 @@ public class MsgBox {
 	private String msgReceiver;
 	private String msgContent;
 	private Date msgSendingDate;
+	private MsgConfirm msgConfirm;
 	
 	public MsgBox() {
 		super();
@@ -23,6 +24,19 @@ public class MsgBox {
 		this.msgReceiver = msgReceiver;
 		this.msgContent = msgContent;
 		this.msgSendingDate = msgSendingDate;
+	}
+
+		
+	public MsgBox(int msgNo, MsgType msgType, String msgSender, String msgReceiver, String msgContent,
+			Date msgSendingDate, MsgConfirm msgConfirm) {
+		super();
+		this.msgNo = msgNo;
+		this.msgType = msgType;
+		this.msgSender = msgSender;
+		this.msgReceiver = msgReceiver;
+		this.msgContent = msgContent;
+		this.msgSendingDate = msgSendingDate;
+		this.msgConfirm = msgConfirm;
 	}
 
 	public int getMsgNo() {
@@ -75,14 +89,23 @@ public class MsgBox {
 		this.msgSendingDate = msgSendingDate;
 	}
 
+	
+	
+	public MsgConfirm getMsgConfirm() {
+		return msgConfirm;
+	}
+
+	public void setMsgConfirm(MsgConfirm msgConfirm) {
+		this.msgConfirm = msgConfirm;
+	}
+
 	@Override
 	public String toString() {
 		return "MsgBox [msgNo=" + msgNo + ", msgType=" + msgType + ", msgSender=" + msgSender + ", msgReceiver="
-				+ msgReceiver + ", msgContent=" + msgContent + ", msgSendingDate=" + msgSendingDate + "]";
+				+ msgReceiver + ", msgContent=" + msgContent + ", msgSendingDate=" + msgSendingDate + ", msgConfirm="
+				+ msgConfirm + "]";
 	}
 
-	
-	
 	
 	
 	
