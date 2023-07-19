@@ -57,9 +57,9 @@ public class RequestService {
 		return acceptedRequest;
 	}
 
-	public List<Request> findByMyReq(String id) {
+	public List<Request> findByMyReq(int start, int end, String id) {
 		Connection conn = getConnection();
-		List<Request> requestList = requestDao.findByMyReq(conn, id);
+		List<Request> requestList = requestDao.findByMyReq(conn, start, end, id);
 		close(conn);
 		return requestList;
 	}
@@ -147,6 +147,13 @@ public class RequestService {
 		}
 		
 		return result;
+	}
+
+	public int getTotalCollection(String id) {
+		Connection conn = getConnection();
+		int totalCollection = requestDao.getTotalCollection(conn, id);
+		close(conn);
+		return totalCollection;
 	}
 
 

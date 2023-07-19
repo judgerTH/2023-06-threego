@@ -136,7 +136,9 @@ session.removeAttribute("msg");
 					</div>
 				</div>
 			</div>
-
+			<div id='pagebar' style="margin-left: 330px">
+				<%= request.getAttribute("pagebar") %>
+			</div>
 	<div id="warningMadal" class="modal">
 		<div class="modal-content">
 			<span class="close" onclick="closeModal()">&times;</span>
