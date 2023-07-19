@@ -13,18 +13,6 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/request_list_view.css"/>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f2398d9caf132d6eea659a665e6afbaf&libraries=services,clusterer,drawing"></script>
-<style>
-.requestDetail-container{display: flex; flex-direction: row;}
-#requestDetail{border-collapse: collapse; margin-top : 20px;}
-#requestDetail th, td{padding : 10px; border : 2px solid #d2d2d2}
-#requestDetail-wrap{border : none; width : 500px;}
-.btn-accept{margin : 10px 5px;border : none; padding : 5px 15px; color : white; background-color: #49B466; font-weight: bold; border-radius: 3px;}
-.map-btn {margin : 10px 5px; border : none; padding : 5px 15px; color : white; background-color: #283593; font-weight: bold; border-radius: 3px;}
-.btn-wrapper{display : flex; flex-direction : row;}
-#map{margin-top : 20px;}
-.map-wrapper h3{margin-top : 23px;}
-</style>
-	
 </head>
 <%
 	Request acceptedRequest = (Request)request.getAttribute("acceptedRequest");

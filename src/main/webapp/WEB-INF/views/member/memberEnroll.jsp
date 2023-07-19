@@ -86,6 +86,7 @@ width:300px;
 } 
 #wrapper{
 padding-bottom: 6rem;
+font-family: 'GmarketSansMedium';
 }
 </style>
 

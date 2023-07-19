@@ -1,11 +1,16 @@
+<%@page import="com.threego.app.payment.model.vo.Payment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <%
-	/* String memberId = loginMember.getId(); */
+	Payment payment = (Payment)request.getAttribute("payment");
+	
+	System.out.println(payment);
+	
 %>
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -287,16 +292,16 @@ input:not(#address), input[type="file"] {
           <td><input type="text" name="detailAddress" id="detailAddress"></td>
         </tr>
         <tr>
-          <th>남은 이용권</th>
+          <th>잔여 이용권</th>
           <% if (loginMember != null) { %>
-          <td><input type="text" name="remainingTicket" id="remainingTicket" value="" required readonly></td>
+          <td><input type="text" name="pCnt" id="remainingTicket" value="<%= payment.getP_cnt() %>" required readonly></td>
           <% } %>
-        </tr>
+        </tr> 
         <tr>
           <th>사진 첨부 파일</th>
           <td>
-            <input type="file" name="photo" id="photoInput" accept="image/jpeg, image/png" required>
-            <div id="photoPreviewContainer" style="width: 150px; height: 150px; margin-top: 10px;"></div>
+            <input type="file" name="photo" id="photoInput" accept="image/jpeg, image/png" onchange="displayPhotoPreview(this)" required>
+<div id="photoPreviewContainer" style="width: 200px; height: 200px; margin-top: 10px;"></div>
           </td>
         </tr>
       </tbody>
@@ -306,6 +311,7 @@ input:not(#address), input[type="file"] {
     </div>
   </form>
 </div>
+	
 	
 
 	<script>
@@ -359,12 +365,17 @@ function updatePrice() {
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
 		
-		
+		<% if( payment.getP_cnt() == 0  || payment == null ){ %>
+			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
+			return;
+		<%}%> 
 		
 		
 		const frmData = new FormData(e.target);
 		  for(const name of frmData.keys())
 	            console.log(`\${name}=\${frmData.get(name)}`);
+		  
+		  
 		$.ajax({
 			url : "<%=request.getContextPath()%>/request/reqGarbagePickup",
 			data : frmData,
@@ -374,10 +385,13 @@ function updatePrice() {
 			contentType : false,
 			success(responseText) {
 	            const {result, payment} = responseText;
+	            console.log(payment);
+	            document.querySelector("#remainingTicket").value = payment.p_cnt;
 	            alert("신청이 성공적으로 처리되었습니다.");
 	         },
 	          error() {
 	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
+	            
 	           },
 		});
 		e.preventDefault();
@@ -393,6 +407,8 @@ function updatePrice() {
 	</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	
+	
     function addressSearch() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -440,7 +456,18 @@ function updatePrice() {
             }
         }).open();
     }
-    
+    function displayPhotoPreview(input) {
+    	  if (input.files && input.files[0]) {
+    	    var reader = new FileReader();
+
+    	    reader.onload = function(e) {
+    	      var photoPreviewContainer = document.getElementById('photoPreviewContainer');
+    	      photoPreviewContainer.innerHTML = "<img src='" + e.target.result + "' style='width: 100%; height: 100%;'>";
+    	    };
+
+    	    reader.readAsDataURL(input.files[0]);
+    	  }
+    	}
     
 </script>
 	<br>

@@ -12,7 +12,7 @@
 <body>
 <%
 	Member member = (Member)request.getAttribute("searchedMember");
-	
+	String msg = (String)request.getAttribute("msg");
 	
 %>
 <div class="search-wrapper">
@@ -31,7 +31,13 @@
 
 </body>
 <script>
-
+window.onload = () => {
+	
+	<% if(msg != null){ %>
+		alert("<%=msg%>"); 
+	<% } %>
+	
+}
 const pwReg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!])[a-zA-Z\d@!]{6,20}$/;	
 	
 //비밀번호 실시간 유효성검사

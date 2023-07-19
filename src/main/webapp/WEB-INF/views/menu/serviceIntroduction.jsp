@@ -5,8 +5,8 @@
 <html>
 <style>
 h3  { text-align: center; color: #232324; font-size: 30px; font-weight: 700  line-height: 0.5; }
-p  { text-align: center; color: #232324; font-size: 20px; font-weight: 700; line-height: 1.0; }
-.page-heading  { margin-top: 40px; padding: 0 24px; text-align: center; color: #232324; font-size: 16px; font-weight: 400; line-height: 1.75; word-break: keep-all; margin-bottom: 40px; }
+p  { text-align: center; color: #232324; font-size: 30px; font-weight: 700; line-height: 1.0; }
+.page-heading  { margin-top: 40px; padding: 0 24px; text-align: center; color: #232324; font-size: 20px; font-weight: 400; line-height: 1.75; word-break: keep-all; margin-bottom: 40px; }
 span { color: #49B466; }
 hr { width: 70%; height: 1px; background-color: #49B466; }
 .row { --bs-gutter-x: 1.5rem; --bs-gutter-y: 0; display: flex; flex-wrap: wrap; margin-top: calc(-1 * var(--bs-gutter-y));  margin-right: 20%; margin-left: 20%; justify-content: space-between!important; }

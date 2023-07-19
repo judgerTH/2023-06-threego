@@ -41,11 +41,11 @@
 }
 /* main css */
 body{margin : 0 auto; width: 100vw; height: 100vh;  font-family: 'GmarketSansMedium';}
-header{display : flex; flex-direction: row; justify-content: space-around; align-items: center; }
+#nav{display : flex; flex-direction: row; justify-content: space-around; align-items: center; }
 .main-container { height : 900px;}
-#menubar{display : flex; flex-direction: row; margin : 0 150px; font-size : 100px;}
-#menubar li{list-style: none; margin : 0 50px;}
-li a{text-decoration: none; font-size : 20px;}
+#menubar{display : flex; flex-direction: row; margin : 0 90px; font-size : 100px; font-family: 'GmarketSansMedium';}
+#menubar li{list-style: none; margin : 0 50px; font-family: 'GmarketSansMedium';}
+li a{text-decoration: none; font-size : 20px; font-family: 'GmarketSansMedium';}
 #enterance{display : flex; flex-direction: row; justify-content: space-between; margin-left : 60px;}
 .ent-button{margin : 0 5px; display : flex; flex-direction: column; margin: 5px 5px; justify-content: center; align-items: center;}
 .ent-img{width : 45px; height: 45px; margin-bottom: 10px;}
@@ -56,23 +56,24 @@ main img{width: 100vw; height: 500px;}
 .footerRow{display : flex; flex-direction: row; margin : 10px 10px; justify-content: flex-start; align-items : center;}
 
 /* loginFrm css*/
+
 .sub_div {display: flex; justify-content: center; text-align: center; align-items: center; translate : 0 200px;}
 .login-wrap{display: flex; justify-content: center; text-align: center; align-items: center;}
-.login-form{margin-bottom : 20px; display: flex; justify-content: center; align-items:center; text-align: center; border: 1px solid black; width: 500px; height: 390px;}
+.login-form{margin-bottom : 20px; display: flex; justify-content: center; align-items:center; text-align: center; box-shadow : 5px 5px 10px 5px #d2d2d2; border: none; border-radius:10px; width: 600px; height: 500px;}
 #login-fieldset{border : none; border-radius: 5px; display: flex; align-items: center; flex-direction: column;}
-#login_logo{width : 150px; height : 150px;}
-#iogin-tbl{margin-top: 20px;}
-.login-input{margin: 5px; width : 300px; height: 30px; border-radius: 5px; border : 0.5px solid black;}
+#login_logo{width : 180px; height : 180px;}
+#login-tbl{margin-top: 20px;}
+.login-input{margin: 5px; width : 300px; padding-left : 5px; height: 30px; border-radius: 5px; border : 1px solid #d2d2d2;}
 .btn-loginMem-wrap{display : flex; justify-content: center; align-items: center; flex-direction: column; }
-.btn-loginMem {margin : 5px 5px; width : 310px; height: 35px; border: none; border-radius: 5px; background-color: #49B466; color: white; font-weight:bold;}
-.searchInfo{display : center; justify-content: center; text-align: center; align-items: center;  width: 500px; height: 300px;}
-.searchInfo a{cursor: pointer;}
+.btn-loginMem {margin : 5px 5px;font-family: 'GmarketSansMedium';  width : 310px; height: 35px; border: none; border-radius: 5px; background-color: #49B466; color: white; font-size : 20px; text-align:center;}
+.searchInfo{display : center; justify-content: center; text-align: center; align-items: center; height: 300px;}
+.searchInfo a{cursor: pointer; font-size : 20px;}
 
 /* searchId, searchPwd*/
 .search-wrapper{display: flex; flex-direction: column; align-items: center; text-align: center; translate : 0 10%;}
 .search-subwrapper{display :flex; flex-direction : column; align-items: center; border : 1px solid black; border-radius : 5px; width: 600px; height: 400px;}
-.search-input{margin : 5px 0; width : 300px; height : 35px;}
-#btn-searchId{margin-top : 10px; width: 305px; height: 35px; border : none; background-color: #49B466; color : white; font-weight: bold;}
+.search-input{margin-top :10px; width : 300px; height : 35px;}
+#btn-searchId{margin-top : 10px; width: 305px; height: 35px; border : none; background-color: #49B466; color : white; font-family: 'GmarketSansMedium'; font-size : 20px;}
 
 
 

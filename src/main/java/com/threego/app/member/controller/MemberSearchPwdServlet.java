@@ -44,6 +44,7 @@ public class MemberSearchPwdServlet extends HttpServlet {
 		request.setAttribute("searchedMember", member);
 		if(member!=null && email.equals(member.getEmail())) {
 			// 만약 아이디 비밀번호가 동일하다면 비밀번호 재설정 페이지로 이동해야함! 
+			request.setAttribute("msg", "입력하신 정보가 확인 되었습니다. 비밀번호 재설정을 진행해주세요.");
 			RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberResetPwd.jsp");
 			reqDispatcher.forward(request, response);
 			

@@ -13,8 +13,6 @@
 	String msg = (String)session.getAttribute("msg");
 	if(msg != null) session.removeAttribute("msg");
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	System.out.println(msg);
-	
 %>
 <script>
 window.onload = () => {
@@ -34,7 +32,7 @@ window.onload = () => {
                     <form action="<%=request.getContextPath()%>/member/memberLogin" name = "LoginFrm" class="login-form" method = "POST">
                         <fieldset id ="login-fieldset">
                             <a href="http://localhost:8080/threego"><img src="<%=request.getContextPath()%>/images/threegoLogo.png" alt="threego logo" id = "login_logo"/></a>
-                            <table id= "iogin-tbl">
+                            <table id= "login-tbl">
                                 <tr>
                                     <td>
                                         <input class = "login-input" type="text" name="login-id" id="login-id" placeholder="아이디">
@@ -48,7 +46,7 @@ window.onload = () => {
                             </table>
                             <div class="btn-loginMem-wrap">
                                 <button type="submit" class = "btn-loginMem" name = "btn-login" id="btn-login">로그인</button>
-                                <button class = "btn-loginMem" name = "btn-enroll" id = "btn-enroll" onclick = "location.href='<%= request.getContextPath()%>/member/memberEnroll'">회원가입</button>
+                                <button type = "button" class = "btn-loginMem" name = "btn-enroll" id = "btn-enroll" onclick = "location.href='<%= request.getContextPath()%>/member/memberEnroll'">회원가입</button>
                             </div>
                         </fieldset>
                     </form>
