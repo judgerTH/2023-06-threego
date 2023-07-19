@@ -267,34 +267,33 @@ function updatePrice() {
 		
 		
 		
-		
 		const frmData = new FormData(e.target);
 		  for(const name of frmData.keys())
 	            console.log(`\${name}=\${frmData.get(name)}`);
 		  
 		  
-		$.ajax({
-			url : "<%=request.getContextPath()%>/request/reqGarbagePickup",
-			data : frmData,
-			method : "POST",
-			dataType : "json",
-			processData : false,
-			contentType : false,
-			success(responseText) {
-	            const {result, uesPayment} = responseText;
-	            console.log(uesPayment);
-	            if(result == "실패"){
-	            	alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
-	            }
-	            document.querySelector("#remainingTicket").value = uesPayment.p_cnt; 
-	            alert("신청이 성공적으로 처리되었습니다.");
-	            
-	         },
-	          error() {
-	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
-	            
-	           },
-		});
+		  $.ajax({
+			  url: "<%=request.getContextPath()%>/request/reqGarbagePickup",
+			  data: frmData,
+			  method: "POST",
+			  dataType: "json",
+			  processData: false,
+			  contentType: false,
+			  success: function(response) {
+			    if (response.result === "성공") {
+			      const uesPayment = response.uesPayment;
+			      document.querySelector("#remainingTicket").value = uesPayment.p_cnt;
+			      alert("신청이 성공적으로 처리되었습니다.");
+			    } else if (response.result === "실패") {
+			      alert("이용권이 모두 소진되었습니다. 이용권 구매 후 신청해주세요.");
+			    } else {
+			      alert("알 수 없는 오류가 발생했습니다.");
+			    }
+			  },
+			  error: function() {
+			    alert("신청을 처리하는 동안 오류가 발생했습니다.");
+			  },
+			});
 		e.preventDefault();
 		};
 		
