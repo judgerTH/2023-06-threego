@@ -1,11 +1,11 @@
-<%@page import="com.threego.app.ticket.model.vo.TicketPayment"%>
+<%@page import="com.threego.app.payment.model.vo.PaymentDetail"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
 String memberId = loginMember.getId();
-List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("paymentList");
+List<PaymentDetail> requestList = (List<PaymentDetail>) request.getAttribute("paymentList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,6 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
 			</ul>
 		</div>
-
 		<div class="right-div">
 				<h3>결제정보</h3>
 				<div class="mypage-content-box">
@@ -63,7 +62,6 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 							<th>이용권명</th>
 							<th>결제금액</th>
 							<th>결제일</th>
-							<th>잔여 이용권</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -75,14 +73,19 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 						</tr>
 						<%
 						} else {
-						for (TicketPayment reqList : requestList) {
+						for (PaymentDetail reqList : requestList) {
 						%>
 						<tr>
-							<td><%=reqList.getNo()%></td>
-							<td><%=reqList.getTicName()%></td>
-							<td><%=reqList.getTicPrice()%></td>
-							<td><%=reqList.getpDate()%></td>
-							<td><%=reqList.getpCnt()%></td>
+							<td><%=reqList.getPd_no()%></td>
+							<td>
+							<%= (reqList.getPd_tic_id().equals("tic1")) ? "1회권" :
+								(reqList.getPd_tic_id().equals("tic3")) ? "3회권" :
+								(reqList.getPd_tic_id().equals("tic5")) ? "5회권" :
+								(reqList.getPd_tic_id().equals("tic10")) ? "10회권" : ""
+								%>
+							</td>
+							<td><%=reqList.getPd_tic_price()%></td>
+							<td><%=reqList.getPd_date()%></td>
 							<%
 							}
 							}
@@ -93,7 +96,6 @@ List<TicketPayment> requestList = (List<TicketPayment>) request.getAttribute("pa
 			</div>
 		</div>
 	</div>
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 </body>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -30,9 +30,9 @@
 				<li><a class="" aria-current="page"
 					href="<%= request.getContextPath() %>/member/myPage">회원정보 수정</a></li>
 				<% if(loginMember != null && loginMember.getMemberRole() == MemberRole.U){ %>
-				<li class="active"><a class="" aria-current="page"
+				<li ><a class="" aria-current="page"
 					href="<%= request.getContextPath() %>/member/paymentList?memberId=<%= memberId %>">결제정보</a></li>
-				<li><a class="" aria-current="page"
+				<li class="active"><a class="" aria-current="page"
 					href="<%= request.getContextPath() %>/member/requestList?memberId=<%= memberId %>">수거신청내역</a></li>
 				<% } else if(loginMember != null && loginMember.getMemberRole() == MemberRole.R) { %>
 				<li><a class="" aria-current="page"
@@ -75,7 +75,8 @@
 				                    (reqList.getReqStatus().equals("3")) ? "수거취소" : "" %>
 						</td>
 						<td><%= reqList.getReqDate() %></td>
-						<td><%= reqList.getReqRider() %> <% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
+						<td><%= reqList.getReqRider() == null ? "수락 대기중" : reqList.getReqRider() %> 
+						<% if (reqList.getReqStatus().equals("1") || reqList.getReqStatus().equals("2")) { %>
 							<form name="requestwarningForm" style="display: inline;">
 								<input type="hidden" name="reqNo"
 									value="<%= reqList.getReqNo()%>"> <input type="hidden"

@@ -47,7 +47,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 				} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
 				%>
 				<li><a class="" aria-current="page"
-					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거 접수
 						리스트</a></li>
 				<li><a class="" aria-current="page"
 					href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의

@@ -87,7 +87,7 @@
 	display: Felx;
 }
 
-#riderbtn, #paysubmit {
+#riderbtn, #paysubmit, #reqsubmit {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -95,7 +95,7 @@
 	margin-left: 20px;
 }
 
-#riderbtn button, #paysubmit {
+#riderbtn button, #paysubmit, #reqsubmit {
 	width: 400px;
 	height: 50px;
 	background-color: #49B466;
@@ -115,7 +115,7 @@ h1 {
 	margin-left: 150px;
 }
 
-#btn1, #btn3, #btn4, #btn5, #applicationForm, #paysubmit {
+#btn1, #btn3, #btn4, #btn5, #applicationForm, #paysubmit, #reqsubmit {
 	margin-top: 10px;
 	margin-left: 150px;
 }
@@ -154,9 +154,9 @@ input:not(#address), input[type="file"] {
 	<div class="left-div" style="display: none">
 		<h2>신청하기</h2>
 		<ul>
-			<li><a class="active" aria-current="page" href="">수거 신청</a></li>
-			<li><a class="active" id="active1" aria-current="page"
-				href="<%=request.getContextPath()%>/board/useInquiryList">이용권 구매</a></li>
+			<li><button id="reqGarbage"><a class="active" aria-current="page" >수거 신청</a></button></li>
+			<li><button id="buyTicket"><a class="active" id="active1" aria-current="page">이용권 구매</a></button></li>
+			
 		</ul>
 	</div>
 	<div class="rider-info-boxes" id="beforeContent">
@@ -198,10 +198,12 @@ input:not(#address), input[type="file"] {
 		</div>
 	</div>
 
+
 	<div id="afterContent">
-		<form name="memberUpdateFrm"
+		<form name="memberUpdateFrm" style="display: none;" id="memberUpdateFrm"
 			action="<%= request.getContextPath() %>/payment/insertpayment"
 			method="post">
+			
 			<table class="mypage-table"
 				style="width: 800px; height: 400px; margin: 0 auto;">
 				<tbody>
@@ -230,6 +232,7 @@ input:not(#address), input[type="file"] {
 							<div id="gunroinfo" style="font-size: 12px;">중복구매가 불가하오니
 								이용중인 상품권이 있으면 소진 후 구매 부탁드립니다.</div></td>
 					</tr>
+					
 					<tr>
 						<th>입금계좌</th>
 						<td>카카오뱅크 : 3333-1111-9999 <br> 예금주 명 : 황대호 <br> <br>
@@ -245,8 +248,79 @@ input:not(#address), input[type="file"] {
 			</div>
 		</form>
 	</div>
+	
+	
+	
+	
+	
+	<div id="afterContent">
+  <form name="reqGarbagePickupFrm" style="display: none;" id="reqGarbagePickupFrm">
+    <table class="mypage-table" style="width: 800px; height: 400px; margin: 0 auto;">
+      <tbody>
+        <tr>
+          <th>아이디</th>
+          <% if (loginMember != null) { %>
+          <td><input type="text" name="id" id="id" value="<%= loginMember.getId() %>" required readonly></td>
+          <% } %>
+        </tr>
+        <tr>
+          <th>이름</th>
+          <% if (loginMember != null) { %>
+          <td><input type="text" name="name" id="name" value="<%= loginMember.getName() %>" required readonly></td>
+          <% } %>
+        </tr>
+        <tr>
+          <th>우편번호</th>
+          <% if (loginMember != null) { %>
+          <td><input type="text" name="post" id="postalCode" value="<%= loginMember.getPost() %>" required readonly></td>
+          <% } %>
+        </tr>
+        <tr>
+          <th>주소</th>
+          <% if (loginMember != null) { %>
+          <td><input type="text" name="address" id="address" value="<%= loginMember.getAddress() %>" required readonly>
+            <button type="button" id="changeAddressBtn" onclick="addressSearch()">주소 변경</button></td>
+          <% } %>
+        </tr>
+        <tr>
+          <th>상세주소</th>
+          <td><input type="text" name="detailAddress" id="detailAddress"></td>
+        </tr>
+        <tr>
+          <th>남은 이용권</th>
+          <% if (loginMember != null) { %>
+          <td><input type="text" name="remainingTicket" id="remainingTicket" value="" required readonly></td>
+          <% } %>
+        </tr>
+        <tr>
+          <th>사진 첨부 파일</th>
+          <td>
+            <input type="file" name="photo" id="photoInput" accept="image/jpeg, image/png" required>
+            <div id="photoPreviewContainer" style="width: 150px; height: 150px; margin-top: 10px;"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="riderbtn">
+      <button type="submit" id="reqsubmit" >신청 완료</button>
+    </div>
+  </form>
+</div>
+	
 
 	<script>
+	
+	reqGarbage.onclick = () => {
+		document.getElementById('reqGarbagePickupFrm').style.display="block";
+		document.getElementById('memberUpdateFrm').style.display="none";
+	}
+	
+	
+	buyTicket.onclick = () => {
+		document.getElementById('memberUpdateFrm').style.display="block";
+		document.getElementById('reqGarbagePickupFrm').style.display="none";
+	}
+	
 	
 	paysubmit.onclick =()=>{
 	 const selectElement = document.getElementById('ticketSelect');
@@ -276,18 +350,97 @@ function updatePrice() {
 	application.onclick=(e)=>{
 		<%if(loginMember == null) {%>
 		alert("로그인 후 이용 가능합니다."); <%}else{%>
+		document.getElementById('reqGarbagePickupFrm').style.display="block";
 		document.querySelector("#beforeContent").style.display="none";
 		document.querySelector(".left-div").style.display="block";
 		
 		<%}%>
 	}
 	
+	document.reqGarbagePickupFrm.onsubmit = (e) => {
+		
+		
+		
+		
+		const frmData = new FormData(e.target);
+		  for(const name of frmData.keys())
+	            console.log(`\${name}=\${frmData.get(name)}`);
+		$.ajax({
+			url : "<%=request.getContextPath()%>/request/reqGarbagePickup",
+			data : frmData,
+			method : "POST",
+			dataType : "json",
+			processData : false,
+			contentType : false,
+			success(responseText) {
+	            const {result, payment} = responseText;
+	            alert("신청이 성공적으로 처리되었습니다.");
+	         },
+	          error() {
+	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
+	           },
+		});
+		e.preventDefault();
+		};
+		
+
+		// 기본 설정: 폼 초기화
+		const reqGarbagePickupFrm = document.getElementById("reqGarbagePickupFrm");
+		reqGarbagePickupFrm.style.display = "none";
+	
 	
 	
 	</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function addressSearch() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
 
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
 
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                   // document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    //document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postalCode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
 	<br>
 	<br>
 	<br>

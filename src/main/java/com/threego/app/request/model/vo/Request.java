@@ -7,22 +7,27 @@ public class Request {
 	private int reqNo;
 	private String reqWriter;
 	private String reqLocationId;
+	private String reqPost;
+	private String reqAddress;
 	private String reqPhoto;
 	private String reqStatus;
 	private Date reqDate;
 	private String reqRider;
 	private Date reqCpDate;
 	
+	
 	public Request() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Request(int reqNo, String reqWriter, String reqLocationId, String reqPhoto, String reqStatus, Date reqDate,
-			String reqRider, Date reqCpDate) {
+	public Request(int reqNo, String reqWriter, String reqLocationId, String reqPost, String reqAddress,
+			String reqPhoto, String reqStatus, Date reqDate, String reqRider, Date reqCpDate) {
 		super();
 		this.reqNo = reqNo;
 		this.reqWriter = reqWriter;
 		this.reqLocationId = reqLocationId;
+		this.reqPost = reqPost;
+		this.reqAddress = reqAddress;
 		this.reqPhoto = reqPhoto;
 		this.reqStatus = reqStatus;
 		this.reqDate = reqDate;
@@ -52,6 +57,22 @@ public class Request {
 
 	public void setReqLocationId(String reqLocationId) {
 		this.reqLocationId = reqLocationId;
+	}
+
+	public String getReqPost() {
+		return reqPost;
+	}
+
+	public void setReqPost(String reqPost) {
+		this.reqPost = reqPost;
+	}
+
+	public String getReqAddress() {
+		return reqAddress;
+	}
+
+	public void setReqAddress(String reqAddress) {
+		this.reqAddress = reqAddress;
 	}
 
 	public String getReqPhoto() {
@@ -97,10 +118,8 @@ public class Request {
 	@Override
 	public String toString() {
 		return "Request [reqNo=" + reqNo + ", reqWriter=" + reqWriter + ", reqLocationId=" + reqLocationId
-				+ ", reqPhoto=" + reqPhoto + ", reqStatus=" + reqStatus + ", reqDate=" + reqDate + ", reqRider="
-				+ reqRider + ", reqCpDate=" + reqCpDate + "]";
+				+ ", reqPost=" + reqPost + ", reqAddress=" + reqAddress + ", reqPhoto=" + reqPhoto + ", reqStatus="
+				+ reqStatus + ", reqDate=" + reqDate + ", reqRider=" + reqRider + ", reqCpDate=" + reqCpDate + "]";
 	}
 	
-	
-
 }

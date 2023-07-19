@@ -93,20 +93,17 @@ public class PaymentDao {
 	}
 
 
-
-
 	public int insertPayment(Connection conn, String id, String ticketId) {
 		int result= 0;
 		String sql = prop.getProperty("insertPayment");
 		
-		// INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
+		// INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, 0)
 		try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, id);
 			pstmt.setString(2, ticketId);
 			String str = ticketId;
 			int cnt = Integer.parseInt(str.substring(3)); // "tic1"
 			pstmt.setInt(3, cnt);
-			pstmt.setInt(4, cnt);
 			
 			result = pstmt.executeUpdate();
 			

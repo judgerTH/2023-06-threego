@@ -28,7 +28,7 @@ public class WarningDao {
 	public int insertWarning(Connection conn, Warning warning) {
 		int result=0;
 		String sql = prop.getProperty("insertWarning");
-		// insertWarning = insert into warning values(seq_w_no.nextval,?,?,?,default, default, null)
+		// insert Warning = insert into warning values(seq_w_no.nextval,?,?,?,default, default, null)
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setInt(1, warning.getWarningReqNo());
 			pstmt.setString(2, warning.getWarningWriter());

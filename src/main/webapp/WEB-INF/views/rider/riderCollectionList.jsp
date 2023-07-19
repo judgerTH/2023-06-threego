@@ -120,8 +120,15 @@ const findAllList = () =>{
 // 각 행마다 내용을 받아와야 하니 frm을 받아와서 함수를 실행하도록
 const acceptRequest = (frm) => {
 	
+	const popupWidth = 1100; 
+	const popupHeight = 600;
+	
+	let popupX = (window.screen.width-popupWidth)/2;
+	let popupY = (window.screen.height - popupHeight)/2;
+	
 	const title = "acceptRequestPopUp"; 
 	const popup = window.open("", title, "width = 1100px, height = 600px");
+	//const popup = window.open("", title, "height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY");
 	
 	frm.target = title;
 	frm.submit();

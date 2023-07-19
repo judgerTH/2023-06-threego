@@ -31,7 +31,20 @@ public class InsertPaymentServlet extends HttpServlet {
         String ticketId = request.getParameter("ticketSelect");
         
         int result = paymentService.insertPayment(id, ticketId);
+        // 수거신청 등 다른 동작 수행
         
+        
+        // 응답 처리 등
+        response.setContentType("application/json; charset=utf-8");
+        
+        Map<String, Object> map = new HashMap<>();
+        map.put("result","성공적으로 구매가 완료되었습니다.");
+
+        // Gson 객체 생성
+        Gson gson = new Gson();
+
+        // 맵을 JSON 데이터로 변환
+        gson.toJson(map, response.getWriter());
         response.sendRedirect(request.getContextPath() + "/menu/buyTicket");
 
         
