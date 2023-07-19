@@ -29,7 +29,7 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 </head>
 <body>
 
-	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+
 	<div class="mypage-container">
 		<div class="left-div">
 			<h2>마이페이지</h2>
@@ -47,8 +47,8 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 				} else if (loginMember != null && loginMember.getMemberRole() == MemberRole.R) {
 				%>
 				<li><a class="" aria-current="page"
-					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거 접수
-						리스트</a></li>
+					href="<%=request.getContextPath()%>/rider/requestCollectionList">수거
+						접수 리스트</a></li>
 				<li><a class="" aria-current="page"
 					href="<%=request.getContextPath()%>/rider/riderCollectionListCheck">나의
 						수거 목록 조회</a></li>
@@ -56,7 +56,8 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 				}
 				%>
 				<li><a class="" aria-current="page"
-					href="<%= request.getContextPath() %>/member/notebox?memberId=<%= memberId %>">📑받은 메시지</a></li>
+					href="<%=request.getContextPath()%>/member/notebox?memberId=<%=memberId%>">📑받은
+						메시지</a></li>
 			</ul>
 		</div>
 		<div class="right-div">
@@ -115,9 +116,9 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 									placeholder="우편번호">
 									<button type="button" id="postal-search" class="btn_frmline"
 										onclick="addressSearch()">주소 검색</button> <br> <br> <input
-									type="text" id="userAddress" name="mb_addr1"
-									value="<%=addr1%>" required size="50" placeholder="기본주소">
-									<label for="reg_mb_addr1" class="sound_only">기본주소 (필수)</label><br>
+									type="text" id="userAddress" name="mb_addr1" value="<%=addr1%>"
+									required size="50" placeholder="기본주소"> <label
+									for="reg_mb_addr1" class="sound_only">기본주소 (필수)</label><br>
 									<br> <input type="text" name="mb_addr2" value="<%%>"
 									size="50" placeholder="상세주소"> <label for="reg_mb_addr2"
 									id="userDetailAddress" class="sound_only">상세주소</label><br>
@@ -125,10 +126,10 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 							</tr>
 						</tbody>
 					</table>
-				</form>
-				<div class="btn-save-box">
-					<button type="submit" id="btn-save">변경사항 저장하기</button>
-				</div>
+					<div class="btn-save-box">
+						<button type="submit" id="btn-save">변경사항 저장하기</button>
+					</div>
+			</form>
 			</div>
 		</div>
 	</div>
@@ -303,11 +304,7 @@ document.memberUpdateFrm.onsubmit = (e) => {
 		  cnt++;
 	  }
 	  
-	  if (cnt !== 4) {
-		    e.preventDefault();
-		    alert("모든 항목을 기입 후 버튼을 눌러주세요.");
-		    return false;
-		  }
+	 
 };
 
 </script>
