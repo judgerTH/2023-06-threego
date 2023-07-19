@@ -13,14 +13,15 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
 
 <style>
-.rider-info-boxes{width : 100vw; height : 600px; display : flex; flex-direction : column; justify-content :center; align-items:center;}
+.rider-info-boxes{width : 100vw; height : 600px; display : flex; flex-direction : column; justify-content :center; align-items:center; margin-bottom : 100px;}
 .rider-info-box{display : flex; flex-direction : row; justify-content : center; align-items:center;}
 #riderimg{width: 600px; border-radius : 10px; box-shadow : 5px 5px 10px 5px #d2d2d2; margin : 40px;}
 #application{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
 		 font-size: 20px; font-weight: bold; }
 .rider-text-box{margin : 30px 10px;}
 
-.left-div ul{display : flex; flex-direction : row;  align-items : left; list-style : none;}
+.left-div{display : flex; align-items :center;}
+.left-div ul{display : flex; flex-direction : row;  align-items : center; list-style : none;}
 .left-div ul li{margin-left : 10px; }
 #reqGarbage, #buyTicket {display: inline-block;
 	width: 200px;
@@ -32,12 +33,22 @@
 	color: #000000;
 	font-size: 20px;}
 #reqGarbage:hover, #buyTicket:hover {background-color: #49B466; color: white;}
-.left-div ul .active a {
-	background-color: #00000;
-	color: #000000;
-}
-.btn-submit{border: none; border-radius: 4px; width: 100px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
+.btn-submit{border: none; border-radius: 4px; width: 250px; text-align: center; padding: 10px; margin-top: 30px; background-color :#468B97; color: white;
 		 font-size: 15px; font-weight: bold; }
+#afterContent {display :flex; flex-direction : column; justify-content:center; text-align : center; align-items :center; margin-bottom : 100px;} 
+
+
+
+
+
+#mypage-table {border-collapse : collapse;  width : 800px; margin-top : 30px; font-size : 15px;}
+#mypage-table th,td{border-top: 2px solid black; border-bottom : 2px solid black; width : 150px; height : 40px;}
+#mypage-table td{text-align : left; padding : 5px; height : 60px;}
+#mypage-table input{padding : 10px 40px; width : 300px; font-size : 15px; font-family: 'GmarketSansMedium';}
+.btn-save-box {display: flex; justify-content: center; align-items: center;}
+#btn-save{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 20px; background-color :#468B97; color: white;
+		 font-size: 20px; font-weight: bold; }
+.riderbtn{display : flex; justify-content: center; align-items: center; }		 
 </style>
 </head>
 
@@ -83,8 +94,8 @@
 		</div>
 	</div>
 
-	<div class="left-div" style="display: none">
-		<h2>신청하기</h2>
+	<div class="left-div" style="display: none; margin-left : 200px;">
+		<h2 style="margin-left : 50px;">신청하기</h2>
 		<ul>
 			<li><a class="active"  id="reqGarbage" aria-current="page"  id="reqGarbage">수거 신청</a></li>
 			<li><a class="active" id="buyTicket" aria-current="page">이용권 구매</a></li>
@@ -95,8 +106,8 @@
 		<form name="memberUpdateFrm" style="display: none;" id="memberUpdateFrm"
 			action="<%= request.getContextPath() %>/payment/insertpayment"
 			method="post">
-			<table class="mypage-table"
-				style="width: 800px; height: 400px; margin: 0 auto;">
+			<table id="mypage-table">
+				
 				<tbody>
 					<tr>
 						<th>아이디</th>
@@ -108,7 +119,7 @@
 					<tr>
 						<th>상품권 종류 <span>*</span></th>
 						<td><select name="ticketSelect" id="ticketSelect"
-							required="required" onchange="updatePrice()">
+							required="required" onchange="updatePrice()" style ="height : 40px">
 								<option value="">선택하세요</option>
 								<option value="tic1">1회권 &#8361;5,000원</option>
 								<option value="tic3">3회권 &#8361;15,000원</option>
@@ -142,7 +153,8 @@
 	
 	<div id="afterContent">
   <form name="reqGarbagePickupFrm" style="display: none;" id="reqGarbagePickupFrm">
-    <table class="mypage-table" style="width: 800px; height: 400px; margin: 0 auto;">
+    <table id="mypage-table">
+      
       <tbody>
         <tr>
           <th>아이디</th>
@@ -328,13 +340,7 @@ function updatePrice() {
         }).open();
     }
 </script>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	
 
 </body>
 

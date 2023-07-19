@@ -26,6 +26,7 @@ List<Board> boards = (List<Board>) request.getAttribute("boards");
         margin-inline-end: 0px;
         padding-inline-start: 40px;
         display: flex;
+        margin-left : 20px;
     }
 
     .left-div ul li {
@@ -86,7 +87,8 @@ List<Board> boards = (List<Board>) request.getAttribute("boards");
 }
 
 h2 {
-	margin-left: 60px;
+	margin-left: 65px;
+	font-size : 30px;
 }
 
 tbody, td, tfoot, th, thead, tr {
@@ -103,6 +105,7 @@ tbody, td, tfoot, th, thead, tr {
 	margin-left: 220px;
 	padding: 20px;
 	width: 70%;
+	height : 700px;
 	margin-top : 20px;
 	font-size: 20px;
 	
