@@ -28,8 +28,6 @@ String addr1 = address.substring(0, address.indexOf(" "));
 	href="<%=request.getContextPath()%>/css/mypage_content.css" />
 </head>
 <body>
-
-
 	<div class="mypage-container">
 		<div class="left-div">
 			<h2>마이페이지</h2>
