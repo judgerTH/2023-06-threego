@@ -51,11 +51,13 @@ public class PaymentDetail {
 	public void setPd_date(Date pd_date) {
 		this.pd_date = pd_date;
 	}
+	
+	// 누적금액 투스트링
 	@Override
 	public String toString() {
-		return "PaymentDetail [pd_no=" + pd_no + ", pd_mem_id=" + pd_mem_id + ", pd_tic_id=" + pd_tic_id
-				+ ", pd_tic_price=" + pd_tic_price + ", pd_date=" + pd_date + "]";
+	    return "총 결제금액 : " + pd_tic_price + "원";
 	}
+
 	
 	
 }

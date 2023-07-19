@@ -359,9 +359,6 @@ function updatePrice() {
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
 		
-		
-		
-		
 		const frmData = new FormData(e.target);
 		  for(const name of frmData.keys())
 	            console.log(`\${name}=\${frmData.get(name)}`);

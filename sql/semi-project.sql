@@ -200,13 +200,14 @@ create table msgbox(
     msg_receiver varchar2(30) not null, 
     msg_content varchar2(4000), 
     msg_sending_date date default sysdate,
+    msg_confirm char(1) default 'X',
     constraints pk_msgbox_msg_no primary key(msg_no),
     constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
-    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P')),
+    constraints ck_msgbox_msg_confirm check(msg_confirm in ('O', 'X'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
 create sequence seq_msg_no;
-
 
 -- 여기까지 테이블 , 시퀀스, 트리거 생성 쿼리만! 
 --------------------------------------------------------------------------------------------------------------------------------------------
@@ -222,6 +223,8 @@ create sequence seq_msg_no;
  insert into member values (
     'xogus', 'xogus','이태현','xogus@naver.com','01021111111','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
 );
+
+
 
 -- ticket
  insert into ticket values (
