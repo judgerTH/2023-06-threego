@@ -59,7 +59,7 @@ public class RequestDao {
 	private Request handleRequestResultSet(ResultSet rset) throws SQLException {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
-		String reqLocationId = rset.getString("req_location_id");
+		String reqLocationId = rset.getString("location_name");
 		String reqPost = rset.getString("req_post");
 		String reqAddress = rset.getString("req_address");
 		String reqPhoto = rset.getString("req_photo");
