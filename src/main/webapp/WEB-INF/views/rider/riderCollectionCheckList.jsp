@@ -134,10 +134,11 @@ session.removeAttribute("msg");
 							%>
 						</table>
 					</div>
-				</div>
-			</div>
-			<div id='pagebar' style="margin-left: 330px">
+					<br><br>
+			<div id='pagebar' style="margin-left: 440px">
 				<%= request.getAttribute("pagebar") %>
+			</div>
+				</div>
 			</div>
 	<div id="warningMadal" class="modal">
 		<div class="modal-content">
