@@ -28,8 +28,6 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 
 </head>
 <body>
-
-	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 	<div class="mypage-container">
 		<div class="left-div">
 			<h2>마이페이지</h2>
@@ -125,10 +123,10 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 							</tr>
 						</tbody>
 					</table>
-				</form>
 				<div class="btn-save-box">
 					<button type="submit" id="btn-save">변경사항 저장하기</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
