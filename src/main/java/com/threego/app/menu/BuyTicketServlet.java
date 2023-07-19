@@ -34,7 +34,7 @@ public class BuyTicketServlet extends HttpServlet {
 	
 		Payment payment = paymentService.findPayment(id);
 		
-		System.out.println(loginMember);
+//		System.out.println(loginMember);
 //		System.out.println(id + "   " +payment);
 		
 		request.setAttribute("payment", payment);

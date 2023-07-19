@@ -70,15 +70,46 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 		// 요청 테이블에 데이터 추가
 		boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
 		int cntResult = requestService.countUpdate(id); // 카운트 업데이트 
-		Payment payment = requestService.findPayment(id); // 업데이트된 payment 조회
+		Payment uesPayment = requestService.findPayment(id); // 업데이트된 payment 조회
 
-		if(payment.getP_cnt() == 0) {
-
+		if(uesPayment == null) {
+			response.setContentType("application/json; charset=utf-8");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", "실패");
+			
+			new Gson().toJson(map, response.getWriter());
+		}else {
+			
+			if(uesPayment.getP_cnt() == 0) {
 			int deletePayment = requestService.deletePayment(id); // 이용권을 다쓰면 delete
-
+			};
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", "성공");
+			map.put("uesPayment", uesPayment);
+			
+			new Gson().toJson(map, response.getWriter());
 		}
-		request.setAttribute("payment", payment);
-		//System.out.println(payment);
+		
+		
+//		if(uesPayment.getP_cnt() == 0) {
+//
+//			int deletePayment = requestService.deletePayment(id); // 이용권을 다쓰면 delete
+//			if(uesPayment == null) {
+//				
+//			}else {
+//				response.setContentType("application/json; charset=utf-8");
+//				
+//				Map<String, Object> map = new HashMap<>();
+//				map.put("result", "성공");
+//				map.put("uesPayment", uesPayment);
+//				
+//				new Gson().toJson(map, response.getWriter());
+//			}
+//		}
 		
 		
 		
@@ -89,14 +120,7 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 		
 		
 		// 응답 처리
-		response.setContentType("application/json; charset=utf-8");
-		//response.setCharacterEncoding("UTF-8");
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", "성공");
-		map.put("payment", payment);
-		
-		new Gson().toJson(map, response.getWriter());
 		
 		
 		// Gson 객체 생성

@@ -411,11 +411,15 @@ create table msgbox(
     msg_sender varchar2(30) not null, 
     msg_receiver varchar2(30) not null, 
     msg_content varchar2(4000), 
+    msg_sending_date date default sysdate,
+    msg_confirm char(1) default 'X',
     constraints pk_msgbox_msg_no primary key(msg_no),
     constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
-    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P'))
+    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P')),
+    constraints ck_msgbox_msg_confirm check(msg_confirm in ('O', 'X'))
     -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
 );
+
 create table paymentDetail(
     pd_no   number,
     pd_mem_id varchar2(30),

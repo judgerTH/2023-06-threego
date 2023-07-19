@@ -7,8 +7,12 @@
 <%
 	Payment payment = (Payment)request.getAttribute("payment");
 	
-	System.out.println(payment);
+	/* System.out.println("jsp ---"  + payment);  */
 	
+%>
+<%
+		 	String msg = (String) session.getAttribute("msg");
+/* 		  	System.out.println(msg); */
 %>
 
 <head>
@@ -212,10 +216,16 @@
 	buyTicket.onclick = () => {
 		document.getElementById('memberUpdateFrm').style.display="block";
 		document.getElementById('reqGarbagePickupFrm').style.display="none";
+		console.log('<%= payment.getP_cnt() %>');
 	}
 	
 	
 	paysubmit.onclick =()=>{
+		if('<%= payment.getP_cnt() %>' > 0 ){
+			alert("이용권이 이미 있습니다.");
+			return;
+		}
+		
 	 const selectElement = document.getElementById('ticketSelect');
 	 const selectedOption = selectElement.options[selectElement.selectedIndex];
 		  // 상품권 종류 선택 여부 확인
@@ -223,9 +233,11 @@
 		    alert('상품권 종류를 선택해주세요.');
 		    return; // 선택되지 않았을 경우 함수 종료
 		  }
-		alert("구매 완료 되었습니다.");
+		alert("구매가 완료되었습니다.")
 		const frm = document.memberUpdateFrm;
 		frm.submit();
+		  
+		  
 	}
 	
 function updatePrice() {
@@ -251,11 +263,11 @@ function updatePrice() {
 	}
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
-		
-		<% if( payment.getP_cnt() == 0  || payment == null ){ %>
+		<% if (payment.getP_cnt() == 0 || payment == null){ %>
 			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
 			return;
-		<%}%> 
+		<%}%>
+		
 		
 		
 		const frmData = new FormData(e.target);
@@ -271,10 +283,14 @@ function updatePrice() {
 			processData : false,
 			contentType : false,
 			success(responseText) {
-	            const {result, payment} = responseText;
-	            console.log(payment);
-	            document.querySelector("#remainingTicket").value = payment.p_cnt;
+	            const {result, uesPayment} = responseText;
+	            console.log(uesPayment);
+	            if(result == "실패"){
+	            	alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
+	            }
+	            document.querySelector("#remainingTicket").value = uesPayment.p_cnt; 
 	            alert("신청이 성공적으로 처리되었습니다.");
+	            
 	         },
 	          error() {
 	            alert("신청을 처리하는 동안 오류가 발생했습니다.");
@@ -299,7 +315,6 @@ function updatePrice() {
     function addressSearch() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
