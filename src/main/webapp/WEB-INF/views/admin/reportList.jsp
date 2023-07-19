@@ -151,7 +151,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
           </nav>
         </section>
         <section>
-            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: 620px">
+            <div class="card" style="margin: 30px 0 0 330px; width: 1300px; height: fit-content">
                 <div class="card-header" id="todayIssueHeader">
                 신고관리
                 </div>
@@ -204,9 +204,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                     <br>
                 </div>
             </div>
-            <div id='pagebar' style="margin-left: 330px">
-				<%= request.getAttribute("pagebar") %>
-			</div>
+           
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     

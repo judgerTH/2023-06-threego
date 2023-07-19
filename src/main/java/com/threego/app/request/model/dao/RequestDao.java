@@ -185,7 +185,7 @@ public class RequestDao {
 	public int insertRequest(Connection conn, String _writer, String msg) {
 		int result = 0; 
 		String sql = prop.getProperty("insertRequest");
-		// insert into msgbox values(seq_msg_no.nextval, 'P', 'admin', ?, ?, default)
+		// insert into msgbox values(seq_msg_no.nextval, 'P', 'admin', ?, ?, default, default)
 
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, _writer);
