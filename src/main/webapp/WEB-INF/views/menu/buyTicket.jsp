@@ -236,6 +236,7 @@
 	paysubmit.onclick =()=>{
 		if('<%= payment.getP_cnt() %>' > 0 ){
 			alert("이용권이 이미 있습니다.");
+			  window.location.reload();
 			return;
 		}
 		
@@ -246,9 +247,10 @@
 		    alert('상품권 종류를 선택해주세요.');
 		    return; // 선택되지 않았을 경우 함수 종료
 		  }
-		alert("구매가 완료되었습니다.")
 		const frm = document.memberUpdateFrm;
+		alert("구매가 완료되었습니다.");
 		frm.submit();
+		 // 폼 제출 후 새로고침
 		  
 		  
 	}
@@ -279,6 +281,7 @@ function updatePrice() {
 		<% if (payment.getP_cnt() == 0 || payment == null){ %>
 			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
 			return;
+			  window.location.reload();
 		<%}%>
 		
 		
@@ -299,10 +302,13 @@ function updatePrice() {
 			      const uesPayment = response.uesPayment;
 			      document.querySelector("#remainingTicket").value = uesPayment.p_cnt;
 			      alert("신청이 성공적으로 처리되었습니다.");
+			      window.location.href = "<%=request.getContextPath()%>/member/requestList?memberId=<%=loginMember.getId()%>";
 			    } else if (response.result === "실패") {
 			      alert("이용권이 모두 소진되었습니다. 이용권 구매 후 신청해주세요.");
+			      window.location.reload();
 			    } else {
 			      alert("알 수 없는 오류가 발생했습니다.");
+			      window.location.reload();
 			    }
 			  },
 			  error: function() {
