@@ -11,7 +11,8 @@ String post = loginMember.getPost();
 String address = loginMember.getAddress();
 
 String addr1 = address.substring(0, address.indexOf(" "));
-String addr2 = address.substring(address.indexOf(" ") + 1);
+
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,6 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 	href="<%=request.getContextPath()%>/css/member_page.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/mypage_content.css" />
-
 </head>
 <body>
 
@@ -69,11 +69,11 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 						<tbody>
 							<tr>
 								<th>아이디</th>
-								<td><%=memberId%></td>
+								<td><input type="hidden" id="memberId" name="memberId" value="<%=memberId%>" /><%=memberId%></td>
 							</tr>
 							<tr>
 								<th>이름</th>
-								<td><%=name%></td>
+								<td><input type="hidden" id="name" name="name" value="<%=name%>" /><%=name%></td>
 							</tr>
 							<tr>
 								<th>비밀번호 <span>*</span>
@@ -125,10 +125,10 @@ String addr2 = address.substring(address.indexOf(" ") + 1);
 							</tr>
 						</tbody>
 					</table>
-				</form>
 				<div class="btn-save-box">
 					<button type="submit" id="btn-save">변경사항 저장하기</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -308,6 +308,8 @@ document.memberUpdateFrm.onsubmit = (e) => {
 		    alert("모든 항목을 기입 후 버튼을 눌러주세요.");
 		    return false;
 		  }
+	  
+	  alert("회원수정이 성공적으로 처리되었습니다.");
 };
 
 </script>
