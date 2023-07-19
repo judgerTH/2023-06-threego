@@ -2,7 +2,10 @@ package com.threego.app.request.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +52,7 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 
 		String photo = multi.getFilesystemName("photo");
 		String post = multi.getParameter("post");
+		
 		System.out.println(id + " "  + address + "    "+ photo +"     " + post);
 		// 주소로부터 지역 구분
 		String location;
@@ -66,36 +70,81 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 		// 요청 테이블에 데이터 추가
 		boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
 		int cntResult = requestService.countUpdate(id); // 카운트 업데이트 
-		Payment payment = requestService.findPayment(id); // 업데이트된 payment 조회
+		Payment uesPayment = requestService.findPayment(id); // 업데이트된 payment 조회
 
-		if(payment.getP_cnt() == 0) {
-
+		if(uesPayment == null) {
+			response.setContentType("application/json; charset=utf-8");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", "실패");
+			
+			new Gson().toJson(map, response.getWriter());
+		}else {
+			
+			if(uesPayment.getP_cnt() == 0) {
 			int deletePayment = requestService.deletePayment(id); // 이용권을 다쓰면 delete
-
+			};
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", "성공");
+			map.put("uesPayment", uesPayment);
+			
+			new Gson().toJson(map, response.getWriter());
 		}
-
+		
+		
+//		if(uesPayment.getP_cnt() == 0) {
+//
+//			int deletePayment = requestService.deletePayment(id); // 이용권을 다쓰면 delete
+//			if(uesPayment == null) {
+//				
+//			}else {
+//				response.setContentType("application/json; charset=utf-8");
+//				
+//				Map<String, Object> map = new HashMap<>();
+//				map.put("result", "성공");
+//				map.put("uesPayment", uesPayment);
+//				
+//				new Gson().toJson(map, response.getWriter());
+//			}
+//		}
+		
+		
+		
+		// JSP 페이지로 포워딩
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/menu/buyTicket.jsp");
+//		dispatcher.forward(request, response);
+		
+		
+		
 		// 응답 처리
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-
+		
+		
+		
 		// Gson 객체 생성
-		Gson gson = new Gson();
-
-		// 응답 데이터 생성
-		String jsonResponse;
-		if (result) {
-			// 성공적으로 데이터가 추가된 경우
-			jsonResponse = "{\"success\": true, \"message\": \"요청이 성공적으로 저장되었습니다.\", \"payment\": " + gson.toJson(payment) + "}";
-		} else {
-			// 데이터 추가 실패한 경우
-			jsonResponse = "{\"success\": false, \"message\": \"요청 저장에 실패했습니다.\", \"payment\": " + gson.toJson(payment) + "}";
-		}
-
-		// 응답 전송
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		out.print(jsonResponse);
-		out.flush();
+//		Gson gson = new Gson();
+//
+//		// 응답 데이터 생성
+//		String jsonResponse;
+//		if (result) {
+//			// 성공적으로 데이터가 추가된 경우
+//			jsonResponse = "{\"success\": true, \"message\": \"요청이 성공적으로 저장되었습니다.\", \"payment\": " + gson.toJson(payment) + "}";
+//		} else {
+//			// 데이터 추가 실패한 경우
+//			jsonResponse = "{\"success\": false, \"message\": \"요청 저장에 실패했습니다.\", \"payment\": " + gson.toJson(payment) + "}";
+//		}
+//
+//		// 응답 전송
+//		PrintWriter out = response.getWriter();
+//		response.setContentType("application/json");
+//		response.setCharacterEncoding("UTF-8");
+//		out.print(jsonResponse);
+//		out.flush();
+		
+		
+		
+		
 	}
 }

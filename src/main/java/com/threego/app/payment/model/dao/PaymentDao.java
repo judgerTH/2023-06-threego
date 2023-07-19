@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.threego.app.admin.model.dao.AdminDao;
 import com.threego.app.payment.model.exception.PaymentException;
 import com.threego.app.payment.model.vo.Payment;
+import com.threego.app.request.model.exception.RequestException;
 
 public class PaymentDao {
 
@@ -112,6 +113,26 @@ public class PaymentDao {
 		}
 		
 		return result;
+	}
+
+	public Payment findPayment(Connection conn, String id) {
+		Payment payment = new Payment();
+		String sql = "select * from payment where p_mem_id = ?";
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			try(ResultSet rset = pstmt.executeQuery()){
+				while(rset.next()) {
+					payment = handlePaymentResultSet(rset);
+					System.out.println("payment@dao = " + payment);
+				}
+			}
+			
+		} catch (SQLException e) {
+			throw new RequestException(e);
+		}
+		return payment;
+		
 	}
 
 

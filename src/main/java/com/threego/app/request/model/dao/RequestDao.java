@@ -211,7 +211,7 @@ public class RequestDao {
 						payment = handlePaymentResultSet(rset);
 					}
 				}
-
+				
 			} catch (SQLException e) {
 				throw new RequestException(e);
 			}
