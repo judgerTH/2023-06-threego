@@ -1,11 +1,13 @@
+<%@page import="com.threego.app.msgbox.model.vo.MsgConfirm"%>
 <%@page import="com.threego.app.msgbox.model.vo.MsgBox"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file = "/WEB-INF/views/common/header.jsp" %>
     <%
+    	
     	String memberId = loginMember.getId();
-    	List<MsgBox> msgBoxes = (List<MsgBox>) request.getAttribute("msgBoxes");
+    	//List<MsgBox> msgBoxes = (List<MsgBox>) session.getAttribute("msgBoxes");
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,16 +43,38 @@
                     </ul>
                 </div>
          
-            <div class="right-div" >
+            <div class="right-div" style="height:fit-content;">
                 <h3>받은 메시지</h3>
                 <% if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
                 	<% for(MsgBox msgBox : msgBoxes) { %>
-		                <div class="letterBox">
+                	<% if(msgBox.getMsgConfirm() == MsgConfirm.O) {%>
+		                <div class="letterBox" style="color:grey;">
+		            <% } else { %>
+		            	<div class="letterBox">
+		            <% } %>
 		                	<div >
 		                		<p class="letterIcon" style="">✉️</p>
 		                	</div>
 		                	<div class="letterContent">
-		                		<p style="font-size:13px;">보낸사람 : 관리자 &nbsp;&nbsp;&nbsp; 전송일자 : <%= msgBox.getMsgSendingDate() %></p>
+		                		<div style="display:flex;">
+			                		<span style="font-size:13px;">보낸사람 : 관리자 &nbsp;&nbsp;&nbsp; 전송일자 : <%= msgBox.getMsgSendingDate() %></span>
+			                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                		<% if(msgBox.getMsgConfirm() == MsgConfirm.O) {%>
+			                			<button id="noteBoxCheck" style="display:none; font-size:13px; border-radius:10px; background-color:white;">확인</button>
+			                			<form action="<%= request.getContextPath() %>/member/noteBoxConfirm" id="msgCheckFrm" name="msgCheckFrm" method="post">
+			                			<input type="hidden" id="msgNo" name="msgNo" value="<%= msgBox.getMsgNo() %>">
+			                			<input type="hidden" id="msgReceiver" name="msgReceiver" value="<%= msgBox.getMsgReceiver() %>">
+			                			
+			                		</form>
+			                		<% } else { %>
+			                		<form action="<%= request.getContextPath() %>/member/noteBoxConfirm" id="msgCheckFrm" name="msgCheckFrm" method="post">
+			                			<input type="hidden" id="msgNo" name="msgNo" value="<%= msgBox.getMsgNo() %>">
+			                			<input type="hidden" id="msgReceiver" name="msgReceiver" value="<%= msgBox.getMsgReceiver() %>">
+				                		<button id="noteBoxCheck" style="font-size:13px; border-radius:10px; background-color:white;">확인</button>
+			                			
+			                		</form>
+			                		<% } %>
+		                		</div>
 		                		<p><%= msgBox.getMsgContent() %></p>
 		                	</div>
 		                </div>
@@ -60,8 +84,29 @@
                 	<div class="letterBox">받은 메시지가 없습니다</div>
                 <% } %>
             </div>
-    
+    		<div id='pagebar'>
+				<%= request.getAttribute("pagebar") %>
+			</div>
        </div>
+<script>
+	document.querySelectorAll("#noteBoxCheck").forEach((item) => {
+		item.onclick = (e) => {
+			if(confirm('확인하셨습니까?')) {
+				const frm = $("#msgCheckFrm");
+				const hiddenVal = document.querySelector("#msgNo");
+				const hiddenVal2 = document.querySelector("#msgReceiver");
+					
+				console.log(hiddenVal.value);
+				console.log(hiddenVal2.value);
+				frm.submit();
+					
+			} else {
+				return false;
+			}
+		};       
+	});
+	 
+</script>
 </body>
 </html>
     <%@ include file = "/WEB-INF/views/common/footer.jsp" %>

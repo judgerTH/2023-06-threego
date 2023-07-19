@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.threego.app.admin.model.exception.AdminException;
 import com.threego.app.member.model.exception.MemberException;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
 import com.threego.app.msgbox.model.vo.MsgBox;
+import com.threego.app.msgbox.model.vo.MsgConfirm;
 import com.threego.app.msgbox.model.vo.MsgType;
 import com.threego.app.payment.model.vo.PaymentDetail;
 import com.threego.app.request.model.vo.Request;
@@ -248,13 +250,16 @@ public class MemberDao {
 		return new Request(reqNo, reqWriter, reqLocationId, reqPost, reqAddress, reqPhoto, reqStatus, reqData, reqRider, reqCpDate);
 	}
 
-	public List<MsgBox> getMsgBoxList(Connection conn, String memberId) {
+	public List<MsgBox> getMsgBoxListPaging(Connection conn, String memberId, int start, int end) {
 		List<MsgBox> msgBoxes = new ArrayList<>();
-		String sql = prop.getProperty("getMsgBoxList");
+		String sql = prop.getProperty("getMsgBoxListPaging");
+		// select * from msgbox where msg_receiver = ? order by msg_no desc
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			
-			pstmt.setString(1, memberId);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, memberId);
 			
 			try(ResultSet rset = pstmt.executeQuery()){
 
@@ -278,8 +283,63 @@ public class MemberDao {
 		msgBox.setMsgReceiver(rset.getString("msg_receiver"));
 		msgBox.setMsgContent(rset.getString("msg_content"));
 		msgBox.setMsgSendingDate(rset.getDate("msg_sending_date"));
+		MsgConfirm msgConfirm = MsgConfirm.valueOf(rset.getString("msg_confirm"));
+		msgBox.setMsgConfirm(msgConfirm);
 		
 		return msgBox;
+	}
+
+	public int updateMsgBoxConfirm(Connection conn, int msgNo) {
+		int result =0;
+		String sql =prop.getProperty("updateMsgBoxConfirm");
+		// updateMsgBoxConfirm = update msgbox set msg_confirm = 'O' where msg_no = ?
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setInt(1, msgNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return result;
+	}
+
+	public int getTotalMsg(Connection conn, String memberId) {
+		int totalMsg = 0;
+		String sql = prop.getProperty("getTotalMsg");
+		// select count(*) from msgbox where msg_receiver = ?
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, "memberId");
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalMsg = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new AdminException(e);
+		}
+		return totalMsg;
+	}
+
+	public List<MsgBox> getMsgBoxList(Connection conn, String id) {
+		List<MsgBox> msgBoxes = new ArrayList<>();
+		String sql = prop.getProperty("getMsgBoxList");
+		// select * from msgbox where msg_receiver = ?
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			
+			pstmt.setString(1, id);
+			
+			try(ResultSet rset = pstmt.executeQuery()){
+
+				while(rset.next()){
+					MsgBox msgBox = handleMsgBoxResultSet(rset);
+					msgBoxes.add(msgBox);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MemberException(e);
+		}
+		return msgBoxes;
 	}
 
 
