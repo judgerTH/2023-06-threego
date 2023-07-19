@@ -9,7 +9,7 @@ alter user threego quota unlimited on users;
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '869,19192';
+-- alter system kill SESSION '873,57050';
  
 ---------------------------------------------------------------
 
@@ -96,7 +96,8 @@ create table request(
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
  create sequence seq_req_no;
-
+insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
+ 
 
 -- 게시판 테이블  
 create table board(
@@ -193,6 +194,9 @@ constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
 create sequence seq_w_no;
 
 -- 메시지 테이블
+
+
+
 create table msgbox(
     msg_no number, 
     msg_type varchar2(50) not null, 
@@ -325,9 +329,14 @@ update rider set r_status = '2' where r_id ='sukey0331';
 
 SELECT * FROM user_constraints WHERE table_name = 'rider' ;
 
+
+
+
  -- request 쿼리 
+insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
+
   insert into request values(
-    seq_req_no.nextval, 'tlfprl', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
+    seq_req_no.nextval, 'eogh', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
     );
 insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
 
@@ -344,14 +353,7 @@ select * from payment where (p_no between ? and ?) and(p_date >= TO_DATE(?, 'YYY
 -- 경고 쿼리
 insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
 
-
+select * from payment;
 -- 라이더 쿼리 
-delete from rider where r_id='sukey0331';
-update member set member_role='A' where id = 'admin2';
 
-SELECT sum(p_cnt)
-FROM payment
-WHERE p_date >= TO_DATE('23/07/01', 'YY/MM/DD')
-  AND p_date <= TO_DATE('23/07/14', 'YY/MM/DD');
 
-update member set member_role = 'R' where id = 'dbsdk1';
