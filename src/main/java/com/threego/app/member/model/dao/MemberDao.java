@@ -43,7 +43,7 @@ public class MemberDao {
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, id);
-			try(ResultSet rset = pstmt.executeQuery()){
+			try(ResultSet rset = pstmt.executeQuery()){    
 				
 				while(rset.next()) {
 					
