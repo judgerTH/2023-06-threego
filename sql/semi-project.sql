@@ -234,7 +234,6 @@ create table msgbox(
 );
 create sequence seq_msg_no;
 
-
 -- 여기까지 테이블 , 시퀀스, 트리거 생성 쿼리만! 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -249,6 +248,8 @@ create sequence seq_msg_no;
  insert into member values (
     'xogus', 'xogus','이태현','xogus@naver.com','01021111111','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
 );
+
+
 
 -- ticket
  insert into ticket values (
