@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쓰리고 | 이용방법</title>
     <style>
-h2 { display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; 
+#info-h2{ display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; 
   		margin-inline-start: 21%; margin-inline-end: 0px; font-weight: bold; }
 strong { letter-spacing: -1px; font-weight: bolder; font-size: 1.3rem !important; }
 span { color: #49B466; }
@@ -35,7 +35,7 @@ p { letter-spacing: -1px; padding-top: 6px; font-size: 1.1rem !important; word-b
 <body>
 <div class="container">
     <div class="top-div">
-        <h2>쓰리고 이용안내</h2>
+        <h2 id="info-h2">쓰리고 이용안내</h2>
     </div>
 
     <div class="info-boxes">
