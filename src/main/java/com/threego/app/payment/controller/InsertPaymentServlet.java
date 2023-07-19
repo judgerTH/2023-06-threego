@@ -33,7 +33,7 @@ public class InsertPaymentServlet extends HttpServlet {
         int result = paymentService.insertPayment(id, ticketId);
         // 수거신청 등 다른 동작 수행
         
-        
+        System.out.println(id+result);
         // 응답 처리 등
         response.setContentType("application/json; charset=utf-8");
         
