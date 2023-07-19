@@ -202,9 +202,6 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                     	</tbody>
                     </table>
                     <br>
-                    <div id='pagebar'>
-						<%= request.getAttribute("pagebar") %>
-					</div>
                 </div>
             </div>
            

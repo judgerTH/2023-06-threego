@@ -175,4 +175,17 @@ public class MemberService {
 		return msgBoxes;
 	}
 
+
+	public PaymentDetail findTotalPrice(String memberId) {
+		// 마이페이지 - 결제정보 - 누적금액 조회
+		Connection conn = getConnection();
+		PaymentDetail paymentDetail = memberDao.findTotalPrice(conn, memberId);
+		close(conn);
+		
+		return paymentDetail;
+	}
+
+
+	
+
 }

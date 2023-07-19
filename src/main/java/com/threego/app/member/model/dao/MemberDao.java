@@ -45,7 +45,7 @@ public class MemberDao {
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, id);
-			try(ResultSet rset = pstmt.executeQuery()){
+			try(ResultSet rset = pstmt.executeQuery()){    
 				
 				while(rset.next()) {
 					
@@ -289,6 +289,7 @@ public class MemberDao {
 		return msgBox;
 	}
 
+
 	public int updateMsgBoxConfirm(Connection conn, int msgNo) {
 		int result =0;
 		String sql =prop.getProperty("updateMsgBoxConfirm");
@@ -340,6 +341,38 @@ public class MemberDao {
 			throw new MemberException(e);
 		}
 		return msgBoxes;
+	}
+
+	public PaymentDetail findTotalPrice(Connection conn, String memberId) {
+		
+		PaymentDetail totalPrice = new PaymentDetail();
+		 String sql = "SELECT pd_mem_id, SUM(pd_tic_price) AS total_price " +
+			                 "FROM paymentDetail " +
+			                 "WHERE pd_mem_id = ? " +
+			                 "GROUP BY pd_mem_id";
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, memberId);
+			try(ResultSet rset = pstmt.executeQuery()){
+				
+				int count = 1;
+				
+				while(rset.next()) {
+				      String pdId = rset.getString("pd_mem_id");
+		                int pdTicPrice = rset.getInt("total_price");
+
+		                totalPrice.setPd_mem_id(pdId);
+		                totalPrice.setPd_tic_price(pdTicPrice);
+				}
+			}
+			
+		} catch (SQLException e) {
+			
+			throw new MemberException(e);
+		}
+		
+		return totalPrice;
+
 	}
 
 

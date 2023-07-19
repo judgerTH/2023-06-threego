@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.threego.app.admin.model.exception.AdminException;
 import com.threego.app.payment.model.vo.Payment;
 import com.threego.app.request.model.exception.RequestException;
 import com.threego.app.request.model.vo.Request;
@@ -59,7 +60,7 @@ public class RequestDao {
 	private Request handleRequestResultSet(ResultSet rset) throws SQLException {
 		int reqNo = rset.getInt("req_no");
 		String reqWriter = rset.getString("req_writer");
-		String reqLocationId = rset.getString("req_location_id");
+		String reqLocationId = rset.getString("location_name");
 		String reqPost = rset.getString("req_post");
 		String reqAddress = rset.getString("req_address");
 		String reqPhoto = rset.getString("req_photo");
@@ -117,13 +118,13 @@ public class RequestDao {
 		return acceptedRequest;
 	}
 
-	public List<Request> findByMyReq(Connection conn, String id) {
+	public List<Request> findByMyReq(Connection conn, int start, int end, String id) {
 	    List<Request> requestList = new ArrayList<>();
 	    String sql = prop.getProperty("findByMyReq");
 	    try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-
 			pstmt.setString(1, id);
-
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
 			try(ResultSet rset = pstmt.executeQuery()){
 
 				while(rset.next()) {
@@ -210,7 +211,7 @@ public class RequestDao {
 						payment = handlePaymentResultSet(rset);
 					}
 				}
-
+				
 			} catch (SQLException e) {
 				throw new RequestException(e);
 			}
@@ -241,6 +242,21 @@ public class RequestDao {
 				throw new RequestException(e);
 			}
 			return result;
+		}
+
+		public int getTotalCollection(Connection conn, String id) {
+			int totalCollection = 0;
+			String sql = prop.getProperty("getTotalCollection");
+			try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				pstmt.setString(1, id);
+				try(ResultSet rset = pstmt.executeQuery()) {
+					while(rset.next())
+						totalCollection = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				throw new RequestException(e);
+			}
+			return totalCollection;
 		}
 
 }

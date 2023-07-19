@@ -6,6 +6,7 @@
 <%
 String memberId = loginMember.getId();
 List<PaymentDetail> requestList = (List<PaymentDetail>) request.getAttribute("paymentList");
+PaymentDetail totalPrice = (PaymentDetail) request.getAttribute("totalPrice");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,6 +94,7 @@ List<PaymentDetail> requestList = (List<PaymentDetail>) request.getAttribute("pa
 						</tr>
 					</tbody>
 				</table>
+				<p style="font-weight: bold; font-size: 18px;"><%= totalPrice %></p>
 			</div>
 		</div>
 	</div>
