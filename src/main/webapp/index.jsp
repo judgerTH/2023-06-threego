@@ -21,7 +21,7 @@
 <main>
 
     <div id="main-info-container">
-        <img src="<%=request.getContextPath()%>/img/메인 이미지.jpg" alt="메인배너" class="main-img">
+        <img src="<%=request.getContextPath()%>/images/mainbanner_new.png" alt="메인배너" class="main-img">
         <div id = "main-info">
         	<h2 style = "color : #468B97; font-size : 40px; font-style :italic; font-family: 'TTWanjudaedunsancheB';">Three Go는요!</h2>
         	<div id = "main-info-card">
