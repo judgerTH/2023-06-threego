@@ -37,7 +37,7 @@
 					</tr>
 					<tr>
 						<th>접수지역</th>
-						<td><%=acceptedRequest.getReqLocationId() %></td>
+						<td><%=acceptedRequest.getReqLocationId()%></td>
 
 					</tr>
 					<tr>
@@ -95,7 +95,7 @@
 							type="hidden" name="reqWriter"
 							value="<%=acceptedRequest.getReqWriter()%>"> <input
 							type="hidden" name="reqStatus" value="1">
-						<button type="submit" class="btn-accept" id="btn-accept">수락</button>
+						<button type="submit" class="btn-accept" id="btn-accept1">수락</button>
 					</form>
 					<%} else if(acceptedRequest.getReqStatus().equals("1")){ %>
 					<form name="requestCancelFrm"
