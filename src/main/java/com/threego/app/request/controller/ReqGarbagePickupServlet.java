@@ -72,7 +72,7 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 		int cntResult = requestService.countUpdate(id); // 카운트 업데이트 
 		Payment uesPayment = requestService.findPayment(id); // 업데이트된 payment 조회
 
-		if(uesPayment == null) {
+		if(uesPayment == null ) {
 			response.setContentType("application/json; charset=utf-8");
 			
 			Map<String, Object> map = new HashMap<>();

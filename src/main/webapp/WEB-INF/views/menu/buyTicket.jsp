@@ -263,10 +263,8 @@ function updatePrice() {
 	}
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
-		<% if (payment.getP_cnt() == 0 || payment == null){ %>
-			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
-			return;
-		<%}%>
+		
+		
 		
 		
 		
