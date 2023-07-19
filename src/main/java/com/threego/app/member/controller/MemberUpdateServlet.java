@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.threego.app.common.util.MemberMvcUtils;
 import com.threego.app.member.model.service.MemberService;
 import com.threego.app.member.model.vo.Member;
 import com.threego.app.member.model.vo.MemberRole;
@@ -29,7 +30,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String memberId = request.getParameter("memberId");
 		String name = request.getParameter("name");
-		String password = request.getParameter("mb_password");
+		String password = MemberMvcUtils.getEncryptedPassword(request.getParameter("mb_password"), memberId);
 		
 		
 		String phone = request.getParameter("mb_tel");
@@ -42,10 +43,13 @@ public class MemberUpdateServlet extends HttpServlet {
 		
 		Member member = new Member(memberId, password, name, email, phone, MemberRole.U, Zip, address, null);
 		
+		System.out.println(member);
 		int result = memberService.updateMember(member);
 		System.out.println(member);
 		HttpSession session = request.getSession();
-		session.setAttribute("loginMember", memberId);
+
+		session.setAttribute("loginMember", memberService.findById(memberId));
+		
 
 		response.sendRedirect(request.getContextPath() + "/member/myPage");
 		
