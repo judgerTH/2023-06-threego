@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.threego.app.common.util.ThreegoUtils;
 import com.threego.app.payment.model.service.PaymentService;
-import com.threego.app.payment.model.vo.Payment;
 import com.threego.app.payment.model.vo.PaymentDetail;
 
 /**
@@ -40,9 +39,9 @@ public class AdminPaymentListServlet extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
-
 		// 매출 전체 조회		
 		List<PaymentDetail> paymentDetails = paymentService.findAllPaymentDetail(start, end);
+
 		// 페이지바영역 처리
 		int totalPaymentDetail = paymentService.getTotalPaymentDetail();
 		String url = request.getRequestURI();

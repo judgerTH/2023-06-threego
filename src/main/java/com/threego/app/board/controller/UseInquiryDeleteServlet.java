@@ -35,7 +35,6 @@ public class UseInquiryDeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		int no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
 		
 		
 		int result = boardService.deleteBoard(no); 

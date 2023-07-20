@@ -26,7 +26,6 @@ public class MemberEnrollSearchServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		if(userId!=null) {
 			
-//			System.out.println(userId);
 			Member searchMemberById = memberService.findById(userId);
 			if(searchMemberById  != null) {
 				response.setContentType("application/json; charset=utf-8");
@@ -43,7 +42,6 @@ public class MemberEnrollSearchServlet extends HttpServlet {
 		}
 		String email = request.getParameter("email");
 		if(email!=null) {
-//			System.out.println(email);
 			Member searchMemberByEmail = memberService.findByEmail(email);
 			if(searchMemberByEmail  != null) {
 				response.setContentType("application/json; charset=utf-8");
@@ -60,7 +58,6 @@ public class MemberEnrollSearchServlet extends HttpServlet {
 		}
 		String phone = request.getParameter("phone");
 		if(phone!=null) {
-			System.out.println(phone);
 			int result = memberService.findByPhone(phone);
 			if(result>0) {
 				response.setContentType("application/json; charset=utf-8");

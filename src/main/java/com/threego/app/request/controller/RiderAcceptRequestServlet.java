@@ -72,7 +72,6 @@ public class RiderAcceptRequestServlet extends HttpServlet {
 		Request acceptedRequest = requestService.findByReqno(reqNo);
 		
 		Member writer = memberService.findById(_writer);
-		System.out.println(_writer);
 		
 		// 접수 현황에 따른 실시간 알림
 		if(acceptedRequest.getReqStatus().equals("3")) { // 접수 취소일 경우

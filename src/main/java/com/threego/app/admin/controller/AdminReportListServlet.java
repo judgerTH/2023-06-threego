@@ -48,7 +48,6 @@ public class AdminReportListServlet extends HttpServlet {
 //				warning.setWarningConfirm(1);
 //			}
 //		}
-		System.out.println(warnings);
 		
 		// 페이지바영역 처리
 		int totalMember = adminService.getTotalMember();

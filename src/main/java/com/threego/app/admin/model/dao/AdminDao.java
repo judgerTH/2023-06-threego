@@ -244,9 +244,7 @@ private Properties prop = new Properties();
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, id);
-			System.out.println(id);
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -445,9 +443,8 @@ private Properties prop = new Properties();
 		String boardWriter = rset.getString("b_writer");
 		String boardContent = rset.getString("b_content");
 		Date boardRegDate = rset.getDate("b_reg_date");
-		int boardCnt = rset.getInt("b_cnt");
 		
-		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
+		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate);
 
 	}
 
@@ -566,7 +563,6 @@ private Properties prop = new Properties();
 			pstmt.setString(1, riderId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -583,7 +579,6 @@ private Properties prop = new Properties();
 			pstmt.setString(2, approvementMsg);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -599,7 +594,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -615,7 +609,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -633,7 +626,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
