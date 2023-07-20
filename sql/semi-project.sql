@@ -5,11 +5,10 @@ identified by threego
 default tablespace users;
 grant connect, resource to threego;
 alter user threego quota unlimited on users;
---select * from request where req_rider = 'xogus';
 -- drop user threego cascade;
 
 -- select sid, serial#, username,status from v$session where username = 'THREEGO';
--- alter system kill SESSION '873,57050';
+-- alter system kill SESSION '142,20889';
  
 ---------------------------------------------------------------
 
@@ -36,7 +35,7 @@ create table ticket(
     tic_name varchar2(30) not null,
     tic_cnt number not null,
     tic_price number not null,
-    constraint  pk_ticket_no primary key(tic_id)
+    constraint  pk_ticket_tic_id primary key(tic_id)
     );        
 
 -- 구매 테이블 
@@ -66,10 +65,6 @@ create table paymentDetail(
 create sequence seq_pd_no;
 
 
-
-
-CREATE OR REPLACE TRIGGER trg_request_insert
-AFTER INSERT ON request
 -- 구매내역  trigger
 CREATE OR REPLACE TRIGGER trg_insert_payment_detail
 AFTER INSERT ON payment
@@ -100,25 +95,6 @@ create table request(
     -- 0 수거 대기중, 1 수거중,  2 수거완료 3 수거취소
 );
  create sequence seq_req_no;
-insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
- 
-
-
-
-
-
-
-
-
-
-select * from payment;
- select * from ticket;
- 
-SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
-FROM ticket t
-JOIN payment p ON t.tic_id = p.p_tic_id;
- 
-
 
 -- 게시판 테이블  
 create table board(
@@ -128,7 +104,6 @@ create table board(
     b_writer varchar2(30) not null,
     b_content varchar2(4000) not null,
     b_reg_date date default sysdate,
-    b_cnt	 number default 0,
     constraints pk_board_b_no primary key(b_no),
     constraints fk_board_b_writer foreign key(b_writer) references member(id) on delete cascade,
     constraints ck_board_b_type check(b_type in ('N', 'Q'))
@@ -152,7 +127,7 @@ create table board_comment(
  create sequence seq_c_no;
 
 
--- 지역구 테이블
+-- 지역 테이블
 create table location(
     l_id varchar2(30),	
     l_name	varchar2(20) not null,
@@ -176,7 +151,6 @@ create table rider(
 
 -- 탈퇴 회원 테이블 
 create table del_member(
-
 del_id varchar2(30),
 del_pwd varchar2(300)	 not null,
 del_email	varchar2(200),	
@@ -213,11 +187,8 @@ constraints ck_warning_w_confirm check(w_confirm in(0, 1))
 -- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
--- drop table warning;
+
 -- 메시지 테이블
-
-
-
 create table msgbox(
     msg_no number, 
     msg_type varchar2(50) not null, 
@@ -234,20 +205,11 @@ create table msgbox(
 );
 create sequence seq_msg_no;
 
--- 여기까지 테이블 , 시퀀스, 트리거 생성 쿼리만! 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
--- test용 insert 구문
+-- 시연용 
 -- member
- insert into member values (
-    'admin', 'admin','관리자','admin@admin1.com','01033233372','A','11111' ,'관리자입니다.',default
-);   
- insert into member values (
-    'eogh', 'eogh','황대호','eogh@naver.com','01011111111','U','05673' ,'서울 송파구 오금로32길 31 (송파동,래미안송파파인탑) 103동1604호',default
-);  
- insert into member values (
-    'xogus', 'xogus','이태현','xogus@naver.com','01021111111','R','17867' ,'경기 평택시 현신3길 76 (용이동,평택 용이2차푸르지오) 215동601호',default
-);
+ 
 
 
 
@@ -266,9 +228,7 @@ create sequence seq_msg_no;
  );
 
 -- 구매
- insert into payment values (
-     seq_payment_no.nextval, 'eogh','tic3',sysdate,3,0
- );
+
  
 
 -- 지역구
@@ -282,25 +242,7 @@ insert into location values(
     'S3', '광진구,성동구'
 );
 
- insert into rider values (
-    'xogus', 'S2','1', sysdate,sysdate, 'asdasd'
-);
 
-
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 2, default, 'xogus',sysdate
- );
-  insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 0, default, null,default
- );
-   insert into request values(
- seq_req_no.nextval, 'eogh', 'S2', '미정ㅠㅠ', 1, default, 'xogus',null
- );
-   
-
-
-
---delete from member where id = 'eogh';
 
 -- commit;
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -317,240 +259,13 @@ select * from msgbox;
 select * from warning;
 select * from board;
 select * from board_comment;
-
-
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 
- -- 개인별 sql 쿼리 작성 모음!
-
---CREATE OR REPLACE TRIGGER trg_insert_payment_detail
---AFTER INSERT ON payment
---FOR EACH ROW
---BEGIN
---  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
---  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
---END;
---/
-
-
-INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
--- drop table msgbox;
-
-alter table rider modify r_status check (r_status in ('0', '1', '2'));
-
-update rider set r_status = '0', up_date = null where r_id='sukey';
-
-update member set email = 'admin@naver.com' where id = 'admin';
-select * from payment;
--- update request set req_status = '1' ,  req_rider = ? where req_no = ?
-
--- 테이블 조인 쿼리
-
-SELECT t.tic_name, t.tic_price, p.p_date, p.p_cnt
-FROM ticket t
-JOIN payment p ON t.tic_id = p.p_tic_id;
-
-
--- 보드 test 쿼리 
-insert into board values(select ROW_NUMBER() OVER (ORDER BY b_no) from board,'N','z','관리자','zz', default, default);
-
-insert into board values(
-   seq_board_no.nextval ,'Q','왜이렇게 비싼가요','eogh','너무비싸요', default, default
-);
- update board set b_tittle = 'sdsdsd', b_content = 'sdsdsdsd' where b_no = 1;
-
--- 라이더 test 쿼리
-alter table rider modify r_status check (r_status in ('0', '1', '2'));
-update rider set r_status = '2' where r_id ='sukey0331';
-
-SELECT * FROM user_constraints WHERE table_name = 'rider' ;
 
 
 
-
- -- request 쿼리 
-insert into request values (seq_req_no.nextval, 'xogus', 'S1', '1234', '경기도 무무무', '사진', default,sysdate, 'xogus', sysdate);
-
-  insert into request values(
-    seq_req_no.nextval, 'eogh', 'S1', '04820', '서울 성동구 가람길 46 공중화장실','사진', default,default, null, default
-    );
-insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
-
-select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r where req_rider =  'xogus';
-
- SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = request;
-select r.*, (select l_name from location where l_id = r.req_location_id) location_name from request r;
-
--- 구매 쿼리 
-delete from payment where p_no = 1;
-select * from payment where (p_no between ? and ?) and(p_date >= TO_DATE(?, 'YYYY/MM/DD') AND p_date <= TO_DATE(?, 'YYYY/MM/DD'))
-
-
--- 경고 쿼리
-insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
-
-select * from payment;
--- 라이더 쿼리 
-
-delete from rider where r_id='sukey0331';
-update member set member_role='U' where id = 'sukey0331';
-
-
-
-create sequence seq_pd_no;
-insert into paymentDetail 
-select * from payment;
-
-
-
-CREATE OR REPLACE TRIGGER trg_insert_payment_detail
-AFTER INSERT ON payment
-FOR EACH ROW
-BEGIN
-  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
-  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
-END;
-/
-select * from payment;
-
-INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
--- drop table msgbox;
-
-
-alter table rider modify r_status check (r_status in ('0', '1', '2'));
-
-update rider set r_status = '0', up_date = null where r_id='sukey';
-
-
-update member set email = 'admin@naver.com' where id = 'admin';
-
--- update request set req_status = '1' ,  req_rider = ? where req_no = ?
-
-select * from request;
-insert into request values(
- seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
-
-select * from request;
-select * from warning;
-select * from msgbox;
-insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
-insert into warning values(seq_w_no.nextval,9,'sukey2','신고합니다',default, default, null);
-
-select 
-    w.*, 
-    (select r.req_writer from request r where req_no = w_req_no) req_writer,
-    (select r.req_rider from request r where req_no = w_req_no) req_rider,
-    (select m.member_role from member m where w_writer = m.id) member_role
-from 
-    warning w
-where 
-    w_no = 7;
-
-select
-    * 
-from 
-    (select 
-        row_number() over (order by m.msg_no desc) rnum, 
-        m.*
-    from 
-        msgbox m) 
-    where 
-        (rnum between ? and ?) and (msg_receiver = ?)
-
-
-select count(*) from request where req_writer = 'tlfprl' and req_staus=2;
 
   
-  select 
-  sum(p_cnt)
-  from payment 
-  where
-  p_mem_id = 'tlfprl' ;
   
-  
-create table msgbox(
-    msg_no number, 
-    msg_type varchar2(50) not null, 
-    msg_sender varchar2(30) not null, 
-    msg_receiver varchar2(30) not null, 
-    msg_content varchar2(4000), 
-    msg_sending_date date default sysdate,
-    msg_confirm char(1) default 'X',
-    constraints pk_msgbox_msg_no primary key(msg_no),
-    constraints fk_msgbox_msg_sender foreign key(msg_sender) references member(id) on delete cascade,
-    constraints ck_msgbox_msg_type check(msg_type in('C', 'A', 'P')),
-    constraints ck_msgbox_msg_confirm check(msg_confirm in ('O', 'X'))
-    -- c 는 조치 ,  a 는 승인 알람,  p는 진행상황알람 
-);
 
-create table paymentDetail(
-    pd_no   number,
-    pd_mem_id varchar2(30),
-    pd_tic_id   varchar2(30),
-    pd_tic_price number,
-    pd_date date default sysdate,
-    constraint  pk_payment_pd_no primary key(pd_no),
-    constraints fk_payment_pd_mem_id foreign key(pd_mem_id) references member(id) 
-);
-
-
-
-create sequence seq_pd_no;
-insert into paymentDetail 
-select * from payment;
-
-
-
-CREATE OR REPLACE TRIGGER trg_insert_payment_detail
-AFTER INSERT ON payment
-FOR EACH ROW
-BEGIN
-  INSERT INTO paymentDetail (pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date)
-  VALUES (seq_pd_no.NEXTVAL, :NEW.p_mem_id, (SELECT tic_id FROM ticket WHERE tic_id = :NEW.p_tic_id), (SELECT tic_price FROM ticket WHERE tic_id = :NEW.p_tic_id), :NEW.p_date);
-END;
-/
-select * from payment;
-
-INSERT INTO payment (p_no, p_mem_id, p_tic_id, p_cnt, p_use_cnt) VALUES (seq_payment_no.NEXTVA, ?, ?, ?, ?)
--- drop table msgbox;
-
-
-alter table rider modify r_status check (r_status in ('0', '1', '2'));
-
-update rider set r_status = '0', up_date = null where r_id='sukey';
-
-
-update member set email = 'admin@naver.com' where id = 'admin';
-
--- update request set req_status = '1' ,  req_rider = ? where req_no = ?
-
-select * from member;
-
-
-
-select * from request;
-insert into request values(
- seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S3', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
- insert into request values(
- seq_req_no.nextval, 'eogh', 'S1', '미정ㅠㅠ', 0, default, 'xogus',sysdate
- );
-
-select * from request;
-select * from warning;
-insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
-insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
-update member set member_role = 'R' where id = 'dbsdk1';
-
-select count(*) from warning where w_reg_date = sysdate and  w_confirm = 0;
