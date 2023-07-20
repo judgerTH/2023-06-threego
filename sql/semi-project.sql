@@ -264,15 +264,3 @@ select * from warning;
 select * from board;
 select * from board_comment;
 --------------------------------------------------------------------------------------------------------------------------------------------
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-=======
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
