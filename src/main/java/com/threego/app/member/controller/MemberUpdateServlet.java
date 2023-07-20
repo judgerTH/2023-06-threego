@@ -49,7 +49,6 @@ public class MemberUpdateServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		session.setAttribute("loginMember", memberService.findById(memberId));
-		
 
 		response.sendRedirect(request.getContextPath() + "/member/myPage");
 		
