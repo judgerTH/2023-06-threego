@@ -153,7 +153,6 @@
 </body>
 <script>
 
-
 application.onclick=(e)=>{
 	<%if(loginMember == null) {%>
 	alert("로그인 후 이용 가능합니다.");<%}else{%>
