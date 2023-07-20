@@ -552,3 +552,5 @@ select * from warning;
 insert into request values(seq_req_no.nextval, 'sukey2', 'S1', '미', '강남구', '미정', '1', default, 'sukey0331', sysdate);
 insert into warning values(seq_w_no.nextval,8,'sukey2','신고합니다',default, default, null);
 update member set member_role = 'R' where id = 'dbsdk1';
+
+select count(*) from warning where w_reg_date = sysdate and  w_confirm = 0;
