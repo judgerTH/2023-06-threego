@@ -47,10 +47,10 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
-			List<MsgBox> msgBoxes = memberService.getMsgBoxList(member.getId());
-			session.setAttribute("msgBoxes", msgBoxes);
 
 			if(member != null && pwd.equals(member.getPwd())) {
+				List<MsgBox> msgBoxes = memberService.getMsgBoxList(member.getId());
+				session.setAttribute("msgBoxes", msgBoxes);
 				session.setAttribute("loginMember", member);
 				response.sendRedirect(request.getContextPath());
 				

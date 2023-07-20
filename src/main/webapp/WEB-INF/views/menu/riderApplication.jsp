@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-	<div class="rider-container" >
+	<div class="rider-container" style = "hegith : 600px; " >
 		<div class="top-div" style = "margin-right: 1000px;">
 			<h2>수고미 지원안내</h2>
 		</div>
@@ -147,8 +147,8 @@
 		
 
 	</div>
-	<form id="riderComplete" style="display: none;">
-						<div>  라이더지원이 완료되어습니다. 관리자 확인 후 1:1 메세지 함으로 연락드리겠습니다.</div></form>
+	<form id="riderComplete" style="display: none; height : 600px; display: flex; justify-content : center; align-items:center;">
+						<div style ="font-size : 30px; ">  라이더지원이 완료되어습니다. 관리자 확인 후 1:1 메세지 함으로 연락드리겠습니다.</div></form>
 </div>
 </body>
 <script>
