@@ -1,8 +1,9 @@
 package com.threego.app.msgbox.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class MsgBox {
+public class MsgBox implements Serializable{
 
 	private int msgNo;
 	private MsgType msgType;
