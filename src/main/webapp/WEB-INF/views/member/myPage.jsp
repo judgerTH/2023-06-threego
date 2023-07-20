@@ -301,8 +301,7 @@ document.memberUpdateFrm.onsubmit = (e) => {
 	  }else{
 		  cnt++;
 	  }
-	  
-
 </script>
+	  
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

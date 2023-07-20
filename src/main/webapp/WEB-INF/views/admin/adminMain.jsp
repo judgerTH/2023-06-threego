@@ -25,10 +25,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
     <title>AdminPage</title>
     <script src="<%=request.getContextPath()%>/js/jquery-3.7.0.js"></script>
-    <script
-      type="text/javascript"
-      src="https://www.gstatic.com/charts/loader.js"
-    ></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
     <section>

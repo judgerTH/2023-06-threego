@@ -3,9 +3,9 @@
 /* my page 회원정보 수정*/
 #mypage-table {border-collapse : collapse;}
 #mypage-table th, td {border-top: 2px solid black; border-bottom : 2px solid black; }
-#mypage-table th{width : 150px; }
+#mypage-table th{width : 150px; text-align:left; padding : 15px;}
 #mypage-table td{width : 900px; height : 50px; text-align : left; padding : 5px; }
-#mypage-table input{padding : 10px 40px; width : 300px;}
+#mypage-table input{padding : 10px 3px; font-size: 15px; width : 300px; border-radius : 10px; border: 1px solid #d2d2d2; font-family: 'GmarketSansMedium';}
 .btn-save-box {display: flex; justify-content: center; align-items: center;}
 #btn-save{border: none; border-radius: 50px; width: 250px; text-align: center; padding: 10px; margin-top: 20px; background-color :#468B97; color: white;
 		 font-size: 20px; font-weight: bold; }

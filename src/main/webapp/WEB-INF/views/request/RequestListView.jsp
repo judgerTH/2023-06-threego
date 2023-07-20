@@ -51,9 +51,7 @@
 					<tr>
 						<th>접수사진</th>
 						<td>
-							<%--
-     				<img src = "<%=request.getContextPath()%>/upload/reqphoto/<%=acceptedRequest.getReqPhoto()%>">
-                	 --%>
+     					<img src = "<%=request.getContextPath()%>/upload/reqphoto/<%=acceptedRequest.getReqPhoto()%>" style= "width : 200px; height: 200px;">
 						</td>
 					</tr>
 					<tr>

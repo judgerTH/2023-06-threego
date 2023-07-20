@@ -576,7 +576,7 @@ private Properties prop = new Properties();
 	public int sendApprovementMsg(Connection conn, String riderId, String approvementMsg) {
 		int result = 0;
 		String sql = prop.getProperty("sendApprovementMsg");
-		// insert into msgbox values (seq_msg_no.nextval, 'A', ?, 'admin', ?, default)
+		// insert into msgbox values (seq_msg_no.nextval, 'A', 'admin', ?, ?, default, default)
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, riderId);
@@ -625,6 +625,7 @@ private Properties prop = new Properties();
 	public int sendRefusalMsg(Connection conn, String riderRefusalId, String refusalMsg) {
 		int result = 0;
 		String sql = prop.getProperty("sendRefusalMsg");
+		// insert into msgbox values (seq_msg_no.nextval, 'A', 'admin', ?, ?, default, default)
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, riderRefusalId);

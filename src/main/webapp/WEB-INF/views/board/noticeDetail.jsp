@@ -66,7 +66,6 @@ Board board = (Board) request.getAttribute("board");
 	margin-left: 220px;
 	padding: 20px;
 	width: 70%;
-	height : 900px;
 	margin-top: 20px;
 	font-size: 20px;
 }
