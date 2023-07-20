@@ -257,6 +257,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                    hiddenVal1.value = content;
                    hiddenVal2.value = userID;
                    hiddenVal3.value = warningNo;
+                   
                    console.log(warningNo);
                    frm.submit();
                };
