@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.threego.app.payment.model.dao.PaymentDao;
 import com.threego.app.payment.model.vo.Payment;
+import com.threego.app.payment.model.vo.PaymentDetail;
 
 public class PaymentService {
 
@@ -63,6 +64,20 @@ public class PaymentService {
 	      }
 	      
 	      return payment;
+	}
+
+	public List<PaymentDetail> findAllPaymentDetail(int start, int end) {
+		Connection conn = getConnection();
+		List<PaymentDetail> paymentDetails = paymentDao.findAllPaymentDetail(conn, start, end);
+		close(conn);
+		return paymentDetails;
+	}
+
+	public int getTotalPaymentDetail() {
+		Connection conn = getConnection();
+		int totalPaymentDetail = paymentDao.getTotalPaymentDetail(conn);
+		close(conn);
+		return totalPaymentDetail;
 	}
 
 
