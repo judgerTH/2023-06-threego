@@ -64,40 +64,38 @@ public class ReqGarbagePickupServlet extends HttpServlet {
 			// 기본값이나 처리할 수 없는 경우의 지역 설정
 			location = "Unknown";
 		}
-		
+
 		int cntResult = requestService.countUpdate(id); // 카운트 업데이트 
 		Payment uesPayment = requestService.findPayment(id); // 업데이트된 payment 조회
 
-<<<<<<< HEAD
 		if(uesPayment == null ) {
-=======
-		if(uesPayment == null) {
-			// payment 가 null일 경우 실패 처리
->>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
-			response.setContentType("application/json; charset=utf-8");
-			Map<String, Object> map = new HashMap<>();
-			map.put("result", "실패");
-			new Gson().toJson(map, response.getWriter());
-			
-		}else {
-			// request 테이블에 수거신청한 데이터 추가
-			boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
-			
-			if(uesPayment.getP_cnt() == 0) {
-			int deletePayment = requestService.deletePayment(id); // 잔여 이용권을 다쓰면 payment 테이블에서 delete 처리
-			};
-			
-			response.setContentType("application/json; charset=utf-8");
-			Map<String, Object> map = new HashMap<>();
-			map.put("result", "성공");
-			map.put("uesPayment", uesPayment);
-			
-			new Gson().toJson(map, response.getWriter());
+			if(uesPayment == null) {
+				// payment 가 null일 경우 실패 처리
+				response.setContentType("application/json; charset=utf-8");
+				Map<String, Object> map = new HashMap<>();
+				map.put("result", "실패");
+				new Gson().toJson(map, response.getWriter());
+
+			}else {
+				// request 테이블에 수거신청한 데이터 추가
+				boolean result = requestService.reqGarbagePickup(id, location, post, address, photo);
+
+				if(uesPayment.getP_cnt() == 0) {
+					int deletePayment = requestService.deletePayment(id); // 잔여 이용권을 다쓰면 payment 테이블에서 delete 처리
+				};
+
+				response.setContentType("application/json; charset=utf-8");
+				Map<String, Object> map = new HashMap<>();
+				map.put("result", "성공");
+				map.put("uesPayment", uesPayment);
+
+				new Gson().toJson(map, response.getWriter());
+			}
+
+
+
+
+
 		}
-		
-		
-		
-		
-		
 	}
 }
