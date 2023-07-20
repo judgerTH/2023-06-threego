@@ -4,15 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<% String msg = (String) session.getAttribute("msg"); %>
-<% session.removeAttribute("msg"); %>
 
-<script>
-    // msg 값이 있을 경우 alert 창으로 출력
-    <% if (msg != null) { %>
-        alert("<%= msg %>");
-    <% } %>
-</script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
