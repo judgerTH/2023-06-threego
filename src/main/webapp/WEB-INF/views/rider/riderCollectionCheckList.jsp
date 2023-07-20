@@ -9,17 +9,7 @@ List<Request> MyRequestList = (List<Request>) request.getAttribute("requestList"
 Request acceptedRequest = (Request) request.getAttribute("acceptedRequest");
 String memberId = loginMember.getId();
 %>
-<%
-String msg = (String) session.getAttribute("msg");
-if (msg != null && !msg.isEmpty()) {
-%>
-<script>
-alert("<%=msg%>");
-</script>
-<%
-session.removeAttribute("msg");
-}
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
