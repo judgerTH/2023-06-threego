@@ -3,6 +3,7 @@ package com.threego.app.payment.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Properties;
 import com.threego.app.admin.model.dao.AdminDao;
 import com.threego.app.payment.model.exception.PaymentException;
 import com.threego.app.payment.model.vo.Payment;
+import com.threego.app.payment.model.vo.PaymentDetail;
 import com.threego.app.request.model.exception.RequestException;
 
 public class PaymentDao {
@@ -124,7 +126,6 @@ public class PaymentDao {
 			try(ResultSet rset = pstmt.executeQuery()){
 				while(rset.next()) {
 					payment = handlePaymentResultSet(rset);
-					System.out.println("payment@dao = " + payment);
 				}
 			}
 			
@@ -133,6 +134,47 @@ public class PaymentDao {
 		}
 		return payment;
 		
+	}
+
+	public List<PaymentDetail> findAllPaymentDetail(Connection conn, int start, int end) {
+		List<PaymentDetail> paymentDetails = new ArrayList<>();
+		String sql = prop.getProperty("findAllPaymentDetail");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					PaymentDetail paymentDetail = handlePaymentDetailResultSet(rset);
+					paymentDetails.add(paymentDetail);
+				}
+			}
+		}catch (SQLException e) {
+			throw new PaymentException(e);
+		}
+		return paymentDetails;
+	}
+
+	private PaymentDetail handlePaymentDetailResultSet(ResultSet rset) throws SQLException {
+		int pd_no = rset.getInt("pd_no");
+		String pd_mem_id = rset.getString("pd_mem_id");
+		String pd_tic_id = rset.getString("pd_tic_id");
+		int pd_tic_price = rset.getInt("pd_tic_price");
+		Date pd_date = rset.getDate("pd_date");
+		return new PaymentDetail(pd_no, pd_mem_id, pd_tic_id, pd_tic_price, pd_date);
+	}
+
+	public int getTotalPaymentDetail(Connection conn) {
+		int totalPaymentDetail = 0;
+		String sql = prop.getProperty("getTotalPaymentDetail");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next())
+					totalPaymentDetail = rset.getInt(1);
+			}
+		}catch (SQLException e) {
+			throw new PaymentException(e);
+		}
+		return totalPaymentDetail;
 	}
 
 

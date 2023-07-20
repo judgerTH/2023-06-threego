@@ -192,9 +192,11 @@ div#pagebar {
 					%>
 					<tr>
 						<td><%=board.getBoardNo()%></td>
-						<td><%=board.getBoardTitle()%><img
+						<td><%=board.getBoardTitle()%>
+						<img
 							src="<%=request.getContextPath()%>/images/secret.png" alt=""
-							style="width: 16px;" /></td>
+							style="width: 16px;" />	
+						</td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
@@ -206,12 +208,14 @@ div#pagebar {
 					%>
 					<tr>
 						<td><%=board.getBoardNo()%></td>
-						<td><a
-							href="<%=request.getContextPath()%>/board/useInquiryDetail?no=<%=board.getBoardNo()%>">
+						<td>
+							<a
+								href="<%=request.getContextPath()%>/board/useInquiryDetail?no=<%=board.getBoardNo()%>">
 								<%=board.getBoardTitle()%> <img
-								src="<%=request.getContextPath()%>/images/secret.png" alt=""
+								src="<%=request.getContextPath()%>/images/open.png" alt=""
 								style="width: 16px;" />
-						</a></td>
+							</a>	
+						</td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
@@ -220,9 +224,11 @@ div#pagebar {
 					%>
 					<tr>
 						<td><%=board.getBoardNo()%></td>
-						<td><a href="#" onclick="notRead();"> <%=board.getBoardTitle()%></a>
+						<td>
+							<a href="#" onclick="notRead();"> <%=board.getBoardTitle()%></a>
 							<img src="<%=request.getContextPath()%>/images/secret.png" alt=""
-							style="width: 16px;" /></td>
+							style="width: 16px;" />
+						</td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 

@@ -216,7 +216,7 @@ public class MemberDao {
 		List<Request> reqList = new ArrayList<>();
 		  String sql = "SELECT req_no, req_writer, req_location_id, req_post, req_address, req_photo, req_status, req_date, req_rider, req_cp_date " +
 	                 "FROM request " +
-	                 "WHERE req_writer = ?";
+	                 "WHERE req_writer = ? ORDER BY req_no desc";
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 			

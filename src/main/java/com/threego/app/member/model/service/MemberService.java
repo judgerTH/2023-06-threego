@@ -42,7 +42,6 @@ public class MemberService {
 		Connection conn = getConnection();
 		try {
 			result = memberDao.updateMember(conn, member);
-			System.out.println(result);
 			commit(conn);
 		} catch(Exception e) {
 			rollback(conn);

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.threego.app.common.util.ThreegoUtils;
 import com.threego.app.payment.model.service.PaymentService;
-import com.threego.app.payment.model.vo.Payment;
+import com.threego.app.payment.model.vo.PaymentDetail;
 
 /**
  * Servlet implementation class AdminPaymentListServlet
@@ -39,16 +39,15 @@ public class AdminPaymentListServlet extends HttpServlet {
 		int start = (cpage - 1) * LIMIT + 1;
 		int end = cpage * LIMIT;
 		
-		// 매출 전체조회
-		List<Payment> payments = paymentService.findAll(start, end);
-		System.out.println(payments);
-		
+		// 매출 전체 조회		
+		List<PaymentDetail> paymentDetails = paymentService.findAllPaymentDetail(start, end);
+
 		// 페이지바영역 처리
-		int totalPayment = paymentService.getTotalPayment();
+		int totalPaymentDetail = paymentService.getTotalPaymentDetail();
 		String url = request.getRequestURI();
-		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalPayment, url);
+		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalPaymentDetail, url);
 		
-		request.setAttribute("payments", payments);
+		request.setAttribute("paymentDetails", paymentDetails);
 		request.setAttribute("pagebar", pagebar);
 		request.getRequestDispatcher("/WEB-INF/views/admin/paymentList.jsp")
 		.forward(request, response);

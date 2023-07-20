@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
+<<<<<<< HEAD
 Payment payment = (Payment)request.getAttribute("payment");
 String msg = (String) session.getAttribute("msg");
 /* 		  	System.out.println(msg); */
@@ -13,6 +14,12 @@ String msg = (String) session.getAttribute("msg");
 %>
 
 
+=======
+	Payment payment = (Payment)request.getAttribute("payment");
+	
+	/* System.out.println("jsp ---"  + payment);  */
+%>
+>>>>>>> branch 'master' of https://github.com/semijo6/semi-project.git
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -325,8 +332,7 @@ function updatePrice() {
 	</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	
-	
+
     function addressSearch() {
     	
     	

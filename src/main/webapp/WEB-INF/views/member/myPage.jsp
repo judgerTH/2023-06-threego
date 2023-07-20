@@ -10,6 +10,7 @@ String phone = loginMember.getPhone();
 String post = loginMember.getPost();
 String address = loginMember.getAddress();
 
+
 String addr1 = address.substring(0, address.indexOf(" "));
 
 
@@ -301,6 +302,9 @@ document.memberUpdateFrm.onsubmit = (e) => {
 	  }else{
 		  cnt++;
 	  }
+	  
+	  alert("회원수정이 성공적으로 처리되었습니다.");
+}
 </script>
 	  
 </html>
