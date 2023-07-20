@@ -5,10 +5,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-	Payment payment = (Payment)request.getAttribute("payment");
-	
-	/* System.out.println("jsp ---"  + payment);  */
+Payment payment = (Payment)request.getAttribute("payment");
+/* String msg = (String) session.getAttribute("msg"); */
+/* 		  	System.out.println(msg); */
+/* System.out.println("jsp ---"  + payment);  */
+
 %>
+
+
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -187,7 +192,7 @@
         </tr>
         <tr>
           <th>상세주소</th>
-          <td><input type="text" name="detailAddress" id="detailAddress"></td>
+          <td><input type="text" name="detailAddress" id="detailAddress" value="" ></td>
         </tr>
         <tr>
           <th>잔여 이용권</th>
@@ -217,6 +222,7 @@
 	reqGarbage.onclick = () => {
 		document.getElementById('reqGarbagePickupFrm').style.display="block";
 		document.getElementById('memberUpdateFrm').style.display="none";
+		
 	}
 	
 	
@@ -272,11 +278,8 @@ function updatePrice() {
 	}
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
-		<% if (payment.getP_cnt() == 0 || payment == null){ %>
-			alert("이용권이 모두 소진되었습니다. 이용권 구매후 신청해주세요.");
-			return;
-			  window.location.reload();
-		<%}%>
+
+		if(confirm("정말 신청하시겠습니까?")) {
 		
 		
 		const frmData = new FormData(e.target);
@@ -310,8 +313,9 @@ function updatePrice() {
 			  },
 			});
 		e.preventDefault();
-		};
 		
+		};
+	}
 
 		// 기본 설정: 폼 초기화
 		const reqGarbagePickupFrm = document.getElementById("reqGarbagePickupFrm");
@@ -324,6 +328,9 @@ function updatePrice() {
 <script>
 
     function addressSearch() {
+    	
+    	
+    	
         new daum.Postcode({
             oncomplete: function(data) {
 
