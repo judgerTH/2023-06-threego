@@ -41,7 +41,6 @@ public class AdminPaymentListServlet extends HttpServlet {
 		
 		// 매출 전체조회
 		List<Payment> payments = paymentService.findAll(start, end);
-		System.out.println(payments);
 		
 		// 페이지바영역 처리
 		int totalPayment = paymentService.getTotalPayment();

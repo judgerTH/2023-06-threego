@@ -244,9 +244,7 @@ private Properties prop = new Properties();
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, id);
-			System.out.println(id);
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -566,7 +564,6 @@ private Properties prop = new Properties();
 			pstmt.setString(1, riderId);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -583,7 +580,6 @@ private Properties prop = new Properties();
 			pstmt.setString(2, approvementMsg);
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -599,7 +595,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -615,7 +610,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
@@ -633,7 +627,6 @@ private Properties prop = new Properties();
 			
 			
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		}catch (SQLException e) {
 			throw new AdminException(e);
 		}
