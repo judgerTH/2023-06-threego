@@ -301,6 +301,9 @@ document.memberUpdateFrm.onsubmit = (e) => {
 	  }else{
 		  cnt++;
 	  }
+	  
+	  alert("회원수정이 성공적으로 처리되었습니다.");
+}
 </script>
 	  
 </html>
