@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.threego.app.common.util.ThreegoUtils;
 import com.threego.app.payment.model.service.PaymentService;
 import com.threego.app.payment.model.vo.Payment;
+import com.threego.app.payment.model.vo.PaymentDetail;
 
 /**
  * Servlet implementation class AdminPaymentListFindByDateServlet
@@ -41,14 +42,13 @@ public class AdminPaymentListFindByDateServlet extends HttpServlet {
 		String startDay = request.getParameter("searchStart");
 		String endDay = request.getParameter("searchEnd");
 		// 선택 날짜 매출조회
-		List<Payment> payments = paymentService.findByDate(start, end, startDay, endDay);
-		
+		List<PaymentDetail> paymentDetails = paymentService.findDetailByDate(start, end, startDay, endDay);
 		// 페이지바영역 처리
-		int totalPayment = paymentService.getTotalPayment();
+		int totalPaymentDetail = paymentService.getTotalPaymentDetail();
 		String url = request.getRequestURI();
-		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalPayment, url);
+		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalPaymentDetail, url);
 		
-		request.setAttribute("payments", payments);
+		request.setAttribute("paymentDetails", paymentDetails);
 		request.setAttribute("pagebar", pagebar);
 		request.getRequestDispatcher("/WEB-INF/views/admin/paymentList.jsp")
 		.forward(request, response);
