@@ -5,15 +5,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-	Payment payment = (Payment)request.getAttribute("payment");
-	
-	/* System.out.println("jsp ---"  + payment);  */
-	
-%>
-<%
-		 	String msg = (String) session.getAttribute("msg");
+Payment payment = (Payment)request.getAttribute("payment");
+String msg = (String) session.getAttribute("msg");
 /* 		  	System.out.println(msg); */
+/* System.out.println("jsp ---"  + payment);  */
+
 %>
+
 
 <head>
 <meta charset="UTF-8">
@@ -193,7 +191,7 @@
         </tr>
         <tr>
           <th>상세주소</th>
-          <td><input type="text" name="detailAddress" id="detailAddress"></td>
+          <td><input type="text" name="detailAddress" id="detailAddress" value="" ></td>
         </tr>
         <tr>
           <th>잔여 이용권</th>
@@ -223,6 +221,7 @@
 	reqGarbage.onclick = () => {
 		document.getElementById('reqGarbagePickupFrm').style.display="block";
 		document.getElementById('memberUpdateFrm').style.display="none";
+		
 	}
 	
 	
@@ -279,6 +278,7 @@ function updatePrice() {
 	
 	document.reqGarbagePickupFrm.onsubmit = (e) => {
 
+		if(confirm("정말 신청하시겠습니까?")) {
 		
 		
 		const frmData = new FormData(e.target);
@@ -312,8 +312,9 @@ function updatePrice() {
 			  },
 			});
 		e.preventDefault();
-		};
 		
+		};
+	}
 
 		// 기본 설정: 폼 초기화
 		const reqGarbagePickupFrm = document.getElementById("reqGarbagePickupFrm");
@@ -327,6 +328,9 @@ function updatePrice() {
 	
 	
     function addressSearch() {
+    	
+    	
+    	
         new daum.Postcode({
             oncomplete: function(data) {
 
