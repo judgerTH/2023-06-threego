@@ -80,5 +80,12 @@ public class PaymentService {
 		return totalPaymentDetail;
 	}
 
+	public List<PaymentDetail> findDetailByDate(int start, int end, String startDay, String endDay) {
+		Connection conn = getConnection();
+		List<PaymentDetail> paymentDetails = paymentDao.findDetailByDate(conn, start, end, startDay, endDay);
+		close(conn);
+		return paymentDetails;
+	}
+
 
 }

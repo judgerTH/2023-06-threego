@@ -177,6 +177,26 @@ public class PaymentDao {
 		return totalPaymentDetail;
 	}
 
+	public List<PaymentDetail> findDetailByDate(Connection conn, int start, int end, String startDay, String endDay) {
+		List<PaymentDetail> paymentDetails = new ArrayList<>();
+		String sql = prop.getProperty("findDetailByDate");
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, startDay);
+			pstmt.setString(4, endDay);
+			try(ResultSet rset = pstmt.executeQuery()) {
+				while(rset.next()) {
+					PaymentDetail paymentDetail = handlePaymentDetailResultSet(rset);
+					paymentDetails.add(paymentDetail);
+				}
+			}
+		}catch (SQLException e) {
+			throw new PaymentException(e);
+		}
+		return paymentDetails;
+	}
+
 
 
 }
