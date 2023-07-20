@@ -51,6 +51,8 @@ public class AdminWarningNoticeServlet extends HttpServlet {
 		
 		// 신고 테이블 주의조치 업데이트
 		int result2 = adminService.updateWarningCaution(warningNo, warningNotice);
+		// 주의조치 업데이트 후 해당 넘버로 신고테이블에서 객체 받아오기
+//		Warning warning2 = adminService.getWarningListByID(warningID);
 		// 필요한 정보(request 테이블 - writer, rider / member 테이블 - role) 받아오기
 		Warning warning = adminService.getInfoFromRequestAndMember(warningNo);
 		// msgbox에 주의 조치 삽입 (리시버 : 신고자 role이 U라면 request 테이블의 rider)
