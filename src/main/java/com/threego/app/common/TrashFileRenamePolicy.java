@@ -31,7 +31,6 @@ public class TrashFileRenamePolicy implements FileRenamePolicy {
             String renamedFilename = sdf.format(new Date()) + df.format(Math.random() * 1000) + ext;
             renamedFile = new File(originalFile.getParent(), renamedFilename);
         } while (!createNewFile(renamedFile));
-        System.out.println("renamedFile = " + renamedFile);
         return renamedFile;
     }
 

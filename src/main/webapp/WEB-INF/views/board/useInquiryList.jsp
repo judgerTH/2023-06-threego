@@ -192,9 +192,11 @@ div#pagebar {
 					%>
 					<tr>
 						<td><%=board.getBoardNo()%></td>
-						<td><%=board.getBoardTitle()%><img
+						<td><%=board.getBoardTitle()%>
+						<img
 							src="<%=request.getContextPath()%>/images/secret.png" alt=""
-							style="width: 16px;" /></td>
+							style="width: 16px;" />	<% if(board.getBoardCnt() >0){%>
+							<%= board.getBoardCnt() %> <%} %>></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
@@ -209,9 +211,10 @@ div#pagebar {
 						<td><a
 							href="<%=request.getContextPath()%>/board/useInquiryDetail?no=<%=board.getBoardNo()%>">
 								<%=board.getBoardTitle()%> <img
-								src="<%=request.getContextPath()%>/images/secret.png" alt=""
+								src="<%=request.getContextPath()%>/images/open.png" alt=""
 								style="width: 16px;" />
-						</a></td>
+						</a>	<% if(board.getBoardCnt() >0){%>
+							<%= board.getBoardCnt() %> <%} %></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 					</tr>
@@ -222,7 +225,8 @@ div#pagebar {
 						<td><%=board.getBoardNo()%></td>
 						<td><a href="#" onclick="notRead();"> <%=board.getBoardTitle()%></a>
 							<img src="<%=request.getContextPath()%>/images/secret.png" alt=""
-							style="width: 16px;" /></td>
+							style="width: 16px;" />	<% if(board.getBoardCnt() >0){%>
+							<%= board.getBoardCnt() %> <%} %></td>
 						<td><%=board.getBoardWriter()%></td>
 						<td><%=board.getBoardRegDate()%></td>
 

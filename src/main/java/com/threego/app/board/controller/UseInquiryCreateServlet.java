@@ -38,7 +38,7 @@ public class UseInquiryCreateServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String content = request.getParameter("boardContent");
 		
-		Board board = new Board(0, null, title, writer, content, null, 0) ;
+		Board board = new Board(0, null, title, writer, content, null) ;
 		int result = boardService.insertBoard(board);
 		response.sendRedirect(request.getContextPath() + "/board/useInquiryDetail?no=" + board.getBoardNo());
 	}

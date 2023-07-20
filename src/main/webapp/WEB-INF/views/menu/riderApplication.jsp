@@ -4,15 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<% String msg = (String) session.getAttribute("msg"); %>
-<% session.removeAttribute("msg"); %>
 
-<script>
-    // msg 값이 있을 경우 alert 창으로 출력
-    <% if (msg != null) { %>
-        alert("<%= msg %>");
-    <% } %>
-</script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +48,7 @@
 </style>
 </head>
 <body>
-	<div class="rider-container" >
+	<div class="rider-container" style = "hegith : 600px; " >
 		<div class="top-div" style = "margin-right: 1000px;">
 			<h2>수고미 지원안내</h2>
 		</div>
@@ -147,12 +139,11 @@
 		
 
 	</div>
-	<form id="riderComplete" style="display: none;">
-						<div>  라이더지원이 완료되어습니다. 관리자 확인 후 1:1 메세지 함으로 연락드리겠습니다.</div></form>
+	<form id="riderComplete" style= "display: none; height : 600px;  align-items:center; ">
+						<div style ="font-size : 30px; margin-top : 100px; ">  라이더지원이 완료되어습니다. 관리자 확인 후 1:1 메세지 함으로 연락드리겠습니다.</div></form>
 </div>
 </body>
 <script>
-
 
 application.onclick=(e)=>{
 	<%if(loginMember == null) {%>

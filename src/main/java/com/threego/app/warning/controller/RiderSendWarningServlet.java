@@ -31,10 +31,8 @@ public class RiderSendWarningServlet extends HttpServlet {
 		int WarningReqNo = Integer.parseInt(request.getParameter("reqNo")) ;
 		String  WarningContent = request.getParameter("warningReason");
 		Warning warning = new Warning(0, WarningReqNo, WarningWriter, WarningContent, null, 0, null);
-//		System.out.println(warning);
 		
 		int result = warningService.insertWarning(warning);
-//		System.out.println("신고"+result);
 		HttpSession session = request.getSession();
 
 		// 4. 사용자피드백 및 리다이렉트 처리
