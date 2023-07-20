@@ -166,10 +166,10 @@
 				</button>
         	</div>
         	<div class="container" id="approveRiderContainer" style="display:none;">
-         		<div class="vh-100 d-flex justify-content-center" style="margin-top:40px;">
+         		<div class="vh-100 justify-content-center" style="margin-top:40px;">
         	<% if(waitingRiders != null && !waitingRiders.isEmpty()) { %>
         		<% for(Rider waitingRider : waitingRiders) { %>
-		            <div class="card mb-3" style="width: 500px; height:200px;">
+		            <div class="card mb-3" style="margin-left:330px; width: 500px; height:200px;">
 		              <div class="row g-0">
 		                <div class="col-md-4">
 		                  <img src="<%= request.getContextPath() %>/img/threeGologo.png" style="padding-top:25px; width:150px;" class="img-fluid rounded-start" alt="...">
@@ -202,14 +202,14 @@
 		                    <p class="card-text">이름 : <%= waitingRider.getRiderName() %></p>
 		                    <p class="card-text">활동구역 : <%= waitingRider.getRiderLocationId() %>(<%= waitingRider.getRiderLocationName() %>)</p>
 		                    <div style="display:flex">
-			                    <button class="card-text" id="approveButton" style="border-style: none; background-color: white;"><small class="text-muted" >승인</small></button>
 			                    <form action="<%= request.getContextPath() %>/admin/riderApprovement" name="riderApprovementFrm" method="post">
 			    					<input type="hidden" name="riderId" id="riderId" value="<%= waitingRider.getRiderId()%>">
+			                    	<button class="card-text" id="approveButton" style="border-style: none; background-color: white;"><small class="text-muted" >승인</small></button>
 			    				</form>
 			                    &nbsp; &nbsp; &nbsp;
-			                    <button class="card-text" id="rejectButton" style="border-style: none; background-color: white;"><small class="text-muted">반려</small></button>		                    
 		                    	<form action="<%= request.getContextPath() %>/admin/riderRefusal" name="riderRefusalFrm" method="post">
 		    						<input type="hidden" name="riderRefusalId" id="riderRefusalId" value="<%= waitingRider.getRiderId()%>">
+			                    	<button class="card-text" id="rejectButton" style="border-style: none; background-color: white;"><small class="text-muted">반려</small></button>		                    
 		    					</form>
 		                    </div>
 		                  </div>
@@ -274,30 +274,32 @@
         	};
         	
         	// 승인 이벤트
-        	const approveButton = document.querySelector("#approveButton");
-        	approveButton.onclick = (e) => {
-        		if(confirm('승인하시겠습니까?')) {
-        			const frm = document.riderApprovementFrm;
-        			const hiddenVal = frm.querySelector("#riderId");
-        				
-        			console.log(hiddenVal.value);
-        			frm.submit();
-        				
-        		} else {
-        			return false;
-        		}
-        	};
+        	document.querySelectorAll("#approveButton").forEach((item) => {
+	        	item.onclick = (e) => {
+	        		if(confirm('승인하시겠습니까?')) {
+	        			const frm = document.riderApprovementFrm;
+	        			const hiddenVal = frm.querySelector("#riderId");
+	        				
+	        			console.log(hiddenVal.value);
+	        			frm.submit();
+	        				
+	        		} else {
+	        			return false;
+	        		}
+	        	};
+        	})
         	
-        	const refusalButton = document.querySelector("#rejectButton");
-        	refusalButton.onclick = (e) => {
-        		if(confirm('반려하시겠습니까?')) {
-        			const frm = document.riderRefusalFrm;
-        			const hiddenVal = frm.querySelector("#riderRefusalId")
-        			frm.submit();
-        		} else {
-        			return false;
-        		}
-        	}
+        	document.querySelector("#rejectButton").forEach((item) => {
+	        	item.onclick = (e) => {
+	        		if(confirm('반려하시겠습니까?')) {
+	        			const frm = document.riderRefusalFrm;
+	        			const hiddenVal = frm.querySelector("#riderRefusalId")
+	        			frm.submit();
+	        		} else {
+	        			return false;
+	        		}
+	        	}        		
+        	});
         	
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
