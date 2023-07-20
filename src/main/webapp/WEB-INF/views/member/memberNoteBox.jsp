@@ -89,9 +89,7 @@
                 <% } %>
             </div>
        </div>
-    	<div id='pagebar' style="margin-left: 330px">
-			<%= request.getAttribute("pagebar") %>
-		</div>
+    	
      </div>
 <script>
 	document.querySelectorAll("#noteBoxCheck").forEach((item) => {
