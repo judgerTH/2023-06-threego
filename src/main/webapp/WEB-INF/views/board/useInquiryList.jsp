@@ -25,6 +25,7 @@ List<Board> boards = (List<Board>) request.getAttribute("boards");
 	margin-inline-end: 0px;
 	padding-inline-start: 40px;
 	display: flex;
+	margin-left : 20px;
 }
 
 .left-div ul li {
@@ -84,7 +85,8 @@ List<Board> boards = (List<Board>) request.getAttribute("boards");
 }
 
 h2 {
-	margin-left: 60px;
+	margin-left: 65px;
+	font-size : 30px;
 }
 
 tbody, td, tfoot, th, thead, tr {
@@ -101,6 +103,7 @@ tbody, td, tfoot, th, thead, tr {
 	margin-left: 220px;
 	padding: 20px;
 	width: 70%;
+	height : 700px;
 	margin-top: 20px;
 	font-size: 20px;
 }
@@ -113,11 +116,12 @@ tbody, td, tfoot, th, thead, tr {
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 16px;
+	font-size: 17px;
 	margin-bottom: 20px;
 	float: right;
 	margin-top: 20px;
-	border-radius: 3px;
+	border-radius: 5px;
+	 font-family: 'GmarketSansMedium';
 }
 
 #tbl-board {
@@ -160,7 +164,7 @@ div#pagebar {
 	<div class="left-div">
 		<h2>고객센터</h2>
 		<ul>
-			<li><a class="active" aria-current="page"
+			<li><a class="active"  aria-current="page"
 				href="<%=request.getContextPath()%>/menu/serviceCenter">공지사항</a></li>
 			<li><a class="active" id="active1" aria-current="page"
 				href="<%=request.getContextPath()%>/board/useInquiryList">이용문의</a></li>

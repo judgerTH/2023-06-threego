@@ -1,6 +1,8 @@
 package com.threego.app.member.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import javax.websocket.Session;
 import com.threego.app.common.util.MemberMvcUtils;
 import com.threego.app.member.model.service.MemberService;
 import com.threego.app.member.model.vo.Member;
+import com.threego.app.msgbox.model.vo.MsgBox;
 
 /**
  * Servlet implementation class LoginMember
@@ -44,6 +47,8 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
+			List<MsgBox> msgBoxes = memberService.getMsgBoxList(member.getId());
+			session.setAttribute("msgBoxes", msgBoxes);
 
 			if(member != null && pwd.equals(member.getPwd())) {
 				session.setAttribute("loginMember", member);
@@ -54,7 +59,7 @@ public class MemberLoginServlet extends HttpServlet {
 				String referer = request.getHeader("Referer");
 				response.sendRedirect(referer);
 			}
-
+			
 			
 
 	}

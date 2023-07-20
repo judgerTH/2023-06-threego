@@ -1,9 +1,15 @@
+<%@page import="com.threego.app.msgbox.model.vo.MsgConfirm"%>
+<%@page import="com.threego.app.msgbox.model.vo.MsgBox"%>
+<%@page import="java.util.List"%>
 <%@page import="com.threego.app.member.model.vo.MemberRole"%>
 <%@page import="com.threego.app.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	
 	Member loginMember = (Member)session.getAttribute("loginMember");
+	List<MsgBox> msgBoxes = (List<MsgBox>) session.getAttribute("msgBoxes");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -45,6 +51,23 @@
             		if(loginMember.getMemberRole()==MemberRole.U || loginMember.getMemberRole()==MemberRole.R){
             
             %>
+            <%  if(msgBoxes != null && !msgBoxes.isEmpty()) { %>
+            	<% int cnt = 0; %>
+            	<% for(MsgBox msgBox : msgBoxes) { %>
+            		<% if(loginMember.getId().equals(msgBox.getMsgReceiver())) {%>
+            			<% if(msgBox.getMsgConfirm() == MsgConfirm.X) { %>
+            			<% cnt++; %>
+            			<% } %>
+            		<% } %>
+            	<% } %>
+            	<% if(cnt > 0) { %>
+			         <div id="msgCheckBox" style="border:1px solid black; border-radius:20px; width:260px; height:45px; margin-right:10px; margin-top:10px; padding-top:20px; text-align:center;">
+			            <a href="<%= request.getContextPath() %>/member/notebox?memberId=<%= loginMember.getId()%>">확인하지 않은 메세지가 있습니다.</a>
+			         </div>
+			    <% } %>
+            	
+            	
+            <% } %>
                 <div id="alarmBox" style="display:none; width:30px; padding-top:10px; padding-right:20px;">
                     <span>
                     	<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-envelope-open-heart" viewBox="0 0 16 16">
