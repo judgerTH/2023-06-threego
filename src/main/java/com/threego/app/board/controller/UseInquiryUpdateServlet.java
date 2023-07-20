@@ -37,19 +37,14 @@ public class UseInquiryUpdateServlet extends HttpServlet {
 		int no = Integer.parseInt(request.getParameter("no"));
 		String title = request.getParameter("title");
 		String boardContent = request.getParameter("boardContent");
-		System.out.println(no);
-		System.out.println(title);
-		System.out.println(boardContent);
 		
 		Board board = new Board();
 		board.setBoardNo(no);
 		board.setBoardContent(boardContent);
 		board.setBoardTitle(title);
-		System.out.println(board);
 		
 		int result = boardService.updateBoard(board); 
 		 response.setStatus(HttpServletResponse.SC_OK);
-		System.out.println(result);
 		response.getWriter().write(String.valueOf(board.getBoardNo()));
 
 	}

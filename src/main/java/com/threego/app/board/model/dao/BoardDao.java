@@ -153,7 +153,6 @@ private Properties prop = new Properties();
 			pstmt.setString(2, board.getBoardContent());
 			pstmt.setInt(3, board.getBoardNo());
 			result = pstmt.executeUpdate();
-			System.out.println("dao"+result);
 		} catch (SQLException e) {
 			throw new BoardException(e);
 		} 
@@ -168,7 +167,6 @@ private Properties prop = new Properties();
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1,no );
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			throw new BoardException(e);

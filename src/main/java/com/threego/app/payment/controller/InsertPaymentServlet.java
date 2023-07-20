@@ -27,9 +27,11 @@ public class InsertPaymentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		// 파라미터 값 가져오기
 		String id = request.getParameter("id");
 		String ticketId = request.getParameter("ticketSelect");
+
 
 		int result = paymentService.insertPayment(id, ticketId);
 		// 수거신청 등 다른 동작 수행
