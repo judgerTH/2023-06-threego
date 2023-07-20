@@ -183,7 +183,7 @@ w_caution varchar2(4000),
 constraints pk_warning_w_no primary key(w_no),
 constraints fk_warning_w_req_no foreign key(w_req_no) references request(req_no) on delete cascade,
 constraints fk_warning_w_id foreign key(w_writer) references member(id) on delete cascade,
-constraints ck_warning_w_confirm check(w_confirm in('0', '1'))
+constraints ck_warning_w_confirm check(w_confirm in(0, 1))
 -- 0 신고확인중  1 신고확인완료
 );
 create sequence seq_w_no;
