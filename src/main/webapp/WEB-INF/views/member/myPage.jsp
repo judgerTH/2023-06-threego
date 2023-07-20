@@ -10,6 +10,7 @@ String phone = loginMember.getPhone();
 String post = loginMember.getPost();
 String address = loginMember.getAddress();
 
+
 String addr1 = address.substring(0, address.indexOf(" "));
 
 
