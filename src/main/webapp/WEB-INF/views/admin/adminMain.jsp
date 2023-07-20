@@ -99,7 +99,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
                         />
                       </svg>
                     </span>
-                    <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
+                    <a href="<%=request.getContextPath()%>/admin/riderManagement">수고미 관리</a>
                   </div>
                 </div>
               </li>
@@ -177,7 +177,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
           &nbsp;
           <span style="color: tomato; font-weight: 600"><%=session.getAttribute("todayPaymentCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp; 
-          <span>라이더 승인</span>
+          <span>수고미 승인</span>
           &nbsp;
           <span style="color: tomato; font-weight: 600"><%=session.getAttribute("unapprovedRiderCount")%></span>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -282,7 +282,7 @@ int lastMonthPayment = (int)request.getAttribute("lastMonthPayment")*5000;
 						<%
 						if(warning.getMemberRole()== WarnigMemberRole.U) {
 						%>
-							[라이더 신고]
+							[수고미 신고]
 						<% } else { %>
 							[유저 신고]
 						<% } %>
