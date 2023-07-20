@@ -1,9 +1,10 @@
-<%@page import="com.threego.app.payment.model.vo.Payment"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.threego.app.payment.model.vo.PaymentDetail"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	List<Payment> payments = (List<Payment>) request.getAttribute("payments");
+	List<PaymentDetail> paymentDetails = (List<PaymentDetail>) request.getAttribute("paymentDetails");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,65 +158,57 @@
                 <input type="submit" id="submit"value="기간 검색" style="order: 0;" onclick="handleSubmit()">
                 </div>
                 <div class="card-body" id="todayIssueBody">
-                    <table>
-                    	<thead>
-                    		<tr>
-		                        <th style="width: 70px;">번호</th>
-		                        <th style="width: 70px;">구매자 ID</th>
-		                        <th style="width: 70px;">티켓 분류</th>
-		                        <th style="width: 70px;">전체 횟수</th>
-		                        <th style="width: 70px;">사용 횟수</th>
-		                        <th style="width: 70px;">금액</th>
-		                        <th style="width: 200px;">결제일</th>
-                    		</tr>
-                    	</thead>
-                    	<tbody>
-							<% 
-								if(payments != null && !payments.isEmpty()) {
-									int totalAmount = 0;
-									for(Payment payment : payments)	{
-							%>
-							<tr>
-								<td><%= payment.getP_no() %></td>
-								<td><%= payment.getP_mem_id() %></td>
-								<td><%= payment.getP_tic_id() %></td>
-								<td><%= payment.getP_cnt() %></td>
-								<td><%= payment.getP_use_cnt() %></td>
-								<td>
-									<% 
-							            int cnt = payment.getP_cnt();
-							            int amount = 0;
-							            
-							            if (cnt == 1) {
-							                amount = 5000;
-							            } else if (cnt == 3) {
-							                amount = 15000;
-							            } else if (cnt == 5) {
-							                amount = 23900;
-							            } else if (cnt == 10) {
-							                amount = 46900;
-							            }
-							         	totalAmount += amount;
-							            out.print(amount);
-							        %>
-								</td>
-								<td><%= payment.getP_date() %></td>
+                <table>
+    <thead>
+        <tr>
+            <th style="width: 70px;">번호</th>
+            <th style="width: 70px;">구매자 ID</th>
+            <th style="width: 70px;">티켓 분류</th>
+            <th style="width: 70px;">금액</th>
+            <th style="width: 200px;">결제일</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+            if(paymentDetails != null && !paymentDetails.isEmpty()) {
+                int totalAmount = 0;
+                // 티켓 분류와 금액을 저장할 HashMap 생성
+                HashMap<String, Integer> ticAmountMap = new HashMap<>();
+                ticAmountMap.put("tic1", 5000);
+                ticAmountMap.put("tic3", 15000);
+                ticAmountMap.put("tic5", 23900);
+                ticAmountMap.put("tic10", 46900);
 
-							</tr>
-							<%
-	            					}
-							%>
-			                    총 매출: <%= totalAmount %>
-							<%
-                        		}
-                        		else {
-							%>
-							<tr>
-								<td>조회된 매출이 없습니다.</td>
-							</tr>
-							<% } %>
-                    	</tbody>
-                    </table>
+                for(PaymentDetail paymentDetail : paymentDetails) {
+                    %>
+                    <tr>
+                        <td><%= paymentDetail.getPd_no() %></td>
+                        <td><%= paymentDetail.getPd_mem_id() %></td>
+                        <td><%= paymentDetail.getPd_tic_id() %></td>
+                        <td>
+                            <% 
+                                String tic_id = paymentDetail.getPd_tic_id();
+                                int amount = ticAmountMap.get(tic_id);
+                                totalAmount += amount; // 총 금액 계산을 위해 더해줍니다.
+                                out.print(amount);
+                            %>
+                        </td>
+                        <td><%= paymentDetail.getPd_date() %></td>
+                    </tr>
+                <% 
+                }
+                %> 총 매출 : <%= totalAmount %>
+                <%
+            } else {
+                %>
+                <tr>
+                    <td colspan="5">조회된 매출이 없습니다.</td>
+                </tr>
+                <% 
+            }
+        %>
+    </tbody>
+</table>
                 </div>
             </div>
             <div id='pagebar' style="margin-left: 330px">
