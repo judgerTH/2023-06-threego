@@ -124,7 +124,6 @@ public class PaymentDao {
 			try(ResultSet rset = pstmt.executeQuery()){
 				while(rset.next()) {
 					payment = handlePaymentResultSet(rset);
-					System.out.println("payment@dao = " + payment);
 				}
 			}
 			

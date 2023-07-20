@@ -41,11 +41,10 @@ public class MemberUpdateServlet extends HttpServlet {
 
 		String address = Addr1 + " " + Addr2;
 		
+		
 		Member member = new Member(memberId, password, name, email, phone, MemberRole.U, Zip, address, null);
 		
-		System.out.println(member);
 		int result = memberService.updateMember(member);
-		System.out.println(member);
 		HttpSession session = request.getSession();
 
 		session.setAttribute("loginMember", memberService.findById(memberId));

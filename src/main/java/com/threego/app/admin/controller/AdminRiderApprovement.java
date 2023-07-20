@@ -30,7 +30,6 @@ public class AdminRiderApprovement extends HttpServlet {
 		
 		// 입력값 
 		String riderId = request.getParameter("riderId");
-		System.out.println(riderId);
 		
 		// 업무로직
 		// 승인 시 라이더 테이블 상태 변경

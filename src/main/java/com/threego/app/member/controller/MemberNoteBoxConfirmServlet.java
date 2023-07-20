@@ -30,7 +30,6 @@ public class MemberNoteBoxConfirmServlet extends HttpServlet {
 		// 입력값
 		int msgNo = Integer.parseInt(request.getParameter("msgNo"));
 		String msgReceiver = request.getParameter("msgReceiver");
-		System.out.println(msgNo);
 		
 		// 업무로직
 		// msgBox Confirm O로 바꿔주기

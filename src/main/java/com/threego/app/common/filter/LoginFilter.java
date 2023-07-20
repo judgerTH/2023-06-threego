@@ -36,7 +36,8 @@ import com.threego.app.member.model.vo.Member;
 	"/board/boardCommentUpdate",
 	"/board/useInquiryDetail",
 	"/board/useInquiryUpdate",
-	"/rider/*"
+	"/rider/*",
+	"/menu/buyTicket"
 })
 public class LoginFilter extends HttpFilter implements Filter {
        

@@ -9,8 +9,17 @@
 	
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	List<MsgBox> msgBoxes = (List<MsgBox>) session.getAttribute("msgBoxes");
+String msg = (String) session.getAttribute("msg");
+	if(msg != null) session.removeAttribute("msg"); // 1회용
 	
 %>
+
+	
+<script>
+<% 	if(msg != null) { %>
+alert('<%= msg %>');
+<% 	} %>
+</script>
 <!DOCTYPE html>
 <html>
 <head>
