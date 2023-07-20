@@ -47,6 +47,8 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
+			List<MsgBox> msgBoxes = memberService.getMsgBoxList(member.getId());
+			session.setAttribute("msgBoxes", msgBoxes);
 
 			if(member != null && pwd.equals(member.getPwd())) {
 				session.setAttribute("loginMember", member);
@@ -58,8 +60,6 @@ public class MemberLoginServlet extends HttpServlet {
 				response.sendRedirect(referer);
 			}
 			
-			List<MsgBox> msgBoxes = memberService.getMsgBoxList(member.getId());
-			session.setAttribute("msgBoxes", msgBoxes);
 			
 
 	}
