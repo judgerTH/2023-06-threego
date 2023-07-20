@@ -93,7 +93,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
                           />
                         </svg>
                       </span>
-                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
+                      <a href="<%=request.getContextPath()%>/admin/riderManagement">수고미 관리</a>
                     </div>
                   </div>
                 </li>
@@ -181,7 +181,7 @@ List<Warning> warnings = (List<Warning>) request.getAttribute("warnings");
 										<%
 										if(warning.getMemberRole()== WarnigMemberRole.U) {
 										%>
-											[라이더 신고]
+											[수고미 신고]
 										<% } else { %>
 											[유저 신고]
 										<% } %>

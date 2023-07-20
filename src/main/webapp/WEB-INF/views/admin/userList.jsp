@@ -94,7 +94,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
+                      <a href="<%=request.getContextPath()%>/admin/riderManagement">수고미 관리</a>
                     </div>
                   </div>
                 </li>

@@ -52,9 +52,12 @@ public class MemberNoteboxServlet extends HttpServlet {
 		
 		// 페이지바영역 처리
 		int totalMsg = memberService.getTotalMsg(memberId);
+
 //		String url = request.getRequestURI();
 		String url = "/threego/member/notebox?"+memberId;
 		String pagebar = ThreegoUtils.getPagebar(cpage, LIMIT, totalMsg, url);
+	
+
 		request.setAttribute("pagebar", pagebar);
 		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/member/memberNoteBox.jsp");

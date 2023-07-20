@@ -93,7 +93,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="">라이더 관리</a>
+                      <a href="">수고미 관리</a>
                     </div>
                   </div>
                 </li>

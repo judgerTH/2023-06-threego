@@ -97,7 +97,7 @@
                           />
                         </svg>
                       </span>
-                      <a href="<%=request.getContextPath()%>/admin/riderManagement">라이더 관리</a>
+                      <a href="<%=request.getContextPath()%>/admin/riderManagement">수고미 관리</a>
                     </div>
                   </div>
                 </li>
@@ -156,9 +156,9 @@
         </section>
         <section>
 	        <div class="buttonBox" style="margin-top:50px; margin-left:330px;">
-    	        <button type="button" class="btn btn-primary" id="lookUpRider">라이더 조회</button>
+    	        <button type="button" class="btn btn-primary" id="lookUpRider">수고미 조회</button>
     	        <button type="button" class="btn btn-primary position-relative" id="approveRider">
- 				 라이더 승인
+ 				 수고미 승인
 				  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 				    <%= request.getAttribute("unapprovedRiderCount2") %>
 				    <span class="visually-hidden">unread messages</span>
@@ -218,13 +218,13 @@
             		</div>
             		<% } %>
             	<% } else { %>
-            	<p>승인대기중인 라이더가 없습니다.</p>
+            	<p>승인대기중인 수고미가 없습니다.</p>
             	<% } %>
           		</div> <!-- vh100 끝 -->
         	</div> <!-- container 끝 -->
         	<div class="card" style="margin: 30px 0 0 330px; width: 1300px; display:none;" id="riderList">
                 <div class="card-header" id="todayIssueHeader">
-                라이더 목록
+                수고미 목록
                 </div>
                 <div class="card-body" id="todayIssueBody" >
                     <table>
@@ -232,7 +232,7 @@
                     		<tr>
 		                        <th style="width: 300px;">ID</th>
 		                        <th style="width: 500px;">지역코드(지역)</th>
-		                        <th>라이더 승인일</th>
+		                        <th>수고미 승인일</th>
                     		</tr>
                     	</thead>
                         <tbody>
@@ -256,7 +256,7 @@
 	        <% 	if(msg != null) { %>
 			alert('<%= msg %>');
 			<% 	} %>
-        	// 라이더 조회, 승인 버튼 이벤트
+        	// 수고미 조회, 승인 버튼 이벤트
         	const lookUpRiderButton = document.querySelector("#lookUpRider");
         	const riderList = document.querySelector("#riderList");
         	const approveRiderContainer = document.querySelector("#approveRiderContainer");
