@@ -443,9 +443,8 @@ private Properties prop = new Properties();
 		String boardWriter = rset.getString("b_writer");
 		String boardContent = rset.getString("b_content");
 		Date boardRegDate = rset.getDate("b_reg_date");
-		int boardCnt = rset.getInt("b_cnt");
 		
-		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate, boardCnt);
+		return new Board(boardNo, boardType, boardTitle, boardWriter, boardContent, boardRegDate);
 
 	}
 

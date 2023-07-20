@@ -57,7 +57,6 @@ private Properties prop = new Properties();
 		board.setBoardWriter(rset.getString("b_writer"));
 		board.setBoardContent(rset.getString("b_content"));
 		board.setBoardRegDate(rset.getDate("b_reg_date"));
-		board.setBoardCnt(rset.getInt("b_cnt"));
 		return board;
 	}
 
@@ -97,7 +96,7 @@ private Properties prop = new Properties();
 	public int insertBoard(Connection conn, Board board) {
 		int result = 0;
 		String sql = prop.getProperty("insertBoard");
-		//insertBoard = insert into board values (seq_board_no.nextval,'Q',?,?,?,default,0)
+		//insertBoard = insert into board values (seq_board_no.nextval,'Q',?,?,?,default)
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, board.getBoardTitle());
 			pstmt.setString(2, board.getBoardWriter());
@@ -105,6 +104,7 @@ private Properties prop = new Properties();
 			
 			result = pstmt.executeUpdate(); 
 		} catch (SQLException e) {
+			
 			throw new BoardException(e);
 		}
 		
