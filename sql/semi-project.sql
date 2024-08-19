@@ -264,3 +264,7 @@ select * from warning;
 select * from board;
 select * from board_comment;
 --------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT r.*, loc.l_name AS location_name 
+FROM (SELECT rr.*, ROWNUM AS rnum FROM (SELECT * FROM request WHERE req_rider = 'disney1026') rr WHERE ROWNUM <= 1) r 
+JOIN location loc ON loc.l_id = r.req_location_id WHERE rnum >= 10;
